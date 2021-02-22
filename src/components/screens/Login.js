@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Button,
   Dimensions,
 } from 'react-native';
 import {
@@ -15,10 +16,43 @@ import {
   HEIGHT,
 } from '../../constants/constants';
 import {COLORS, icons} from '../../constants';
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import auth from '@react-native-firebase/auth';
+
 export default function Login() {
-    const navigation = useNavigation()
+  const navigation = useNavigation();
+
+  // If null, no SMS has been sent
+  const [confirm, setConfirm] = useState(null);
+
+  const [code, setCode] = useState('');
+
+  // Handle the button press
+  async function signInWithPhoneNumber(phoneNumber) {
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    setConfirm(confirmation);
+    console.log('------> ' + confirmation);
+  }
+
+  // if (!confirm) {
+  //   return (
+  //     <Button
+  //       title="Phone Number Sign In"
+  //       onPress={() => signInWithPhoneNumber('+84906288042')}
+  //     />
+  //   );
+  // }
+
+  async function confirmCode() {
+    try {
+      await confirm.confirm(code);
+      navigation.push('Home')
+    } catch (error) {
+      console.log('Invalid code.');
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View
@@ -40,6 +74,19 @@ export default function Login() {
         }}>
         ĐĂNG NHẬP
       </Text>
+      <Button
+        title="Phone Number Sign In"
+        onPress={() => signInWithPhoneNumber('+84906288042')}
+      />
+      <View style={{marginBottom: 20}}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="code"
+          value={code}
+          onChangeText={(text) => setCode(text)}
+        />
+      </View>
+      <Button title="Confirm Code" onPress={() => confirmCode()} />
 
       <View style={{marginBottom: 20}}>
         <TouchableOpacity style={styles.textInput}>
