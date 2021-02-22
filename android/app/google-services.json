@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "365236379621",
+    "project_id": "hexia-1f113",
+    "storage_bucket": "hexia-1f113.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365236379621:android:465cdb2587e2ab3bad590c",
+        "android_client_info": {
+          "package_name": "com.hexiacf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365236379621-ia00torahr64q551qn21oui73ekbuark.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt6AWIocttB-10G_eZo5sb8Ev26ZBTfFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365236379621-ia00torahr64q551qn21oui73ekbuark.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
