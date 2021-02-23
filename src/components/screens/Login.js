@@ -27,6 +27,7 @@ export default function Login() {
   const [confirm, setConfirm] = useState(null);
 
   const [code, setCode] = useState('');
+  const [phone, setPhone] = useState('');
 
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
@@ -56,7 +57,7 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <View
-        style={{alignItems: 'center', justifyContent: 'center', marginTop: 30}}>
+        style={{alignItems: 'center', justifyContent: 'center', marginTop: 5  }}>
         <Image
           style={styles.logo}
           source={{
@@ -74,11 +75,20 @@ export default function Login() {
         }}>
         ĐĂNG NHẬP
       </Text>
+      <View style={{marginBottom: 10}}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Phone"
+          value={phone}
+          textContentType = 'telephoneNumber'
+          onChangeText={(text1) => setPhone(text1)}
+        />
+      </View>
       <Button
-        title="Phone Number Sign In"
-        onPress={() => signInWithPhoneNumber('+84906288042')}
+        title="Phone Number Sign In" 
+        onPress={() => signInWithPhoneNumber(phone)}
       />
-      <View style={{marginBottom: 20}}>
+      <View style={{marginVertical: 10}}>
         <TextInput
           style={styles.textInput}
           placeholder="code"
@@ -86,9 +96,9 @@ export default function Login() {
           onChangeText={(text) => setCode(text)}
         />
       </View>
-      <Button title="Confirm Code" onPress={() => confirmCode()} />
+      <Button title="Confirm Code" onPress={() => confirmCode()}/>
 
-      <View style={{marginBottom: 20}}>
+      {/* <View style={{marginBottom: 20}}>
         <TouchableOpacity style={styles.textInput}>
           <FontAwesome5
             name={'google-plus-square'}
@@ -108,9 +118,9 @@ export default function Login() {
             Đăng nhập bằng Facebook
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
-      <View style={{marginBottom: 10}}>
+      <View style={{marginVertical: 20}}>
         <View
           style={{
             borderBottomWidth: 1,
@@ -136,7 +146,7 @@ export default function Login() {
       </View>
 
       <View style={{marginBottom: 20}}>
-        <TextInput style={styles.textInput} placeholder="Password" />
+        <TextInput style={styles.textInput} placeholder="Password" secureTextEntry/>
       </View>
 
       <TouchableOpacity
