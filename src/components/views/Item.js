@@ -22,8 +22,8 @@ export default function Item({item}) {
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
     <View style={styles.box}>
       <Image style={styles.image_box} source={{uri: item.thumb}} />
-      <View style={{marginHorizontal: 10, marginVertical: 5}}>
-        <Text style={styles.text_box_title}>{item.id}</Text>
+      <View style={{marginHorizontal: 10, marginVertical: 5, alignItems: 'center',}}>
+        {/* <Text style={styles.text_box_title}>{item.id}</Text> */}
         <Text
           style={styles.text_box_artist}
           ellipsizeMode="tail"
@@ -39,25 +39,26 @@ export default function Item({item}) {
 const styles = StyleSheet.create({
   box: {
     width: WIDTH / 2.3,
-    height: HEIGHT / 4,
+    height: HEIGHT / 4.3,
     margin: 5,
     // backgroundColor: '#000',
-    borderRadius: 15,
-    backgroundColor: COLORS.white,
+    // borderRadius: 15,
+    // backgroundColor: COLORS.white,
   },
   image_box: {
     height: 140,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
+    // borderTopLeftRadius: 15,
+    // borderTopRightRadius: 15,
   },
   text_box_title: {
     fontSize: 14,
     color: '#000',
+   
   },
   text_box_artist: {
-    opacity: 0.7,
     color: '#000',
-    fontSize: 12,
+    fontSize: 15,
+    // fontWeight: 'normal'
   },
   box_icon: {
     width: 25,
