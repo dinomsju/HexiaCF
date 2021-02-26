@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
 import {films} from '../../constants/data/fakeData';
@@ -20,42 +21,49 @@ import {
   HEIGHT,
 } from '../../constants/constants';
 export default function Home() {
+  const navigation = useNavigation();
   console.log('datafake -----> ' + films.length);
   test = (item) => {
     console.log('title + id: ' + item.id + '----' + item.title);
   };
+  let datafilms;
   return (
     <View style={styles.container}>
-      {/* <FlatList
-        numColumns={2}
-        data={films}
-        renderItem={({item}) => (
-          <TouchableOpacity onPress={() => test(item)}>
-            <Item item={item} />
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.title}
-      /> */}
       <ScrollView>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 5,
-          }}>
-          <Image
-            style={styles.logo}
-            source={{
-              uri:
-                'https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg',
-            }}
-          />
+        <View style={{padding: 5}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              opacity: 0.3,
+            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                paddingRight: 5,
+                color: COLORS.black,
+              }}>
+              ĐỊA CHỈ
+            </Text>
+            <Icon name="chevron-down-outline" color={COLORS.black} size={20} />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 5,
+            }}>
+            <Icon name="location-sharp" color={COLORS.orange} size={20} />
+            <Text style={{fontWeight: 'bold', fontSize: 14}}>
+              107 Hoàng Hoa Thám, Phường 6 , Quận Bình Thạnh
+            </Text>
+          </View>
         </View>
-
         <View style={{height: WIDTH / 2 - 20}}>
           <Swiper
             autoplay={true}
-            autoplayTimeout={2}
+            autoplayTimeout={3}
             paginationStyle={{height: WIDTH / 2 - 240}}
             dotColor={'#bebebe'}
             showsPagination={true}>
@@ -80,9 +88,38 @@ export default function Home() {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
+            alignItems: 'center',
             width: WIDTH - 20,
+            marginTop: 10,
           }}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>THỰC ĐƠN</Text>
+          <TouchableOpacity   onPress={() => navigation.push('Menu')}>
+            <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          // numColumns={2}
+          data={films}
+          horizontal
+          renderItem={({item}) => (
+            <TouchableOpacity onPress={() => test(item)}>
+              <Item item={item} />
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.title}
+        />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: WIDTH - 20,
+            marginTop: 10,
+          }}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+            BẮT ĐẦU NGÀY MỚI
+          </Text>
           <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
         </View>
         <FlatList
@@ -109,8 +146,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   logo: {
-    width: WIDTH - 250,
-    height: WIDTH - 250,
+    width: WIDTH / 10,
+    height: WIDTH / 10,
   },
   banner: {
     width: WIDTH - 20,
