@@ -4,7 +4,8 @@ import HeaderPro from '../Header/HeaderPro';
 import Item from '../views/ItemNew';
 import {films} from '../../constants/data/fakeData';
 import {COLORS, icons} from '../../constants';
-export default function Menu() {
+export default function Menu({navigation, route}) {
+  console.log('test ----------->> ' + route.params.xyz);
   return (
     <View style={styles.container}>
       <HeaderPro />

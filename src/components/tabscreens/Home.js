@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -22,6 +22,7 @@ import {
 } from '../../constants/constants';
 export default function Home() {
   const navigation = useNavigation();
+  const [idcategory, setIDCategory] = useState('ps09830');
   console.log('datafake -----> ' + films.length);
   test = (item) => {
     console.log('title + id: ' + item.id + '----' + item.title);
@@ -93,7 +94,7 @@ export default function Home() {
             marginTop: 10,
           }}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>THỰC ĐƠN</Text>
-          <TouchableOpacity   onPress={() => navigation.push('Menu')}>
+          <TouchableOpacity   onPress={() => navigation.push('Menu', {xyz})}>
             <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
