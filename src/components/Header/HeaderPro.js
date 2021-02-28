@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
 import { WIDTH } from '../../constants/constants';
 import { useNavigation } from "@react-navigation/native";
-const Header = () => {
+const Header = ({title}) => {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
@@ -18,7 +18,7 @@ const Header = () => {
             <Icon name="arrow-back" color={COLORS.orange} size={20} />
             </TouchableOpacity>
             
-             <Text style={{fontSize: 18, fontWeight: 'bold', marginLeft: 130}}>THỰC ĐƠN</Text>
+             <Text style={{fontSize: 18, fontWeight: 'bold', marginLeft: 130}}>{title}</Text>
         </View>
     )
 }

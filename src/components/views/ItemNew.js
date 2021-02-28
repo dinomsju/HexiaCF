@@ -18,13 +18,13 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
-export default function Item({item}) {
+export default function ItemNew({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
     <View style={styles.box}>
       {/* <Image style={styles.image_box} source={{uri: item.thumb}} /> */}
       <FastImage
-        source={{uri: item.thumb}}
+        source={{uri: item.image}}
         style={styles.image_box}
         resizeMode={FastImage.resizeMode.cover}
       />
@@ -35,7 +35,7 @@ export default function Item({item}) {
           numberOfLines={1}>
           {item.title}
         </Text>
-        <Text style={styles.text_box_title}>{item.id}</Text>
+        <Text style={styles.text_box_title}>{item.artist}</Text>
       </View>
     </View>
     // </TouchableOpacity>

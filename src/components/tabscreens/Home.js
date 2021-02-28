@@ -94,7 +94,7 @@ export default function Home() {
             marginTop: 10,
           }}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>THỰC ĐƠN</Text>
-          <TouchableOpacity   onPress={() => navigation.push('Menu', {xyz})}>
+          <TouchableOpacity   onPress={() => navigation.push('Menu', {idcategory})}>
             <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
@@ -119,7 +119,7 @@ export default function Home() {
             marginTop: 10,
           }}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-            BẮT ĐẦU NGÀY MỚI
+            KHUYẾN MÃI
           </Text>
           <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
         </View>
