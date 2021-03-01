@@ -7,6 +7,7 @@ import Login from './components/screens/Login';
 import Signup from './components/screens/Signup';
 import Menu from './components/screens/Menu';
 import DetailsCategory from './components/screens/DetailsCategory';
+import DetailsProduct from './components/screens/DetailsProduct';
 const Stack = createStackNavigator();
 
 function StackNavigator() {
@@ -17,6 +18,7 @@ function StackNavigator() {
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="DetailsCategory" component={DetailsCategory} />
+      <Stack.Screen name="DetailsProduct" component={DetailsProduct} />
     </Stack.Navigator>
   );
 }

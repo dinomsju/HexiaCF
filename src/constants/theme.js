@@ -17,5 +17,7 @@ export const COLORS = {
     transparent: "transparent",
     darkgray: '#898C95',
     dark: '#1e272e',
-    darkk: '#333333'
+    darkk: '#333333',
+    textGray: '#8D8B8B',
+    textOrange: '#EA8025',
 };

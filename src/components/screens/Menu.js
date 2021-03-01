@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View,FlatList,TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import HeaderPro from '../Header/HeaderPro';
 import Item from '../views/ItemNew';
 import {films} from '../../constants/data/fakeData';
@@ -13,9 +13,9 @@ export default function Menu({navigation, route}) {
   };
   return (
     <View style={styles.container}>
-      <HeaderPro title= 'THỰC ĐƠN' />
+      <HeaderPro title="THỰC ĐƠN" />
       <FlatList
-      style = {{marginLeft: 10}}
+        style={{marginLeft: 10}}
         numColumns={2}
         data={songs}
         renderItem={({item}) => (
@@ -29,9 +29,9 @@ export default function Menu({navigation, route}) {
   );
 }
 
-const styles = StyleSheet.create({  
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.secondary
+    backgroundColor: COLORS.secondary,
   },
 });

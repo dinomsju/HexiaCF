@@ -25,6 +25,7 @@ export default function Home() {
   const [idcategory, setIDCategory] = useState('ps09830');
   console.log('datafake -----> ' + films.length);
   test = (item) => {
+    navigation.push('DetailsProduct' , {item})
     console.log('title + id: ' + item.id + '----' + item.title);
   };
   let datafilms;
