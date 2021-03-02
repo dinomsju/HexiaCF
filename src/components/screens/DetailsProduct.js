@@ -22,24 +22,48 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
 import {Searchbar} from 'react-native-paper';
 import Item from '../views/ItemDetailsCategory';
+
 export default function DetailsProduct({navigation, route}) {
   let product = route.params.item;
   const [number, setNumber] = useState(1);
   const [limit, setLimit] = useState(false);
+  const [hearColor, setHearColor] = useState(COLORS.textGray);
+  const [condition, setCondition] = useState(false);
+
   // test2 = (item) => {
   //   navigation.push('DetailsCategory');
   //   // console.log('title + id: ' + item.artist + '----' + item.title);
   // };
   numberPlus = (number) => {
     setNumber(number + 1);
-    console.log(number);
+    setLimit(false);
   };
   numberMinus = (number) => {
-    setNumber(number - 1);
-
-    console.log(number);
+    if (number > 1) {
+      setNumber(number - 1);
+    } else {
+      setLimit(true);
+    }
   };
-
+  addCart = () => {
+    console.log('addCart -------> ' + number);
+    console.log('condition -------> ' + condition);
+    console.log('hearColor -------> ' + hearColor);
+  };
+  heartCondition = () => {
+    // setCondition(condition === false ? true : false);
+    // setHearColor(condition === false ? COLORS.textGray : COLORS.hearRed)
+    if (condition === false) {
+      setCondition(true);
+    } else {
+      setCondition(false);
+    }
+    if (condition === true) {
+      setHearColor(COLORS.hearRed);
+    } else {
+      setHearColor(COLORS.textGray);
+    }
+  };
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -52,6 +76,11 @@ export default function DetailsProduct({navigation, route}) {
       <Text>header</Text>
       <View style={styles.footer}>
         <View style={{}}>
+          <TouchableOpacity
+            style={styles.heart}
+            onPress={() => heartCondition()}>
+            <Icon name="heart" color={hearColor} size={25} />
+          </TouchableOpacity>
           <Text style={{fontSize: 20, fontWeight: 'bold', color: COLORS.black}}>
             {product.title}
           </Text>
@@ -98,10 +127,10 @@ export default function DetailsProduct({navigation, route}) {
           </View>
           <View
             style={{
-             flexDirection: 'row', 
-            justifyContent: 'space-between', 
-            alignItems:'baseline',
-            paddingTop: 20,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              paddingTop: 20,
             }}>
             <Text
               style={{
@@ -113,7 +142,7 @@ export default function DetailsProduct({navigation, route}) {
               numberOfLines={1}>
               32.000đ
             </Text>
-            <TouchableOpacity style={styles.login}>
+            <TouchableOpacity style={styles.add} onPress={() => addCart()}>
               <Text
                 style={{
                   color: COLORS.white,
@@ -167,7 +196,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
   },
-  login: {
+  add: {
     width: WIDTH / 2,
     height: WIDTH / 11,
     backgroundColor: COLORS.black,
@@ -175,5 +204,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     marginBottom: 20,
+  },
+  heart: {
+    position: 'absolute',
+    top: -WIDTH_SCALE * 38,
+    right: 20,
+    borderWidth: 0.3,
+    borderRadius: 20,
+    backgroundColor: COLORS.white,
+    width: WIDTH_SCALE * 35,
+    height: HEIGHT_SCALE * 35,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

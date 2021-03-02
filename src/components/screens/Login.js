@@ -8,6 +8,7 @@ import {
   TextInput,
   Button,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import {
   WIDTH_SCALE,
@@ -48,7 +49,7 @@ export default function Login() {
   async function confirmCode() {
     try {
       await confirm.confirm(code);
-      navigation.push('Home')
+      navigation.push('Home');
     } catch (error) {
       console.log('Invalid code.');
     }
@@ -57,7 +58,7 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <View
-        style={{alignItems: 'center', justifyContent: 'center', marginTop: 5  }}>
+        style={{alignItems: 'center', justifyContent: 'center', marginTop: 5}}>
         <Image
           style={styles.logo}
           source={{
@@ -80,12 +81,12 @@ export default function Login() {
           style={styles.textInput}
           placeholder="Phone"
           value={phone}
-          textContentType = 'telephoneNumber'
+          textContentType="telephoneNumber"
           onChangeText={(text1) => setPhone(text1)}
         />
       </View>
       <Button
-        title="Phone Number Sign In" 
+        title="Phone Number Sign In"
         onPress={() => signInWithPhoneNumber(phone)}
       />
       <View style={{marginVertical: 10}}>
@@ -96,7 +97,7 @@ export default function Login() {
           onChangeText={(text) => setCode(text)}
         />
       </View>
-      <Button title="Confirm Code" onPress={() => confirmCode()}/>
+      <Button title="Confirm Code" onPress={() => confirmCode()} />
 
       {/* <View style={{marginBottom: 20}}>
         <TouchableOpacity style={styles.textInput}>
@@ -146,7 +147,11 @@ export default function Login() {
       </View>
 
       <View style={{marginBottom: 20}}>
-        <TextInput style={styles.textInput} placeholder="Password" secureTextEntry/>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Password"
+          secureTextEntry
+        />
       </View>
 
       <TouchableOpacity
