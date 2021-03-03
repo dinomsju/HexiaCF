@@ -7,6 +7,8 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
+  SafeAreaView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -45,7 +47,7 @@ export default function Home() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <TouchableOpacity style={{padding: 5}}>
           <View
@@ -119,6 +121,7 @@ export default function Home() {
           // numColumns={2}
           data={category}
           horizontal
+          showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() =>
@@ -138,22 +141,26 @@ export default function Home() {
             width: WIDTH - 20,
             marginTop: 10,
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>KHUYẾN MÃI</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>SẢN PHẨM MỚI</Text>
           <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
         </View>
         <FlatList
           // numColumns={2}
           data={product}
           horizontal
+          showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => test(item)}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('DetailsProduct', {product: item})
+              }>
               <ItemProduct item={item} />
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.title}
         />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

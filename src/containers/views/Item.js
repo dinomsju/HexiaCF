@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
   },
   text_box_artist: {
     color: '#000',
-    fontSize: 15,
-    // fontWeight: 'normal'
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   box_icon: {
     width: 25,

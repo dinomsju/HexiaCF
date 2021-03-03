@@ -51,7 +51,7 @@ export default function DetailsCategory(props) {
       </ImageBackground>
       <Text>header</Text>
       <View style={styles.footer}>
-        <View style={{alignItems: 'center', flex: 1}}>
+        <View style={{alignItems: 'center', flex: 1, marginBottom: 90}}>
           <Text style={{fontSize: 24, fontWeight: 'bold', paddingBottom: 10}}>
             {data.title}
           </Text>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     height: WIDTH / 2,
 
     position: 'absolute',
-    top: 20,
+    top: 0,
     left: 0,
     padding: 20,
   },
