@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
 import {films} from '../../constants/data/fakeData';
 import Item from '../views/Item';
+import ItemProduct from '../views/ItemProduct';
 import Swiper from 'react-native-swiper';
 import {
   WIDTH_SCALE,
@@ -37,23 +38,16 @@ export default function Home() {
   const getAllCategory = async () => {
     let getApi = await getCategory();
     setCategory(getApi.data.items);
-    console.log(getApi.data.items);
   };
   const getAllProduct = async () => {
     let getApi = await getProduct();
     setProduct(getApi.data.items);
-    console.log(getApi.data.items);
   };
 
-  console.log('datafake -----> ' + films.length);
-  test = (item) => {
-    navigation.push('DetailsProduct', {item});
-    console.log('title + id: ' + item.id + '----' + item.title);
-  };
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={{padding: 5}}>
+        <TouchableOpacity style={{padding: 5}}>
           <View
             style={{
               flexDirection: 'row',
@@ -82,7 +76,7 @@ export default function Home() {
               107 Hoàng Hoa Thám, Phường 6 , Quận Bình Thạnh
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
         <View style={{height: WIDTH / 2 - 20}}>
           <Swiper
             autoplay={true}
@@ -126,7 +120,10 @@ export default function Home() {
           data={category}
           horizontal
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => test(item)}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('DetailsCategory', {data: item})
+              }>
               <Item item={item} />
             </TouchableOpacity>
           )}
@@ -150,7 +147,7 @@ export default function Home() {
           horizontal
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => test(item)}>
-              <Item item={item} />
+              <ItemProduct item={item} />
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.title}

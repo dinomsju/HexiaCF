@@ -8,10 +8,10 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Home from './components/tabscreens/Home';
-import Profile from './components/tabscreens/Profile';
-import Setting from './components/tabscreens/Setting';
-import Notification from './components/tabscreens/Notification';
+import Home from './containers/tabscreens/Home';
+import Profile from './containers/tabscreens/Profile';
+import Setting from './containers/tabscreens/Setting';
+import Notification from './containers/tabscreens/Notification';
 
 //Constants
 import {COLORS, icons} from './constants';

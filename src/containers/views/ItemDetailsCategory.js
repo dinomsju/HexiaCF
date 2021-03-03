@@ -30,7 +30,7 @@ export default function ItemDetailsCategory({item}) {
           justifyContent: 'space-between',
           flexDirection: 'row',
         }}>
-        <View style= {{justifyContent: 'center',}}>
+        <View style={{justifyContent: 'center'}}>
           <Text
             style={styles.text_box_name}
             ellipsizeMode="tail"
@@ -40,18 +40,18 @@ export default function ItemDetailsCategory({item}) {
           <Text
             style={styles.text_box_content}
             ellipsizeMode="tail"
-            numberOfLines={1}
-            >{item.artist}
+            numberOfLines={1}>
+            {item.artist}
           </Text>
           <Text
             style={styles.text_box_price}
             ellipsizeMode="tail"
-            numberOfLines={1}
-            >32.000đ
+            numberOfLines={1}>
+            32.000đ
           </Text>
         </View>
         <FastImage
-          source={{uri: item.image}}
+          source={{uri: item.coverUrl}}
           style={styles.image_box}
           resizeMode={FastImage.resizeMode.cover}
         />
@@ -63,7 +63,7 @@ export default function ItemDetailsCategory({item}) {
 
 const styles = StyleSheet.create({
   box: {
-    width: WIDTH/1.2 ,
+    width: WIDTH / 1.2,
     // height: WIDTH,
     margin: 5,
     // backgroundColor: '#000',

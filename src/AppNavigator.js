@@ -3,11 +3,11 @@ import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import BottomNavigation from './BottomNavigation';
-import Login from './components/screens/Login';
-import Signup from './components/screens/Signup';
-import Menu from './components/screens/Menu';
-import DetailsCategory from './components/screens/DetailsCategory';
-import DetailsProduct from './components/screens/DetailsProduct';
+import Login from './containers/screens/Login';
+import Signup from './containers/screens/Signup';
+import Menu from './containers/screens/Menu';
+import DetailsCategory from './containers/screens/DetailsCategory';
+import DetailsProduct from './containers/screens/DetailsProduct';
 const Stack = createStackNavigator();
 
 function StackNavigator() {

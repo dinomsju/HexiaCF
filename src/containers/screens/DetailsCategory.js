@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -22,17 +23,23 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
 import {Searchbar} from 'react-native-paper';
 import Item from '../views/ItemDetailsCategory';
-export default function DetailsCategory({navigation}) {
+import {getProductByCat} from '../../api/productApi';
+export default function DetailsCategory(props) {
+  const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = React.useState('');
-
+  const [product, setProduct] = useState([]);
+  const {data} = props.route.params;
   const onChangeSearch = (query) => setSearchQuery(query);
 
-  console.log('seaerchquery +++++++++++++>>>>> ' + searchQuery);
+  useEffect(() => {
+    getData();
+  }, []);
 
-  // test2 = (item) => {
-  //   navigation.push('DetailsCategory');
-  //   // console.log('title + id: ' + item.artist + '----' + item.title);
-  // };
+  const getData = async () => {
+    let getApi = await getProductByCat(data._id);
+    setProduct(getApi.data.items);
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -44,30 +51,39 @@ export default function DetailsCategory({navigation}) {
       </ImageBackground>
       <Text>header</Text>
       <View style={styles.footer}>
-        <View style={{alignItems: 'center'}}>
-          <Text style={{fontSize: 18, fontWeight: 'bold'}}>Cà phê</Text>
+        <View style={{alignItems: 'center', flex: 1}}>
+          <Text style={{fontSize: 24, fontWeight: 'bold', paddingBottom: 10}}>
+            {data.title}
+          </Text>
           {/* <TextInput style={styles.textInput}>
             <Icon name="arrow-back" color={COLORS.orange} size={20} />
             <Text>Tìm kiếm</Text>
           </TextInput> */}
           <Searchbar
-            style={{borderRadius: 30}}
+            style={{borderRadius: 30, marginBottom: 5}}
             placeholder="Tìm kiếm"
             onChangeText={onChangeSearch}
             value={searchQuery}
           />
-
-          <FlatList
-            style={{marginLeft: 10}}
-            numColumns={1}
-            data={songs}
-            renderItem={({item}) => (
-              <TouchableOpacity onPress={() => test2(item)}>
-                <Item item={item} />
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item) => item.title}
-          />
+          {product.length === 0 ? (
+            <Text style={styles.alertWarning}>Tìm thấy (0) kết quả!</Text>
+          ) : (
+            <FlatList
+              style={{marginLeft: 10}}
+              numColumns={1}
+              data={product}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('DetailsProduct', {product: item})
+                  }>
+                  <Item item={item} />
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.title}
+            />
+          )}
         </View>
       </View>
     </View>
@@ -110,5 +126,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 10,
     flexDirection: 'row',
+  },
+  alertWarning: {
+    backgroundColor: '#fcf8e3',
+    borderColor: '#faebcc',
+    padding: 10,
+    marginTop: 5,
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#8a6d3b',
+    fontSize: 20,
   },
 });

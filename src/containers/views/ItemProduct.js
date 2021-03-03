@@ -16,26 +16,21 @@ import {
   HEIGHT,
 } from '../../constants/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
-import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
-export default function ItemNew({item}) {
+export default function ItemProduct({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
     <View style={styles.box}>
-      {/* <Image style={styles.image_box} source={{uri: item.thumb}} /> */}
-      <FastImage
-        source={{uri: item.image}}
-        style={styles.image_box}
-        resizeMode={FastImage.resizeMode.cover}
-      />
-      <View style={{marginHorizontal: 15, marginVertical: 5}}>
+      <Image style={styles.image_box} source={{uri: item.coverUrl}} />
+      <View
+        style={{marginHorizontal: 10, marginVertical: 5, alignItems: 'center'}}>
+        {/* <Text style={styles.text_box_title}>{item.id}</Text> */}
         <Text
           style={styles.text_box_artist}
           ellipsizeMode="tail"
           numberOfLines={1}>
           {item.title}
         </Text>
-        <Text style={styles.text_box_title}>{item.artist}</Text>
       </View>
     </View>
     // </TouchableOpacity>
@@ -44,27 +39,37 @@ export default function ItemNew({item}) {
 
 const styles = StyleSheet.create({
   box: {
-    width: WIDTH / 2 - 20,
-    height: WIDTH / 2 ,
-    margin: 5,
+    width: WIDTH / 3.5,
+    height: WIDTH / 3,
+    margin: 5.5,
     // backgroundColor: '#000',
-    borderRadius: 15,
-    backgroundColor: COLORS.white,
+    // borderRadius: 15,
+    // backgroundColor: COLORS.white,
   },
   image_box: {
-    width: WIDTH / 2 - 20,
-    height: WIDTH / 2 - 50,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
+    width: WIDTH / 3.5,
+    height: WIDTH / 3.5,
+    // borderTopLeftRadius: 15,
+    // borderTopRightRadius: 15,
   },
   text_box_title: {
     fontSize: 14,
     color: '#000',
-    opacity: 0.4
   },
   text_box_artist: {
     color: '#000',
-    fontSize: 16,
-    fontWeight: 'bold'
+    fontSize: 15,
+    // fontWeight: 'normal'
+  },
+  box_icon: {
+    width: 25,
+    height: 25,
+    borderRadius: 14,
+    backgroundColor: 'white',
+    position: 'absolute',
+    left: '75%',
+    top: '55%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

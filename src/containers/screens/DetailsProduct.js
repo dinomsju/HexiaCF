@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -16,24 +17,18 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import {songs} from '../../constants/data/song';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
-import {Searchbar} from 'react-native-paper';
-import Item from '../views/ItemDetailsCategory';
 
-export default function DetailsProduct({navigation, route}) {
-  let product = route.params.item;
+export default function DetailsProduct(props) {
+  const navigation = useNavigation();
+  const {product} = props.route.params;
   const [number, setNumber] = useState(1);
   const [limit, setLimit] = useState(false);
   const [hearColor, setHearColor] = useState(COLORS.textGray);
   const [condition, setCondition] = useState(false);
 
-  // test2 = (item) => {
-  //   navigation.push('DetailsCategory');
-  //   // console.log('title + id: ' + item.artist + '----' + item.title);
-  // };
   numberPlus = (number) => {
     setNumber(number + 1);
     setLimit(false);
@@ -66,9 +61,7 @@ export default function DetailsProduct({navigation, route}) {
   };
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={styles.header}
-        source={{uri: 'https://img.anime47.com/imgur/6hhR2bl.jpg'}}>
+      <ImageBackground style={styles.header} source={{uri: product.coverUrl}}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" color={COLORS.white} size={40} />
         </TouchableOpacity>
@@ -96,7 +89,7 @@ export default function DetailsProduct({navigation, route}) {
           <Text
             style={{fontSize: 18, color: COLORS.textGray, paddingTop: 10}}
             ellipsizeMode="tail">
-            {product.id}
+            {product.description}
           </Text>
           <View
             style={{
@@ -180,7 +173,8 @@ const styles = StyleSheet.create({
     height: HEIGHT,
     position: 'absolute',
     left: 0,
-    top: WIDTH - 60,
+    // top: WIDTH - 60,
+    top: WIDTH - 30,
     backgroundColor: COLORS.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -209,7 +203,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -WIDTH_SCALE * 38,
     right: 20,
-    borderWidth: 0.3,
+    // borderWidth: 0.3,
+    borderWidth: 0.02,
     borderRadius: 20,
     backgroundColor: COLORS.white,
     width: WIDTH_SCALE * 35,

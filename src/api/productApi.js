@@ -11,13 +11,15 @@ const getProduct = async () => {
     return null;
   }
 };
-const getProductById = async (id) => {
+const getProductByCat = async (id) => {
   try {
-    let getData = await axios.get(`${BASE_URL}/api/product/get/id/${id}`);
+    let getData = await axios.get(
+      `${BASE_URL}/api/product/get/category/id/${id}`,
+    );
     return getData;
   } catch (error) {
     console.log(error);
     return null;
   }
 };
-export {getProduct, getProductById};
+export {getProduct, getProductByCat};
