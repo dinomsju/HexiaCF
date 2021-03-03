@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -20,15 +20,36 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
+import {getCategory} from '../../api/categoryApi';
+import {getProduct} from '../../api/productApi';
+
 export default function Home() {
   const navigation = useNavigation();
   const [idcategory, setIDCategory] = useState('ps09830');
+  const [category, setCategory] = useState();
+  const [product, setProduct] = useState();
+
+  useEffect(() => {
+    getAllCategory();
+    getAllProduct();
+  }, []);
+
+  const getAllCategory = async () => {
+    let getApi = await getCategory();
+    setCategory(getApi.data.items);
+    console.log(getApi.data.items);
+  };
+  const getAllProduct = async () => {
+    let getApi = await getProduct();
+    setProduct(getApi.data.items);
+    console.log(getApi.data.items);
+  };
+
   console.log('datafake -----> ' + films.length);
   test = (item) => {
-    navigation.push('DetailsProduct' , {item})
+    navigation.push('DetailsProduct', {item});
     console.log('title + id: ' + item.id + '----' + item.title);
   };
-  let datafilms;
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -95,13 +116,14 @@ export default function Home() {
             marginTop: 10,
           }}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>THỰC ĐƠN</Text>
-          <TouchableOpacity   onPress={() => navigation.push('Menu', {idcategory})}>
+          <TouchableOpacity
+            onPress={() => navigation.push('Menu', {idcategory})}>
             <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
         <FlatList
           // numColumns={2}
-          data={films}
+          data={category}
           horizontal
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => test(item)}>
@@ -119,14 +141,12 @@ export default function Home() {
             width: WIDTH - 20,
             marginTop: 10,
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-            KHUYẾN MÃI
-          </Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>KHUYẾN MÃI</Text>
           <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
         </View>
         <FlatList
           // numColumns={2}
-          data={films}
+          data={product}
           horizontal
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => test(item)}>

@@ -21,8 +21,9 @@ export default function Item({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
     <View style={styles.box}>
-      <Image style={styles.image_box} source={{uri: item.thumb}} />
-      <View style={{marginHorizontal: 10, marginVertical: 5, alignItems: 'center',}}>
+      <Image style={styles.image_box} source={{uri: item.imageUrl}} />
+      <View
+        style={{marginHorizontal: 10, marginVertical: 5, alignItems: 'center'}}>
         {/* <Text style={styles.text_box_title}>{item.id}</Text> */}
         <Text
           style={styles.text_box_artist}
@@ -54,7 +55,6 @@ const styles = StyleSheet.create({
   text_box_title: {
     fontSize: 14,
     color: '#000',
-   
   },
   text_box_artist: {
     color: '#000',
