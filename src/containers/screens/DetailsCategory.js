@@ -42,11 +42,11 @@ export default function DetailsCategory(props) {
 
   return (
     <View style={styles.container}>
-        <ScrollView>
+     
       <ImageBackground
         style={styles.header}
         source={{uri: 'https://img.anime47.com/imgur/6hhR2bl.jpg'}}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style = {{marginTop: 150}}>
           <Icon name="arrow-back" color={COLORS.white} size={40} />
         </TouchableOpacity>
       </ImageBackground>
@@ -86,7 +86,6 @@ export default function DetailsCategory(props) {
           )}
         </View>
       </View>
-      </ScrollView>
     </View>
   );
 }
@@ -100,19 +99,19 @@ const styles = StyleSheet.create({
   },
   header: {
     width: WIDTH,
-    height: WIDTH / 2,
+    height: WIDTH ,
     padding: 20,
   },
   footer: {
     width: WIDTH,
-    height: HEIGHT,
+    height: HEIGHT - 160,
     position: 'relative',
     left: 0,
-    top: -25,
+    top: -40,
     backgroundColor: COLORS.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    padding: 20,
+    // padding: 20,
   },
   textInput: {
     width: WIDTH - 120,
