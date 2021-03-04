@@ -95,7 +95,7 @@ const Tabs = () => {
         component={Profile}
         options={{
           tabBarIcon: ({color, size}) => (
-            <FontAwesome name="search" color={color} size={size} />
+            <FontAwesome name="heart" color={color} size={size} />
           ),
           tabBarButton: (props) => <TabBarCustomButton {...props} />,
         }}

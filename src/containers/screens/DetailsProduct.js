@@ -46,34 +46,33 @@ export default function DetailsProduct(props) {
     console.log('hearColor -------> ' + hearColor);
   };
   heartCondition = () => {
-    // setCondition(condition === false ? true : false);
-    // setHearColor(condition === false ? COLORS.textGray : COLORS.hearRed)
-    if (condition === false) {
-      setCondition(true);
-    } else {
-      setCondition(false);
-    }
-    if (condition === true) {
-      setHearColor(COLORS.hearRed);
-    } else {
-      setHearColor(COLORS.textGray);
-    }
+    setCondition(condition === false ? true : false);
   };
   return (
     <View style={styles.container}>
-      <ImageBackground style={styles.header} source={{uri: product.coverUrl}}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" color={COLORS.white} size={40} />
-        </TouchableOpacity>
-      </ImageBackground>
-      <Text>header</Text>
-      <View style={styles.footer}>
-        <View style={{}}>
-          <TouchableOpacity
-            style={styles.heart}
-            onPress={() => heartCondition()}>
-            <Icon name="heart" color={hearColor} size={25} />
+      <ScrollView>
+        <ImageBackground style={styles.header} source={{uri: product.coverUrl}}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" color={COLORS.white} size={40} />
           </TouchableOpacity>
+        </ImageBackground>
+        <View style={styles.footer}>
+          {condition ? 
+            <TouchableOpacity
+              style={styles.heart}
+              onPress={() => heartCondition()}>
+              <Icon name="heart" color={COLORS.hearRed} size={25} />
+            </TouchableOpacity>
+           
+           : 
+         
+            <TouchableOpacity
+              style={styles.heart}
+              onPress={() => heartCondition()}>
+              <Icon name="heart" color={COLORS.textGray} size={25} />
+            </TouchableOpacity>
+          }
+
           <Text style={{fontSize: 20, fontWeight: 'bold', color: COLORS.black}}>
             {product.title}
           </Text>
@@ -148,7 +147,7 @@ export default function DetailsProduct(props) {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -163,18 +162,17 @@ const styles = StyleSheet.create({
   header: {
     width: WIDTH,
     height: WIDTH,
-    position: 'absolute',
-    top: 0,
-    left: 0,
+    // position: 'absolute',
+    // top: 0,
+    // left: 0,
     padding: 20,
   },
   footer: {
     width: WIDTH,
     height: HEIGHT,
-    position: 'absolute',
+    position: 'relative',
     left: 0,
-    // top: WIDTH - 60,
-    top: WIDTH - 30,
+    top: -30,
     backgroundColor: COLORS.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -201,8 +199,8 @@ const styles = StyleSheet.create({
   },
   heart: {
     position: 'absolute',
-    top: -WIDTH_SCALE * 38,
-    right: 20,
+    top: -20,
+    right: 30,
     // borderWidth: 0.3,
     borderWidth: 0.02,
     borderRadius: 20,
