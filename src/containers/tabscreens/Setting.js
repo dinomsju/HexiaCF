@@ -11,7 +11,7 @@ import {
 export default function Setting() {
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
+      <View style={{flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 20}}>
         <Icon name="person-circle-sharp" color={COLORS.black} size={100} />
         <View style={{paddingHorizontal: 10}}>
           <Text style={{paddingBottom: 10, fontSize: 14, fontWeight: 'bold'}}>
