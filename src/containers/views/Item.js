@@ -40,7 +40,7 @@ export default function Item({item}) {
 const styles = StyleSheet.create({
   box: {
     width: WIDTH / 3.5,
-    height: WIDTH / 3,
+    height: WIDTH / 3 + 5,
     margin: 5.5,
     // backgroundColor: '#000',
     // borderRadius: 15,
