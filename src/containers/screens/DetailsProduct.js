@@ -41,6 +41,9 @@ export default function DetailsProduct(props) {
     }
   };
   addCart = () => {
+  
+      navigation.push('Cart')
+    
     console.log('addCart -------> ' + number);
     console.log('condition -------> ' + condition);
     console.log('hearColor -------> ' + hearColor);
