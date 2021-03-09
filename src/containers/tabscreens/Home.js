@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   FlatList,
   Image,
@@ -23,6 +22,7 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
+import {Text} from '../../components';
 import {getCategory} from '../../api/categoryApi';
 import {getProduct} from '../../api/productApi';
 
