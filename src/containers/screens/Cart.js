@@ -5,9 +5,10 @@ import {
   Text,
   View,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from 'react-native';
 import Header from '../Header/HeaderCart';
+import FooterCart from '../Footer/FooterCart';
 import {
   WIDTH_SCALE,
   HEIGHT_SCALE,
@@ -19,9 +20,11 @@ import {getProduct} from '../../api/productApi';
 import Item from '../views/ItemCart';
 export default function Cart() {
   const [product, setProduct] = useState();
-
+  const [number, setNumber] = useState(3);
+  const [money, setMoney] = useState(127000+'');
+  const format = money.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
   useEffect(() => {
-    getAllProduct();
+    getAllProduct();  
   }, []);
 
   const getAllProduct = async () => {
@@ -63,6 +66,7 @@ export default function Cart() {
           keyExtractor={(item) => item.title}
         />
       </ScrollView>
+      <FooterCart title={`${number} món trong giỏ hàng`} price={`${format}đ`} />
     </View>
   );
 }

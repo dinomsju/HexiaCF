@@ -21,4 +21,6 @@ export const COLORS = {
     textGray: '#8D8B8B',
     textOrange: '#EA8025',
     hearRed: '#eb2f06',
+    footer : '#000000',
+    
 };
