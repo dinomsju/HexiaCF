@@ -22,7 +22,7 @@ export default function ItemProduct({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
     <View style={styles.box}>
-      <Image style={styles.image_box} source={{uri: item.coverUrl}} />
+      <Image style={styles.image_box} source={{uri: item.imageUrl}} />
       <View style={{marginHorizontal: 10, marginVertical: 5}}>
         {/* <Text style={styles.text_box_title}>{item.id}</Text> */}
         <Text

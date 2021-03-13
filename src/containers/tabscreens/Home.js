@@ -39,7 +39,7 @@ export default function Home() {
 
   const getAllCategory = async () => {
     let getApi = await getCategory();
-    setCategory(getApi.data.items);
+    setCategory(getApi.data);
   };
   const getAllProduct = async () => {
     let getApi = await getProduct();

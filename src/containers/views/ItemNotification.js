@@ -22,7 +22,6 @@ export default function ItemNotification({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
     <View style={styles.box}>
-      
       {/* <Image style={styles.image_box} source={{uri: item.thumb}} /> */}
       <View
         style={{
@@ -30,14 +29,15 @@ export default function ItemNotification({item}) {
           marginVertical: 5,
           justifyContent: 'flex-start',
           flexDirection: 'row',
-          paddingHorizontal: 10, 
-          paddingVertical: 5
+          paddingHorizontal: 10,
+          paddingVertical: 5,
         }}>
-           <FastImage
-          source={{uri: item.coverUrl}}
+        {/* <FastImage
+          source={{uri: item?.imageUrl}}
           style={styles.image_box}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+          resizeMode={FastImage?.resizeMode?.cover}
+        /> */}
+         <Image style={styles.image_box} source={{uri: item.imageUrl}} />
         <View style={{justifyContent: 'center', marginLeft: 15}}>
           <Text
             style={styles.text_box_name}
@@ -58,7 +58,6 @@ export default function ItemNotification({item}) {
             32.000đ
           </Text>
         </View>
-       
       </View>
     </View>
     // </TouchableOpacity>
@@ -67,7 +66,7 @@ export default function ItemNotification({item}) {
 
 const styles = StyleSheet.create({
   box: {
-    width: WIDTH / 1.1,   // height: WIDTH,
+    width: WIDTH / 1.1, // height: WIDTH,
     margin: 5,
     // backgroundColor: '#000',
     borderRadius: 15,

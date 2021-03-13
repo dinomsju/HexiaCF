@@ -12,7 +12,7 @@ export default function Profile({navigation}) {
 
   const getAllCategory = async () => {
     let getApi = await getCategory();
-    setCategory(getApi.data.items);
+    setCategory(getApi.data);
   };
   return (
     <View style={styles.container}>
