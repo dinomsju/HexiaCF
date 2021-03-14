@@ -20,22 +20,21 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
 export default function ItemCart({item}) {
-  const [number, setNumber] = useState(1)
-  const [limit, setLimit] = useState(false)
- 
-  Plus = (number) => {
+  const [number, setNumber] = useState(1);
+  const [limit, setLimit] = useState(false);
+
+  const Plus = (number) => {
     setNumber(number + 1);
     setLimit(false);
   };
-  Minus = (number) => {
+  const Minus = (number) => {
     if (number > 1) {
       setNumber(number - 1);
     } else {
       setLimit(true);
     }
   };
- 
-   
+
   return (
     <View style={styles.box}>
       <View
@@ -53,10 +52,10 @@ export default function ItemCart({item}) {
             paddingHorizontal: 10,
             paddingVertical: 5,
           }}>
-          <FastImage
-            source={{uri: item.coverUrl}}
+          <Image
+            source={{uri: item.imageUrl}}
             style={styles.image_box}
-            resizeMode={FastImage.resizeMode.cover}
+            resizeMode="cover"
           />
         </View>
         <View

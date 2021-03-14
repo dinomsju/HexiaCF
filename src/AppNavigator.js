@@ -9,6 +9,7 @@ import Menu from './containers/screens/Menu';
 import DetailsCategory from './containers/screens/DetailsCategory';
 import DetailsProduct from './containers/screens/DetailsProduct';
 import Cart from './containers/screens/Cart';
+import Payment from './containers/screens/Payment';
 const Stack = createStackNavigator();
 
 function StackNavigator() {
@@ -21,6 +22,7 @@ function StackNavigator() {
       <Stack.Screen name="DetailsCategory" component={DetailsCategory} />
       <Stack.Screen name="DetailsProduct" component={DetailsProduct} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="Payment" component={Payment} />
     </Stack.Navigator>
   );
 }

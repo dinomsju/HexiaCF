@@ -21,10 +21,10 @@ import Item from '../views/ItemCart';
 export default function Cart() {
   const [product, setProduct] = useState();
   const [number, setNumber] = useState(3);
-  const [money, setMoney] = useState(127000+'');
-  const format = money.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  const [money, setMoney] = useState(127000 + '');
+  const format = money.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   useEffect(() => {
-    getAllProduct();  
+    getAllProduct();
   }, []);
 
   const getAllProduct = async () => {
