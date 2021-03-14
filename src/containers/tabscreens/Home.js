@@ -43,7 +43,7 @@ export default function Home() {
   };
   const getAllProduct = async () => {
     let getApi = await getProduct();
-    setProduct(getApi.data.items);
+    setProduct(getApi.data.products);
   };
 
   return (

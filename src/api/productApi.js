@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const getProduct = async () => {
   try {
-    let getData = await axios.get(`${BASE_URL}/api/product/getall`);
+    let getData = await axios.get(`${BASE_URL}/api/products`);
     // console.log('hello', getData?.data?.items);
     return getData;
   } catch (error) {
