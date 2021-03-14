@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   StyleSheet,
   Image,
@@ -11,9 +12,8 @@ import {greaterOrEq} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {COLORS, icons} from '../../constants';
 import {HEIGHT, WIDTH} from '../../constants/constants';
-import {useNavigation} from '@react-navigation/native';
 
-const FooterCart = ({title, price}) => {
+const FooterCart = ({title, price, onPress}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -49,9 +49,10 @@ const FooterCart = ({title, price}) => {
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: 20,
-        }}>
+        }}
+        onPress={() => navigation.navigate('Payment')}>
         <Text style={{fontSize: 8, fontWeight: 'bold', color: COLORS.white}}>
-          TIẾP TỤC
+          ĐẶT HÀNG
         </Text>
       </TouchableOpacity>
     </View>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
@@ -9,9 +10,16 @@ import {
   HEIGHT,
 } from '../../constants/constants';
 export default function Setting() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 20}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: 10,
+          paddingVertical: 20,
+        }}>
         <Icon name="person-circle-sharp" color={COLORS.black} size={100} />
         <View style={{paddingHorizontal: 10}}>
           <Text style={{paddingBottom: 10, fontSize: 14, fontWeight: 'bold'}}>
@@ -33,6 +41,34 @@ export default function Setting() {
           </View>
         </View>
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingHorizontal: 15,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderBottomWidth: 0.4,
+            borderBottomColor: COLORS.textGray,
+          }}>
+          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Text
+            style={{
+              fontSize: 14,
+              color: COLORS.black,
+              paddingLeft: 10,
+              paddingRight: WIDTH_SCALE * 190,
+            }}>
+            Giỏ hàng
+          </Text>
+          <Icon
+            style={[styles.edit, styles.p]}
+            name="chevron-forward"
+            color={COLORS.black}
+            size={40}
+          />
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity>
         <View
           style={{
