@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,11 +17,12 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import {COLORS, icons} from '../../constants';
-import {useNavigation} from '@react-navigation/native';
+import { COLORS, icons } from '../../constants';
+import SignUp from '../../api/userApi';
+import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
-
+import { Modal } from 'react-native-paper';
 export default function Login() {
   const navigation = useNavigation();
 
@@ -30,9 +32,23 @@ export default function Login() {
   const [code, setCode] = useState('');
   const [phone, setPhone] = useState('');
 
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+
+  const [visible, setVisible] = React.useState(false);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {
+    backgroundColor: 'white',
+    padding: 20,
+    margin: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    const confirmation = await auth().signInWithPhoneNumber(
+      '+84' + phoneNumber,
+    );
     setConfirm(confirmation);
     console.log('------> ' + confirmation);
   }
@@ -49,16 +65,26 @@ export default function Login() {
   async function confirmCode() {
     try {
       await confirm.confirm(code);
-      navigation.push('Home');
+      setVisible(true);
     } catch (error) {
       console.log('Invalid code.');
     }
   }
-
+  check = async () => {
+    console.log('phone ------->   ', phone);
+    console.log('name ------->   ', name);
+    console.log('address ------->   ', address);
+    
+    let SignUpFetch = await SignUp(
+      phone, name, address
+    )
+    console.log('userrrrrr ------->>>> ' + SignUpFetch)
+    navigation.push('Home');
+  }
   return (
     <View style={styles.container}>
       <View
-        style={{alignItems: 'center', justifyContent: 'center', marginTop: 5}}>
+        style={{ alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
         <Image
           style={styles.logo}
           source={{
@@ -76,20 +102,19 @@ export default function Login() {
         }}>
         ĐĂNG NHẬP
       </Text>
-      <View style={{marginBottom: 10}}>
+      <View style={styles.textInput}>
+        <Text style={{ marginRight: 10 }}>+84</Text>
         <TextInput
-          style={styles.textInput}
+          style={{ width: WIDTH - 120, height: WIDTH / 7.4 }}
           placeholder="Phone"
           value={phone}
           textContentType="telephoneNumber"
+          keyboardType="number-pad"
+          maxLength={11}
           onChangeText={(text1) => setPhone(text1)}
         />
       </View>
-      <Button
-        title="Phone Number Sign In"
-        onPress={() => signInWithPhoneNumber(phone)}
-      />
-      <View style={{marginVertical: 10}}>
+      {/* <View style={{marginVertical: 10}}>
         <TextInput
           style={styles.textInput}
           placeholder="code"
@@ -97,66 +122,11 @@ export default function Login() {
           onChangeText={(text) => setCode(text)}
         />
       </View>
-      <Button title="Confirm Code" onPress={() => confirmCode()} />
-
-      {/* <View style={{marginBottom: 20}}>
-        <TouchableOpacity style={styles.textInput}>
-          <FontAwesome5
-            name={'google-plus-square'}
-            color={'#EA4335'}
-            size={20}
-          />
-          <Text style={{fontWeight: 'bold', fontSize: 14}}>
-            Đăng nhập bằng Google
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={{marginBottom: 50}}>
-        <TouchableOpacity style={styles.textInput}>
-          <FontAwesome5 name={'facebook-square'} color={'#3B5998'} size={20} />
-          <Text style={{fontWeight: 'bold', fontSize: 14}}>
-            Đăng nhập bằng Facebook
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-
-      <View style={{marginVertical: 20}}>
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderColor: COLORS.darkgray,
-            width: WIDTH - 80,
-            marginBottom: 20,
-          }}></View>
-        <Text
-          style={{
-            position: 'absolute',
-            top: -11,
-            left: 65,
-            backgroundColor: COLORS.white,
-            color: COLORS.darkgray,
-            fontWeight: 'bold',
-          }}>
-          Hoặc đăng nhập bằng Email
-        </Text>
-      </View>
-
-      <View style={{marginBottom: 20}}>
-        <TextInput style={styles.textInput} placeholder="Email" />
-      </View>
-
-      <View style={{marginBottom: 20}}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Password"
-          secureTextEntry
-        />
-      </View>
+      <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
 
       <TouchableOpacity
         style={styles.login}
-        onPress={() => navigation.push('Home')}>
+        onPress={() => signInWithPhoneNumber(phone)}>
         <Text
           style={{
             color: COLORS.white,
@@ -164,20 +134,63 @@ export default function Login() {
             fontSize: 20,
             fontStyle: 'normal',
           }}>
-          ĐĂNG NHẬP
+          GỬI CODE
         </Text>
       </TouchableOpacity>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{color: COLORS.darkgray, fontWeight: 'bold'}}>
-          Bạn đã tài khoản thì nhấn vào?
-        </Text>
-        <TouchableOpacity onPress={() => navigation.push('Signup')}>
-          <Text style={{color: COLORS.darkgray, fontWeight: 'bold'}}>
-            {' '}
-            Đăng kí
-          </Text>
-        </TouchableOpacity>
+
+      <View style={{ marginVertical: 10 }}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="code"
+          value={code}
+          keyboardType="number-pad"
+          maxLength={11}
+          onChangeText={(text) => setCode(text)}
+        />
       </View>
+
+      <TouchableOpacity style={styles.login} onPress={() => confirmCode()}>
+        <Text
+          style={{
+            color: COLORS.white,
+            fontWeight: 'bold',
+            fontSize: 20,
+            fontStyle: 'normal',
+          }}>
+          CHECK MÃ
+        </Text>
+      </TouchableOpacity>
+
+      <Modal
+        visible={visible}
+        onDismiss={hideModal}
+        contentContainerStyle={containerStyle}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Họ và tên"
+          value={name}
+          maxLength={20}
+          onChangeText={(text) => setName(text)}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Địa chỉ"
+          value={address}
+          maxLength={50}
+          onChangeText={(text) => setAddress(text)}
+        />
+        <TouchableOpacity style={styles.login} onPress={() => check()}>
+          <Text
+            style={{
+              color: COLORS.white,
+              fontWeight: 'bold',
+              fontSize: 20,
+              fontStyle: 'normal',
+            }}>
+            LƯU THÔNG TIN
+        </Text>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 }
@@ -187,6 +200,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   logo: {
     width: WIDTH - 250,
@@ -196,9 +210,10 @@ const styles = StyleSheet.create({
     width: WIDTH - 120,
     height: WIDTH / 7.4,
     backgroundColor: COLORS.lightGray3,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingHorizontal: 30,
+    marginVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 10,
     flexDirection: 'row',
   },
