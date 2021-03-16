@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,13 +16,15 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import { COLORS, icons } from '../../constants';
+import {COLORS, icons} from '../../constants';
 import SignUp from '../../api/userApi';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
-import { Modal } from 'react-native-paper';
+import {Modal} from 'react-native-paper';
 import {getUserByPhone} from '../../api/productApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function Login() {
   const navigation = useNavigation();
   const [userPhone, setUserPhone] = useState();
@@ -62,37 +63,39 @@ export default function Login() {
   //     />
   //   );
   // }
-   getUser = async () => {
+  getUser = async () => {
     let getApi = await getUserByPhone(phone);
-    getApi?.data===''?setVisible(true): navigation.push('Home');
-    console.log('data ---------->>> ' , getApi.data);
-    console.log('UserPhone ---------->>> ' , userPhone);
+    getApi?.data === '' ? setVisible(true) : navigation.push('Home');
+    console.log('data ---------->>> ', getApi.data);
+    console.log('UserPhone ---------->>> ', userPhone);
   };
+
   async function confirmCode() {
     try {
       await confirm.confirm(code);
-      getUser()
+      getUser();
     } catch (error) {
       console.log('Invalid code.', error);
     }
     // getUser()
     // setVisible(true);
   }
+
   check = async () => {
     console.log('phone ------->   ', phone);
     console.log('name ------->   ', name);
     console.log('address ------->   ', address);
-    
-    let SignUpFetch = await SignUp(
-      phone, name, address
-    )
-    console.log('userrrrrr ------->>>> ' + SignUpFetch)
+
+    let SignUpFetch = await SignUp(phone, name, address);
+    console.log('userrrrrr ------->>>> ' + SignUpFetch);
+    await AsyncStorage.setItem('isLoggedIn', 1);
     navigation.push('Home');
-  }
+  };
+
   return (
     <View style={styles.container}>
       <View
-        style={{ alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
+        style={{alignItems: 'center', justifyContent: 'center', marginTop: 5}}>
         <Image
           style={styles.logo}
           source={{
@@ -111,9 +114,9 @@ export default function Login() {
         ĐĂNG NHẬP
       </Text>
       <View style={styles.textInput}>
-        <Text style={{ marginRight: 10 }}>+84</Text>
+        <Text style={{marginRight: 10}}>+84</Text>
         <TextInput
-          style={{ width: WIDTH - 120, height: WIDTH / 7.4 }}
+          style={{width: WIDTH - 120, height: WIDTH / 7.4}}
           placeholder="Phone"
           value={phone}
           textContentType="telephoneNumber"
@@ -146,7 +149,7 @@ export default function Login() {
         </Text>
       </TouchableOpacity>
 
-      <View style={{ marginVertical: 10 }}>
+      <View style={{marginVertical: 10}}>
         <TextInput
           style={styles.textInput}
           placeholder="code"
@@ -196,7 +199,7 @@ export default function Login() {
               fontStyle: 'normal',
             }}>
             LƯU THÔNG TIN
-        </Text>
+          </Text>
         </TouchableOpacity>
       </Modal>
     </View>
