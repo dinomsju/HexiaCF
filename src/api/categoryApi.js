@@ -7,7 +7,6 @@ const getCategory = async () => {
       `${BASE_URL_1}/api/category/getall`,
       // `http://10.82.166.162:3000/api/category/getall`,
     );
-    console.log(getData.data);
     return getData;
   } catch (error) {
     console.log('hello Error', error);

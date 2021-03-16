@@ -16,7 +16,6 @@ const getProductByCat = async (id) => {
     let getData = await axios.get(
       `${BASE_URL}/api/product/cate/${id}`,
     );
-    console.log(getData.data)
     return getData;
   } catch (error) {
     console.log(error);
