@@ -21,4 +21,4 @@ const SignUp = async (phone,name,address) => {
     
 }
 
-export default SignUp
+export default SignUp;

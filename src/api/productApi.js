@@ -22,4 +22,15 @@ const getProductByCat = async (id) => {
     return null;
   }
 };
-export {getProduct, getProductByCat};
+const getUserByPhone = async (phone) => {
+  try {
+    let getData = await axios.get(
+      `${BASE_URL}/api/authUser/${phone}`,
+    );
+    return getData;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+export {getProduct, getProductByCat, getUserByPhone};

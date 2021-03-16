@@ -23,9 +23,10 @@ import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
 import { Modal } from 'react-native-paper';
+import {getUserByPhone} from '../../api/productApi';
 export default function Login() {
   const navigation = useNavigation();
-
+  const [userPhone, setUserPhone] = useState();
   // If null, no SMS has been sent
   const [confirm, setConfirm] = useState(null);
 
@@ -61,14 +62,21 @@ export default function Login() {
   //     />
   //   );
   // }
-
+   getUser = async () => {
+    let getApi = await getUserByPhone(phone);
+    getApi?.data===''?setVisible(true): navigation.push('Home');
+    console.log('data ---------->>> ' , getApi.data);
+    console.log('UserPhone ---------->>> ' , userPhone);
+  };
   async function confirmCode() {
     try {
       await confirm.confirm(code);
-      setVisible(true);
+      getUser()
     } catch (error) {
       console.log('Invalid code.');
     }
+    // getUser()
+    // setVisible(true);
   }
   check = async () => {
     console.log('phone ------->   ', phone);
