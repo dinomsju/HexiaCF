@@ -10,11 +10,13 @@ import DetailsCategory from './containers/screens/DetailsCategory';
 import DetailsProduct from './containers/screens/DetailsProduct';
 import Cart from './containers/screens/Cart';
 import Payment from './containers/screens/Payment';
+import EditLocation from './containers/screens/EditLocation'
+import OrderManage from './containers/screens/OrderManage';
 const Stack = createStackNavigator();
 
 function StackNavigator() {
   return (
-    <Stack.Navigator headerMode="none" initialRouteName="Login">
+    <Stack.Navigator headerMode="none" initialRouteName="Home">
       <Stack.Screen name="Home" component={BottomNavigation} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
@@ -23,6 +25,8 @@ function StackNavigator() {
       <Stack.Screen name="DetailsProduct" component={DetailsProduct} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Payment" component={Payment} />
+      <Stack.Screen name="EditLocation" component={EditLocation}/>
+      <Stack.Screen name="OrderManage" component={OrderManage}/>
     </Stack.Navigator>
   );
 }

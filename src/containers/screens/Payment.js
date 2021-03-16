@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {FlatList, Image, SafeAreaView, ScrollView} from 'react-native';
 import {Block, Text, Button} from '../../components';
 import Header from '../Header/HeaderPayment';
 import {RadioButton} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/AntDesign'
 //example
 import {getProduct} from '../../api/productApi';
 import Item from '../views/ItemPayment';
+import Footer from '../Footer/FooterPayment';
 
 const Payment = () => {
+  const navigation = useNavigation();
   const [value, setValue] = useState('Giao hàng tận nơi');
   const [product, setProduct] = useState([
     {
@@ -20,19 +24,19 @@ const Payment = () => {
       title: 'Trà bưởi mật ong',
       soLuong: 1,
       imageUrl:
-        'https://product.hstatic.net/1000075078/product/cfsd_615a3cb2b1e342d2b1986bfeb6572070_master.jpg',
+        'https://product.hstatic.net/1000075078/product/tra_buoi_5c4c5ce2d4e44042a069ec9011ef1a9f_master.jpg',
     },
   ]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header title="THANH TOÁN" />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Block row marginHorizontal={10} marginVertical={5} space={'between'}>
           <Text bold size={14}>
             ĐỊA CHỈ NHẬN HÀNG
           </Text>
-          <Button>
+          <Button onPress={() => navigation.navigate('EditLocation')}>
             <Text color={'#2400FF'}>Thay đổi</Text>
           </Button>
         </Block>
@@ -102,8 +106,41 @@ const Payment = () => {
               Tổng cộng
             </Text>
           </Block>
+          <Block padding={5}
+          row
+          space={'between'}
+          style={{
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              borderColor: '#CDD0D9',
+            }}>
+            <Text>Tổng tạm tính:</Text>
+            <Text color={'#EA8025'}>127.000đ</Text>
+          </Block>
+          <Block padding={5}
+          row
+          space={'between'}
+          alignCenter
+          style={{
+              borderBottomWidth: 1,
+              paddingBottom: 10,
+              borderColor: '#CDD0D9',
+            }}>
+              <Block>
+            <Text bold color={'#EA8025'}>Khuyến mãi</Text>
+            <Text>Bấm vào để chọn khuyến mãi</Text>
+            </Block>
+              <Icon name="right" size={18}/>
+          </Block>
+          <Block padding={5}
+          row
+          space={'between'}>
+            <Text bold>Thành tiền</Text>
+            <Text color={'#EA8025'} bold>127.000đ</Text>
+          </Block>
         </Block>
       </ScrollView>
+      <Footer title={` 1 món trong giỏ hàng`} price={`82.000đ`} goTo={'Cart'}/>
     </SafeAreaView>
   );
 };

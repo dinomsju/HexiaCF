@@ -17,7 +17,7 @@ export default function Menu() {
 
   const getAllCategory = async () => {
     let getApi = await getCategory();
-    setCategory(getApi.data.items);
+    setCategory(getApi.data);
   };
 
   return (

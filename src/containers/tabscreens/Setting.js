@@ -69,7 +69,7 @@ export default function Setting() {
           />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('OrderManage')}>
         <View
           style={{
             flexDirection: 'row',
@@ -87,7 +87,7 @@ export default function Setting() {
               paddingLeft: 10,
               paddingRight: WIDTH_SCALE * 150,
             }}>
-            Lịch sử mua hàng
+            Quản lý đơn hàng
           </Text>
           <Icon
             style={[styles.edit, styles.p]}

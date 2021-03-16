@@ -18,11 +18,12 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
+import {IMAGE_URL} from '../../api/BASE_URL'
 export default function ItemNew({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
     <View style={styles.box}>
-      <Image style={styles.image_box} source={{uri: item.imageUrl}} />
+      <Image style={styles.image_box} source={{uri: `${IMAGE_URL}${item.imageUrl}`}} />
       {/* <FastImage
         source={{uri: item.image}}
         style={styles.image_box}

@@ -67,7 +67,7 @@ export default function Login() {
       await confirm.confirm(code);
       setVisible(true);
     } catch (error) {
-      console.log('Invalid code.');
+      console.log('Invalid code.', error);
     }
   }
   check = async () => {

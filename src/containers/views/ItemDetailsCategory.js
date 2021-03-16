@@ -18,6 +18,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
+import { IMAGE_URL } from '../../api/BASE_URL';
 export default function ItemDetailsCategory({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
@@ -51,7 +52,7 @@ export default function ItemDetailsCategory({item}) {
           </Text>
         </View>
         <FastImage
-          source={{uri: item.coverUrl}}
+          source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
           style={styles.image_box}
           resizeMode={FastImage.resizeMode.cover}
         />

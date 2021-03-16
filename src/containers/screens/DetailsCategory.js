@@ -37,7 +37,7 @@ export default function DetailsCategory(props) {
 
   const getData = async () => {
     let getApi = await getProductByCat(data._id);
-    setProduct(getApi.data.items);
+    setProduct(getApi.data.products);
   };
 
   return (
