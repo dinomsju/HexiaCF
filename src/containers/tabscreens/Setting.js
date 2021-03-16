@@ -1,8 +1,11 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
+
 import {
   WIDTH_SCALE,
   HEIGHT_SCALE,
@@ -11,6 +14,14 @@ import {
 } from '../../constants/constants';
 export default function Setting() {
   const navigation = useNavigation();
+
+  const logOut = async () => {
+    await AsyncStorage.removeItem('@auth');
+    auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  };
+
   return (
     <View style={styles.container}>
       <View
@@ -181,7 +192,7 @@ export default function Setting() {
           />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => logOut()}>
         <View
           style={{
             flexDirection: 'row',
