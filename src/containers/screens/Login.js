@@ -88,7 +88,6 @@ export default function Login() {
 
     let SignUpFetch = await SignUp(phone, name, address);
     console.log('userrrrrr ------->>>> ' + SignUpFetch);
-    await AsyncStorage.setItem('isLoggedIn', 1);
     navigation.push('Home');
   };
 
