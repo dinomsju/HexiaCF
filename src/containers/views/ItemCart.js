@@ -20,16 +20,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
 export default function ItemCart({item}) {
-  const [number, setNumber] = useState(1);
+  const [number, setNumber] = useState(item.quality);
   const [limit, setLimit] = useState(false);
+  const [price, setPrice] = useState(item?.quality * item?._idProduct?.price);
 
   const Plus = (number) => {
     setNumber(number + 1);
+    setPrice(number * item?._idProduct?.price)
     setLimit(false);
   };
   const Minus = (number) => {
     if (number > 1) {
       setNumber(number - 1);
+      setPrice(number * item?._idProduct?.price)
     } else {
       setLimit(true);
     }
@@ -53,7 +56,7 @@ export default function ItemCart({item}) {
             paddingVertical: 5,
           }}>
           <Image
-            source={{uri: item.imageUrl}}
+            source={{uri: item?._idProduct?.imageUrl}}
             style={styles.image_box}
             resizeMode="cover"
           />
@@ -129,7 +132,7 @@ export default function ItemCart({item}) {
                 }}
                 ellipsizeMode="tail"
                 numberOfLines={1}>
-                32.000đ
+                {price}
               </Text>
             </View>
           </View>

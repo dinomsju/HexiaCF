@@ -16,21 +16,34 @@ import {
   HEIGHT,
 } from '../../constants/constants';
 import {COLORS, icons} from '../../constants';
-import {getProduct} from '../../api/productApi';
+import {getUserByPhone, getCartByUser} from '../../api/cartApi';
 import Item from '../views/ItemCart';
 export default function Cart() {
-  const [product, setProduct] = useState();
+  const [userID, setUserID] = useState();
+  const [dataCart, setDataCart] = useState();
   const [number, setNumber] = useState(3);
   const [money, setMoney] = useState(127000 + '');
   const format = money.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   useEffect(() => {
-    getAllProduct();
+    getDataUser();
+    getDataCart();
   }, []);
 
-  const getAllProduct = async () => {
-    let getApi = await getProduct();
-    setProduct(getApi?.data?.items);
+  const getDataUser = async () => {
+    let getApiUser = await getUserByPhone('906288042');
+    setUserID(getApiUser.data._id)
+   console.log('getApiUser -------------> ', getApiUser.data);
+  
   };
+ 
+  const getDataCart = async () => {
+    let getApiCart = await getCartByUser(userID);
+    setDataCart(getApiCart?.data?.cart.products);
+  //  console.log('getApiCart -------------> ', getApiCart.data.cart.products);
+   console.log('setDataCart -------------> ', dataCart);
+  };
+
+  console.log('setUserID1 -------------> ', userID); 
   return (
     <View style={styles.container}>
       <Header title="GIỎ HÀNG" />
@@ -52,7 +65,7 @@ export default function Cart() {
 
         <FlatList
           numColumns={1}
-          data={product}
+          data={dataCart}
           renderItem={({item}) => (
             // <TouchableOpacity
             // // onPress={() =>
