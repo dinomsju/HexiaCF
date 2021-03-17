@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, Dimensions} from 'react-native';
+import {SafeAreaView, Dimensions, StatusBar} from 'react-native';
 import {Block, Text, Button} from './../../../components';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import MTIcon from 'react-native-vector-icons/MaterialIcons';
@@ -29,7 +29,7 @@ export default function OrderManage() {
     all: () => <ViewTab isPending={2} />,
   });
   return (
-    <SafeAreaView style={{flex: 1, marginTop: 28}}>
+    <SafeAreaView style={{flex: 1}}>
       <Block
         row
         height={50}
@@ -43,7 +43,9 @@ export default function OrderManage() {
           }}>
           <MTIcon name={'chevron-left'} color={'#FFF'} size={25} />
         </Button>
-        <Text bold color={'white'} size={18} paddingLeft={10}>QUẢN LÝ ĐƠN HÀNG</Text>
+        <Text bold color={'white'} size={18} paddingLeft={10}>
+          QUẢN LÝ ĐƠN HÀNG
+        </Text>
       </Block>
 
       <TabView
