@@ -55,19 +55,10 @@ export default function Login() {
     console.log('------> ' + confirmation);
   }
 
-  // if (!confirm) {
-  //   return (
-  //     <Button
-  //       title="Phone Number Sign In"
-  //       onPress={() => signInWithPhoneNumber('+84906288042')}
-  //     />
-  //   );
-  // }
   getUser = async () => {
     let getApi = await getUserByPhone(phone);
     getApi?.data === '' ? setVisible(true) : navigation.push('Home');
     console.log('data ---------->>> ', getApi.data);
-    console.log('UserPhone ---------->>> ', userPhone);
   };
 
   async function confirmCode() {

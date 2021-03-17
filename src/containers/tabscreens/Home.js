@@ -31,6 +31,7 @@ export default function Home() {
   const [idcategory, setIDCategory] = useState('ps09830');
   const [category, setCategory] = useState();
   const [product, setProduct] = useState();
+  // const phone = route.params.phone;
 
   useEffect(() => {
     getAllCategory();

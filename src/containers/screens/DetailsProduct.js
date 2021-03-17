@@ -55,7 +55,8 @@ export default function DetailsProduct(props) {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <ImageBackground style={styles.header} source={{uri: `${IMAGE_URL}${product.imageUrl}`}}>
+        {/* <ImageBackground style={styles.header} source={{uri: `${IMAGE_URL}${product.imageUrl}`}}> */}
+        <ImageBackground style={styles.header} source={{uri: product.imageUrl}}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icon name="arrow-back" color={COLORS.white} size={40} />
           </TouchableOpacity>
