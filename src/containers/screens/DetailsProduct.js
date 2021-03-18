@@ -20,7 +20,7 @@ import {
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
-import { IMAGE_URL } from '../../api/BASE_URL';
+import {IMAGE_URL} from '../../api/BASE_URL';
 
 export default function DetailsProduct(props) {
   const navigation = useNavigation();
@@ -42,9 +42,8 @@ export default function DetailsProduct(props) {
     }
   };
   addCart = () => {
-  
-      navigation.push('Cart')
-    
+    navigation.push('Home');
+
     console.log('addCart -------> ' + number);
     console.log('condition -------> ' + condition);
     console.log('hearColor -------> ' + hearColor);
@@ -55,28 +54,28 @@ export default function DetailsProduct(props) {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {/* <ImageBackground style={styles.header} source={{uri: `${IMAGE_URL}${product.imageUrl}`}}> */}
-        <ImageBackground style={styles.header} source={{uri: product.imageUrl}}>
+        <ImageBackground
+          style={styles.header}
+          source={{uri: `${IMAGE_URL}${product.imageUrl}`}}>
+          {/* <ImageBackground style={styles.header} source={{uri: product.imageUrl}}> */}
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" color={COLORS.white} size={40} />
+            <Icon name="arrow-back" color={COLORS.textOrange} size={40} />
           </TouchableOpacity>
         </ImageBackground>
         <View style={styles.footer}>
-          {condition ? 
+          {condition ? (
             <TouchableOpacity
               style={styles.heart}
               onPress={() => heartCondition()}>
               <Icon name="heart" color={COLORS.hearRed} size={25} />
             </TouchableOpacity>
-           
-           : 
-         
+          ) : (
             <TouchableOpacity
               style={styles.heart}
               onPress={() => heartCondition()}>
               <Icon name="heart" color={COLORS.textGray} size={25} />
             </TouchableOpacity>
-          }
+          )}
 
           <Text style={{fontSize: 20, fontWeight: 'bold', color: COLORS.black}}>
             {product.title}
@@ -137,7 +136,7 @@ export default function DetailsProduct(props) {
               }}
               ellipsizeMode="tail"
               numberOfLines={1}>
-              32.000đ
+              {product.price}đ
             </Text>
             <TouchableOpacity style={styles.add} onPress={() => addCart()}>
               <Text
@@ -160,13 +159,14 @@ export default function DetailsProduct(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     justifyContent: 'center',
     position: 'relative',
+    backgroundColor: 'white',
+    paddingTop: 20,
   },
   header: {
     width: WIDTH,
-    height: WIDTH,
+    height: WIDTH - 60,
     // position: 'absolute',
     // top: 0,
     // left: 0,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     width: WIDTH,
-    height: HEIGHT,
+    // height: HEIGH,
     position: 'relative',
     left: 0,
     top: -30,
@@ -195,12 +195,11 @@ const styles = StyleSheet.create({
   },
   add: {
     width: WIDTH / 2,
-    height: WIDTH / 11,
+    height: WIDTH / 9,
     backgroundColor: COLORS.black,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    marginBottom: 20,
   },
   heart: {
     position: 'absolute',

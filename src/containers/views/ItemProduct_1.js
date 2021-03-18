@@ -1,37 +1,29 @@
 import React, {Component, useEffect, useState, useRef} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-  Image,
-  ScrollView,
-  TextInput,
-} from 'react-native';
-import {
-  WIDTH_SCALE,
-  HEIGHT_SCALE,
-  WIDTH,
-  HEIGHT,
-} from '../../constants/constants';
+import {StyleSheet} from 'react-native';
+import {WIDTH} from '../../constants/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
 import {IMAGE_URL} from '../../api/BASE_URL';
-export default function ItemDetailsCategory({item}) {
+import {Block, Button, Text} from '../../components';
+export default function ItemProduct_1({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
-    <View style={styles.box}>
+    <Block>
       {/* <Image style={styles.image_box} source={{uri: item.thumb}} /> */}
-      <View
+      <Block
         style={{
           // marginHorizontal: 5,
           marginVertical: 5,
           justifyContent: 'space-between',
           flexDirection: 'row',
         }}>
-        <View style={{justifyContent: 'center'}}>
+        <FastImage
+          source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
+          style={styles.image_box}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <Block justifyCenter paddingLeft={10}>
           <Text
             style={styles.text_box_name}
             ellipsizeMode="tail"
@@ -50,27 +42,14 @@ export default function ItemDetailsCategory({item}) {
             numberOfLines={1}>
             {`${item.price}đ`}
           </Text>
-        </View>
-        <FastImage
-          source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
-          style={styles.image_box}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </View>
-    </View>
+        </Block>
+      </Block>
+    </Block>
     // </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  box: {
-    width: WIDTH / 1.2,
-    // height: WIDTH,
-    margin: 5,
-    // backgroundColor: '#000',
-    borderRadius: 15,
-    backgroundColor: COLORS.white,
-  },
   image_box: {
     width: WIDTH / 4.5,
     height: WIDTH / 4.5,

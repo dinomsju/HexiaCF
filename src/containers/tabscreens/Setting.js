@@ -1,8 +1,8 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, icons} from '../../constants';
+import { COLORS, icons } from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 
@@ -20,6 +20,8 @@ export default function Setting() {
     auth()
       .signOut()
       .then(() => console.log('User signed out!'));
+    await AsyncStorage.removeItem('SDT');
+    navigation.replace('Login')
   };
 
   return (
@@ -32,8 +34,8 @@ export default function Setting() {
           paddingVertical: 20,
         }}>
         <Icon name="person-circle-sharp" color={COLORS.black} size={100} />
-        <View style={{paddingHorizontal: 10}}>
-          <Text style={{paddingBottom: 10, fontSize: 14, fontWeight: 'bold'}}>
+        <View style={{ paddingHorizontal: 10 }}>
+          <Text style={{ paddingBottom: 10, fontSize: 14, fontWeight: 'bold' }}>
             Nguyễn Duy Tân{' '}
           </Text>
           <View
@@ -52,34 +54,6 @@ export default function Setting() {
           </View>
         </View>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 0.4,
-            borderBottomColor: COLORS.textGray,
-          }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
-          <Text
-            style={{
-              fontSize: 14,
-              color: COLORS.black,
-              paddingLeft: 10,
-              paddingRight: WIDTH_SCALE * 190,
-            }}>
-            Giỏ hàng
-          </Text>
-          <Icon
-            style={[styles.edit, styles.p]}
-            name="chevron-forward"
-            color={COLORS.black}
-            size={40}
-          />
-        </View>
-      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('OrderManage')}>
         <View
           style={{
@@ -90,7 +64,7 @@ export default function Setting() {
             borderBottomWidth: 0.4,
             borderBottomColor: COLORS.textGray,
           }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Icon name="documents-outline" color={COLORS.textGray} size={40} />
           <Text
             style={{
               fontSize: 14,
@@ -118,7 +92,7 @@ export default function Setting() {
             borderBottomWidth: 0.4,
             borderBottomColor: COLORS.textGray,
           }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Icon name="gift-outline" color={COLORS.textGray} size={40} />
           <Text
             style={{
               fontSize: 14,
@@ -146,7 +120,7 @@ export default function Setting() {
             borderBottomWidth: 0.4,
             borderBottomColor: COLORS.textGray,
           }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Icon name="cash-outline" color={COLORS.textGray} size={40} />
           <Text
             style={{
               fontSize: 14,
@@ -174,7 +148,7 @@ export default function Setting() {
             borderBottomWidth: 0.4,
             borderBottomColor: COLORS.textGray,
           }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Icon name="paper-plane-outline" color={COLORS.textGray} size={40} />
           <Text
             style={{
               fontSize: 14,

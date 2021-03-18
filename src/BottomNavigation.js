@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useEffect} from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -12,6 +12,7 @@ import Home from './containers/tabscreens/Home';
 import Profile from './containers/tabscreens/Profile';
 import Setting from './containers/tabscreens/Setting';
 import Notification from './containers/tabscreens/Notification';
+import Cart from './containers/screens/Cart';
 
 //Constants
 import {COLORS, icons} from './constants';
@@ -68,7 +69,8 @@ const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
   }
 };
 
-const Tabs = () => {
+const Tabs = ({navigation}) => {
+
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -78,7 +80,7 @@ const Tabs = () => {
           backgroundColor: 'transparent',
           elevation: 0,
         },
-        activeTintColor: '#243D8C',
+        activeTintColor: '#EA8025',
       }}>
       <Tab.Screen
         name="Home"
@@ -91,11 +93,11 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={Profile}
+        name="Cart"
+        component={Cart}
         options={{
           tabBarIcon: ({color, size}) => (
-            <FontAwesome name="heart" color={color} size={size} />
+            <FontAwesome name="shopping-cart" color={color} size={size} />
           ),
           tabBarButton: (props) => <TabBarCustomButton {...props} />,
         }}

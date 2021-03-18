@@ -18,12 +18,15 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
-import {IMAGE_URL} from '../../api/BASE_URL'
+import {IMAGE_URL} from '../../api/BASE_URL';
 export default function ItemNew({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
     <View style={styles.box}>
-      <Image style={styles.image_box} source={{uri: `${IMAGE_URL}${item.imageUrl}`}} />
+      <Image
+        style={styles.image_box}
+        source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
+      />
       {/* <FastImage
         source={{uri: item.image}}
         style={styles.image_box}
@@ -36,7 +39,8 @@ export default function ItemNew({item}) {
           numberOfLines={1}>
           {item.title}
         </Text>
-        <Text style={styles.text_box_title}>{item.artist}</Text>
+        {/* <Text style={styles.text_box_title}>{item.artist}</Text> */}
+        <Text style={styles.text_box_title}>{item.price}đ</Text>
       </View>
     </View>
     // </TouchableOpacity>
@@ -46,7 +50,7 @@ export default function ItemNew({item}) {
 const styles = StyleSheet.create({
   box: {
     width: WIDTH / 2 - 20,
-    height: WIDTH / 2,
+    height: WIDTH / 2 + 20,
     margin: 5,
     // backgroundColor: '#000',
     borderRadius: 15,
@@ -54,14 +58,14 @@ const styles = StyleSheet.create({
   },
   image_box: {
     width: WIDTH / 2 - 20,
-    height: WIDTH / 2 - 50,
+    height: WIDTH / 2 - 40,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
   text_box_title: {
     fontSize: 14,
-    color: '#000',
-    opacity: 0.4,
+    color: COLORS.textOrange,
+    fontWeight: 'bold',
   },
   text_box_artist: {
     color: '#000',

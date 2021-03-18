@@ -42,17 +42,24 @@ export default function DetailsCategory(props) {
 
   return (
     <View style={styles.container}>
-     
       <ImageBackground
         style={styles.header}
         source={{uri: 'https://img.anime47.com/imgur/6hhR2bl.jpg'}}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style = {{marginTop: 150}}>
-          <Icon name="arrow-back" color={COLORS.white} size={40} />
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{marginTop: 140}}>
+          <Icon name="arrow-back" color={COLORS.textOrange} size={40} />
         </TouchableOpacity>
       </ImageBackground>
       <View style={styles.footer}>
         <View style={{alignItems: 'center', flex: 1, marginBottom: 90}}>
-          <Text style={{fontSize: 24, fontWeight: 'bold', paddingBottom: 10}}>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: 'bold',
+              paddingBottom: 10,
+              paddingTop: 10,
+            }}>
             {data.title}
           </Text>
           {/* <TextInput style={styles.textInput}>
@@ -81,7 +88,7 @@ export default function DetailsCategory(props) {
                   <Item item={item} />
                 </TouchableOpacity>
               )}
-              keyExtractor={(item) => item.title}
+              keyExtractor={(item) => item._id}
             />
           )}
         </View>
@@ -93,18 +100,16 @@ export default function DetailsCategory(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     justifyContent: 'center',
-   
   },
   header: {
     width: WIDTH,
-    height: WIDTH ,
+    height: WIDTH,
     padding: 20,
   },
   footer: {
     width: WIDTH,
-    height: HEIGHT - 160,
+    height: HEIGHT - 70,
     position: 'relative',
     left: 0,
     top: -40,

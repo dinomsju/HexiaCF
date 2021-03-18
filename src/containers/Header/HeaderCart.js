@@ -32,10 +32,8 @@ const HeaderCart = ({title}) => {
       </TouchableOpacity> */}
       <Image
         style={styles.logo}
-        source={{
-          uri:
-            'https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg',
-        }}
+        source={require('../../constants/icons/logo.png')}
+        resizeMode="center"
       />
       <Text style={{fontSize: 18, fontWeight: 'bold'}}>{title}</Text>
       <TouchableOpacity onPress={() => navigation.goBack()}>
