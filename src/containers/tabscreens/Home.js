@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,10 +9,10 @@ import {
   StatusBar,
   SafeAreaView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, icons} from '../../constants';
-import {films} from '../../constants/data/fakeData';
+import { COLORS, icons } from '../../constants';
+import { films } from '../../constants/data/fakeData';
 import Item from '../views/Item';
 import ItemProduct from '../views/ItemProduct';
 import Swiper from 'react-native-swiper';
@@ -22,22 +22,22 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import {Text} from '../../components';
-import {getCategory} from '../../api/categoryApi';
-import {getProduct} from '../../api/productApi';
-
+import { Text } from '../../components';
+import { getCategory } from '../../api/categoryApi';
+import { getProduct } from '../../api/productApi';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Home() {
-  const navigation = useNavigation();
   const [idcategory, setIDCategory] = useState('ps09830');
   const [category, setCategory] = useState();
   const [product, setProduct] = useState();
-  // const phone = route.params.phone;
-
-  useEffect(() => {
+  const [phone, setPhone] = useState();
+  
+  useEffect(() => {// test di
     getAllCategory();
     getAllProduct();
+    getDataParams()
+    console.log('phone ------------>>', phone)
   }, []);
-
   const getAllCategory = async () => {
     let getApi = await getCategory();
     setCategory(getApi.data);
@@ -46,11 +46,15 @@ export default function Home() {
     let getApi = await getProduct();
     setProduct(getApi.data.products);
   };
-
+  // đọc dữ liệu mà thằng ml tân lưu trong storage
+  getDataParams = async () =>{
+     await  AsyncStorage.getItem('SDT').then(res => setPhone(res)).catch(err=> console.log('do thằng tân'))
+     
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <TouchableOpacity style={{padding: 5}}>
+        <TouchableOpacity style={{ padding: 5 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -64,7 +68,7 @@ export default function Home() {
                 paddingRight: 5,
                 color: COLORS.black,
               }}>
-              ĐỊA CHỈ
+              ĐỊA CHỈ {phone?phone:'tan cut heo'}
             </Text>
             <Icon name="chevron-down-outline" color={COLORS.black} size={20} />
           </View>
@@ -75,21 +79,21 @@ export default function Home() {
               marginTop: 5,
             }}>
             <Icon name="location-sharp" color={COLORS.orange} size={20} />
-            <Text style={{fontWeight: 'bold', fontSize: 14}}>
-              107 Hoàng Hoa Thám, Phường 6 , Quận Bình Thạnh
+            <Text style={{ fontWeight: 'bold', fontSize: 14 }}>
+              107 Hoàng Hoa Thám, Phường 6 , Quận Bình Thạnh 
             </Text>
           </View>
         </TouchableOpacity>
-        <View style={{height: WIDTH / 2 - 20}}>
+        <View style={{ height: WIDTH / 2 - 20 }}>
           <Swiper
             autoplay={true}
             autoplayTimeout={3}
-            paginationStyle={{height: WIDTH / 2 - 240}}
+            paginationStyle={{ height: WIDTH / 2 - 240 }}
             dotColor={'#bebebe'}
             showsPagination={true}>
             {films.map((item) => {
               return (
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                   <TouchableOpacity onPress={() => console.log(item)}>
                     <Image
                       style={styles.banner}
@@ -112,10 +116,10 @@ export default function Home() {
             width: WIDTH - 20,
             marginTop: 10,
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>THỰC ĐƠN</Text>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>THỰC ĐƠN</Text>
           <TouchableOpacity
-            onPress={() => navigation.push('Menu', {idcategory})}>
-            <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
+            onPress={() => navigation.push('Menu', { idcategory })}>
+            <Text style={{ color: COLORS.blue }}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -123,10 +127,10 @@ export default function Home() {
           data={category}
           horizontal
           showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('DetailsCategory', {data: item})
+                navigation.navigate('DetailsCategory', { data: item })
               }>
               <Item item={item} />
             </TouchableOpacity>
@@ -142,18 +146,18 @@ export default function Home() {
             width: WIDTH - 20,
             marginTop: 10,
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>SẢN PHẨM MỚI</Text>
-          <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>SẢN PHẨM MỚI</Text>
+          <Text style={{ color: COLORS.blue }}>Xem tất cả</Text>
         </View>
         <FlatList
           // numColumns={2}
           data={product}
           horizontal
           showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('DetailsProduct', {product: item})
+                navigation.navigate('DetailsProduct', { product: item })
               }>
               <ItemProduct item={item} />
             </TouchableOpacity>

@@ -1,8 +1,8 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, icons} from '../../constants';
+import { COLORS, icons } from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 
@@ -20,6 +20,8 @@ export default function Setting() {
     auth()
       .signOut()
       .then(() => console.log('User signed out!'));
+    await AsyncStorage.removeItem('SDT');
+    navigation.replace('Login')
   };
 
   return (
@@ -32,8 +34,8 @@ export default function Setting() {
           paddingVertical: 20,
         }}>
         <Icon name="person-circle-sharp" color={COLORS.black} size={100} />
-        <View style={{paddingHorizontal: 10}}>
-          <Text style={{paddingBottom: 10, fontSize: 14, fontWeight: 'bold'}}>
+        <View style={{ paddingHorizontal: 10 }}>
+          <Text style={{ paddingBottom: 10, fontSize: 14, fontWeight: 'bold' }}>
             Nguyễn Duy Tân{' '}
           </Text>
           <View
