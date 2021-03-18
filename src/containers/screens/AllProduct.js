@@ -3,35 +3,31 @@ import {useNavigation} from '@react-navigation/native';
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import HeaderPro from '../Header/HeaderPro';
 import Item from '../views/ItemNew';
-import {films} from '../../constants/data/fakeData';
-import {songs} from '../../constants/data/song';
-import {getCategory} from '../../api/categoryApi';
 import {COLORS, icons} from '../../constants';
+import {getProduct} from '../../api/productApi';
 export default function Menu() {
   const navigation = useNavigation();
   const [category, setCategory] = useState();
 
   useEffect(() => {
-    getAllCategory();
+    getAllProduct();
   }, []);
 
-  const getAllCategory = async () => {
-    let getApi = await getCategory();
-    setCategory(getApi.data);
+  const getAllProduct = async () => {
+    let getApi = await getProduct();
+    setCategory(getApi.data.products);
   };
 
   return (
     <View style={styles.container}>
-      <HeaderPro title="THỰC ĐƠN" />
+      <HeaderPro title="TẤT CẢ SẢN PHẨM" />
       <FlatList
         style={{marginLeft: 10}}
         numColumns={2}
         data={category}
         renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('DetailsCategory', {data: item})
-            }>
+            onPress={() => navigation.navigate('DetailsProduct', {data: item})}>
             <Item item={item} />
           </TouchableOpacity>
         )}
