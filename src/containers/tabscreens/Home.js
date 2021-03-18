@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -12,38 +12,45 @@ import {
 import Header from '../Header/Header';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { COLORS, icons } from '../../constants';
-import { films } from '../../constants/data/fakeData';
+import {COLORS, icons} from '../../constants';
+import {films} from '../../constants/data/fakeData';
 import Item from '../views/Item';
 // import ItemProduct from '../views/ItemProduct';
 import ItemProduct from '../views/ItemProduct_1';
 import Swiper from 'react-native-swiper';
+import auth from '@react-native-firebase/auth';
 import {
   WIDTH_SCALE,
   HEIGHT_SCALE,
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import { Text } from '../../components';
-import { getCategory } from '../../api/categoryApi';
-import { getProduct } from '../../api/productApi';
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {getCategory} from '../../api/categoryApi';
+import {getProduct, getUserByPhone} from '../../api/productApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Text} from '../../components';
 
-
 export default function Home() {
+  const navigation = useNavigation();
   const [idcategory, setIDCategory] = useState('ps09830');
   const [category, setCategory] = useState();
   const [product, setProduct] = useState();
-  const [phone, setPhone] = useState();
-  
-  useEffect(() => {// test di
+  const [user, setUser] = useState();
+  const [page, setPage] = useState();
+
+  useEffect(() => {
     getAllCategory();
     getAllProduct();
-    getDataParams()
-    console.log('phone ------------>>', phone)
-  const [page, setPage] = useState();
-  // const phone = route.params.phone;
+    getUser();
+  }, []);
+
+  const getUser = async () => {
+    const user = auth().currentUser;
+    const phone = user.phoneNumber.slice(3);
+    let getApi = await getUserByPhone(phone);
+    setUser(getApi.data);
+  };
+
   const getAllCategory = async () => {
     let getApi = await getCategory();
     setCategory(getApi.data);
@@ -55,22 +62,12 @@ export default function Home() {
     });
     setProduct(listTmp);
   };
-  // đọc dữ liệu mà thằng ml tân lưu trong storage
-  getDataParams = async () => {
-    await AsyncStorage.getItem('SDT')
-      .then((res) => setPhone(res))
-      .catch((err) => console.log('do thằng tân'));
-  };
-  // đọc dữ liệu mà thằng ml tân lưu trong storage
-  getDataParams = async () =>{
-     await  AsyncStorage.getItem('SDT').then(res => setPhone(res)).catch(err=> console.log('do thằng tân'))
-     
-  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Trang Chủ" />
+      <Header title="TRANG CHỦ"></Header>
       <ScrollView>
-        <TouchableOpacity style={{ padding: 5 }}>
+        <TouchableOpacity style={{padding: 5}}>
           <View
             style={{
               flexDirection: 'row',
@@ -91,25 +88,24 @@ export default function Home() {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-between',
               marginTop: 5,
             }}>
             <Icon name="location-sharp" color={COLORS.orange} size={20} />
-            <Text style={{ fontWeight: 'bold', fontSize: 14 }}>
-              107 Hoàng Hoa Thám, Phường 6 , Quận Bình Thạnh 
+            <Text style={{fontWeight: 'bold', fontSize: 14}}>
+              {user?.address}
             </Text>
           </View>
         </TouchableOpacity>
-        <View style={{ height: WIDTH / 2 - 20 }}>
+        <View style={{height: WIDTH / 2 - 20}}>
           <Swiper
             autoplay={true}
             autoplayTimeout={3}
-            paginationStyle={{ height: WIDTH / 2 - 240 }}
+            paginationStyle={{height: WIDTH / 2 - 240}}
             dotColor={'#bebebe'}
             showsPagination={true}>
             {films.map((item) => {
               return (
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
                   <TouchableOpacity onPress={() => console.log(item)}>
                     <Image
                       style={styles.banner}
@@ -132,10 +128,10 @@ export default function Home() {
             width: WIDTH - 20,
             marginTop: 10,
           }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>THỰC ĐƠN</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>THỰC ĐƠN</Text>
           <TouchableOpacity
-            onPress={() => navigation.push('Menu', { idcategory })}>
-            <Text style={{ color: COLORS.blue }}>Xem tất cả</Text>
+            onPress={() => navigation.push('Menu', {idcategory})}>
+            <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -143,10 +139,10 @@ export default function Home() {
           data={category}
           horizontal
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('DetailsCategory', { data: item })
+                navigation.navigate('DetailsCategory', {data: item})
               }>
               <Item item={item} />
             </TouchableOpacity>
@@ -191,7 +187,7 @@ export default function Home() {
                 elevation: 5,
               }}
               onPress={() =>
-                navigation.navigate('DetailsProduct', { product: item })
+                navigation.navigate('DetailsProduct', {product: item})
               }>
               <ItemProduct item={item} />
             </Button>

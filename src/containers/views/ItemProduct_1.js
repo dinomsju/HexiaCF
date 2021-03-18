@@ -33,8 +33,8 @@ export default function ItemProduct_1({item}) {
           <Text
             style={styles.text_box_content}
             ellipsizeMode="tail"
-            numberOfLines={1}>
-            {item.artist}
+            numberOfLines={2}>
+            {item.description}
           </Text>
           <Text
             style={styles.text_box_price}
@@ -59,12 +59,13 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: COLORS.textGray,
     // opacity: 0.4,
+    width: 240,
   },
   text_box_name: {
     color: COLORS.black,
     fontSize: 18,
     fontWeight: 'bold',
-    width: 220,
+    width: '84%',
   },
   text_box_price: {
     color: COLORS.textOrange,

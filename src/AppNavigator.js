@@ -1,6 +1,7 @@
 import * as React from 'react';
 import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
+import auth from '@react-native-firebase/auth';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import BottomNavigation from './BottomNavigation';
 import Login from './containers/screens/Login';
@@ -15,12 +16,20 @@ import OrderManage from './containers/screens/OrderManage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AllProduct from './containers/screens/AllProduct';
 const Stack = createStackNavigator();
+const Auth = createStackNavigator();
+
+function AuthStack() {
+  return (
+    <Stack.Navigator headerMode="none" initialRouteName="Login">
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
+    </Stack.Navigator>
+  );
+}
 
 function StackNavigator() {
   return (
     <Stack.Navigator headerMode="none" initialRouteName="Home">
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Home" component={BottomNavigation} />
       <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="DetailsCategory" component={DetailsCategory} />
@@ -34,9 +43,15 @@ function StackNavigator() {
   );
 }
 export default function AppNavigator() {
+  const [user, setUser] = React.useState();
+  React.useEffect(() => {
+    auth().onAuthStateChanged((users) => {
+      setUser(users);
+    });
+  });
   return (
     <NavigationContainer>
-      <StackNavigator />
+      {user ? <StackNavigator /> : <AuthStack />}
     </NavigationContainer>
   );
 }

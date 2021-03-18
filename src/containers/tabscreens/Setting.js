@@ -1,8 +1,9 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {StyleSheet, View, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { COLORS, icons } from '../../constants';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import {COLORS, icons} from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 
@@ -12,8 +13,22 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
+import {getUserByPhone} from '../../api/productApi';
+import {Block, Text, Button} from '../../components';
 export default function Setting() {
   const navigation = useNavigation();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    getUser();
+  });
+
+  const getUser = async () => {
+    const user = auth().currentUser;
+    const phone = user.phoneNumber.slice(3);
+    let getApi = await getUserByPhone(phone);
+    setUser(getApi.data);
+  };
 
   const logOut = async () => {
     await AsyncStorage.removeItem('@auth');
@@ -21,24 +36,84 @@ export default function Setting() {
       .signOut()
       .then(() => console.log('User signed out!'));
     await AsyncStorage.removeItem('SDT');
-    navigation.replace('Login')
+    navigation.replace('Login');
   };
 
-  return (
-    <View style={styles.container}>
-      <View
+  const listItems = [
+    {
+      Icon: 'documents-outline',
+      title: 'Quản lý đơn hàng',
+      onPress: () => {
+        navigation.navigate('OrderManage');
+      },
+    },
+    {
+      Icon: 'gift-outline',
+      title: 'Mã khuyến mãi',
+      onPress: () => {
+        navigation.navigate('OrderManage');
+      },
+    },
+    {
+      Icon: 'wallet-outline',
+      title: 'Thanh toán',
+      onPress: () => {
+        navigation.navigate('OrderManage');
+      },
+    },
+    {
+      Icon: 'ios-map-outline',
+      title: 'Địa chỉ',
+      onPress: () => {
+        navigation.navigate('OrderManage');
+      },
+    },
+    {
+      Icon: 'log-out-outline',
+      title: 'Đăng xuất',
+      onPress: () => logOut(),
+    },
+  ];
+
+  const renderButton = () =>
+    listItems.map((value, index) => (
+      <Button
+        key={index}
+        height={62.5}
+        row
+        alignCenter
+        space={'between'}
         style={{
+          borderBottomWidth: index == listItems.length - 1 ? 0 : 0.4,
+          borderColor: '#808e95',
+        }}
+        onPress={value.onPress}>
+        <Block row alignCenter>
+          <Icon size={23} name={value.Icon} />
+          <Text size={15} marginLeft={20}>
+            {value.title}
+          </Text>
+        </Block>
+        <AntIcon name="right" size={15} />
+      </Button>
+    ));
+
+  return (
+    <Block style={styles.container}>
+      <Block
+        style={{
+          marginTop: 28,
           flexDirection: 'row',
           alignItems: 'center',
           paddingHorizontal: 10,
           paddingVertical: 20,
         }}>
-        <Icon name="person-circle-sharp" color={COLORS.black} size={100} />
-        <View style={{ paddingHorizontal: 10 }}>
-          <Text style={{ paddingBottom: 10, fontSize: 14, fontWeight: 'bold' }}>
-            Nguyễn Duy Tân{' '}
+        <Icon name="person-circle-sharp" color={COLORS.black} size={70} />
+        <Block style={{paddingHorizontal: 10}}>
+          <Text style={{paddingBottom: 10, fontSize: 14, fontWeight: 'bold'}}>
+            {user?.name === null ? 'Ẩn danh' : user?.name}
           </Text>
-          <View
+          <Block
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -51,144 +126,11 @@ export default function Setting() {
               color={COLORS.black}
               size={20}
             />
-          </View>
-        </View>
-      </View>
-      <TouchableOpacity onPress={() => navigation.navigate('OrderManage')}>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 0.4,
-            borderBottomColor: COLORS.textGray,
-          }}>
-          <Icon name="documents-outline" color={COLORS.textGray} size={40} />
-          <Text
-            style={{
-              fontSize: 14,
-              color: COLORS.black,
-              paddingLeft: 10,
-              paddingRight: WIDTH_SCALE * 150,
-            }}>
-            Quản lý đơn hàng
-          </Text>
-          <Icon
-            style={[styles.edit, styles.p]}
-            name="chevron-forward"
-            color={COLORS.black}
-            size={40}
-          />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 0.4,
-            borderBottomColor: COLORS.textGray,
-          }}>
-          <Icon name="gift-outline" color={COLORS.textGray} size={40} />
-          <Text
-            style={{
-              fontSize: 14,
-              color: COLORS.black,
-              paddingLeft: 10,
-              paddingRight: WIDTH_SCALE * 165,
-            }}>
-            Mã khuyến mãi
-          </Text>
-          <Icon
-            style={[styles.edit, styles.p]}
-            name="chevron-forward"
-            color={COLORS.black}
-            size={40}
-          />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 0.4,
-            borderBottomColor: COLORS.textGray,
-          }}>
-          <Icon name="cash-outline" color={COLORS.textGray} size={40} />
-          <Text
-            style={{
-              fontSize: 14,
-              color: COLORS.black,
-              paddingLeft: 10,
-              paddingRight: WIDTH_SCALE * 190,
-            }}>
-            Thanh toán
-          </Text>
-          <Icon
-            style={[styles.edit, styles.p]}
-            name="chevron-forward"
-            color={COLORS.black}
-            size={40}
-          />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 0.4,
-            borderBottomColor: COLORS.textGray,
-          }}>
-          <Icon name="paper-plane-outline" color={COLORS.textGray} size={40} />
-          <Text
-            style={{
-              fontSize: 14,
-              color: COLORS.black,
-              paddingLeft: 5,
-              paddingRight: WIDTH_SCALE * 215,
-            }}>
-            Địa chỉ
-          </Text>
-          <Icon
-            style={[styles.edit, styles.p]}
-            name="chevron-forward"
-            color={COLORS.black}
-            size={40}
-          />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => logOut()}>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 0.4,
-            borderBottomColor: COLORS.textGray,
-          }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
-          <Text
-            style={{
-              fontSize: 14,
-              color: COLORS.black,
-              paddingLeft: 5,
-              paddingRight: WIDTH_SCALE * 230,
-            }}>
-            Đăng xuất
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+          </Block>
+        </Block>
+      </Block>
+      <Block marginHorizontal={10}>{renderButton()}</Block>
+    </Block>
   );
 }
 

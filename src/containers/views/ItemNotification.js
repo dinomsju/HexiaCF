@@ -18,6 +18,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
+import moment from 'moment';
+import {IMAGE_URL} from '../../api/BASE_URL';
 export default function ItemNotification({item}) {
   return (
     // <TouchableOpacity style={home.box} key={i} onPress={() => changeCategory(c)}>
@@ -37,7 +39,10 @@ export default function ItemNotification({item}) {
           style={styles.image_box}
           resizeMode={FastImage?.resizeMode?.cover}
         /> */}
-         <Image style={styles.image_box} source={{uri: item.imageUrl}} />
+        <Image
+          style={styles.image_box}
+          source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
+        />
         <View style={{justifyContent: 'center', marginLeft: 15}}>
           <Text
             style={styles.text_box_name}
@@ -48,14 +53,20 @@ export default function ItemNotification({item}) {
           <Text
             style={styles.text_box_content}
             ellipsizeMode="tail"
-            numberOfLines={1}>
-            {item.artist}
+            numberOfLines={2}>
+            {item.description}
           </Text>
           <Text
             style={styles.text_box_price}
             ellipsizeMode="tail"
             numberOfLines={1}>
             32.000đ
+          </Text>
+          <Text
+            style={styles.text_box_content}
+            ellipsizeMode="tail"
+            numberOfLines={2}>
+            {`${moment(item?.createAt).format('DD/MM/YYYY')}`}
           </Text>
         </View>
       </View>
@@ -81,11 +92,13 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: COLORS.textGray,
     // opacity: 0.4,
+    width: 240,
   },
   text_box_name: {
     color: COLORS.black,
     fontSize: 18,
     fontWeight: 'bold',
+    width: '84%',
   },
   text_box_price: {
     color: COLORS.textOrange,

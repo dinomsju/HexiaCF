@@ -29,7 +29,7 @@ export default function OrderManage() {
     all: () => <ViewTab isPending={2} />,
   });
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, marginTop: 28}}>
       <Block
         row
         height={50}

@@ -37,7 +37,7 @@ const HeaderCart = ({title}) => {
       />
       <Text style={{fontSize: 18, fontWeight: 'bold'}}>{title}</Text>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon name="remove" color={COLORS.black} size={30} />
+        {/* <Icon name="remove" color={COLORS.black} size={30} /> */}
       </TouchableOpacity>
     </View>
   );
