@@ -31,12 +31,10 @@ const Header = ({title}) => {
       </TouchableOpacity> */}
       <Image
         style={styles.logo}
-        source={{
-          uri:
-            'https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg',
-        }}
+        source={require('../../constants/icons/logo.png')}
+        resizeMode="center"
       />
-      <Text style={{fontSize: 18, fontWeight: 'bold', marginLeft: 115}}>
+      <Text style={{fontSize: 18, fontWeight: 'bold', marginLeft: 95}}>
         {title}
       </Text>
     </View>
@@ -53,11 +51,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    borderWidth: 0.19,
+    // borderWidth: 0.19,
     alignItems: 'center',
   },
   logo: {
-    width: WIDTH / 8 ,
-    height: WIDTH / 8,
+    width: WIDTH / 9,
+    height: WIDTH / 9,
+    marginLeft: 10,
   },
 });

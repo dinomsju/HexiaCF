@@ -54,34 +54,6 @@ export default function Setting() {
           </View>
         </View>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 15,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 0.4,
-            borderBottomColor: COLORS.textGray,
-          }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
-          <Text
-            style={{
-              fontSize: 14,
-              color: COLORS.black,
-              paddingLeft: 10,
-              paddingRight: WIDTH_SCALE * 190,
-            }}>
-            Giỏ hàng
-          </Text>
-          <Icon
-            style={[styles.edit, styles.p]}
-            name="chevron-forward"
-            color={COLORS.black}
-            size={40}
-          />
-        </View>
-      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('OrderManage')}>
         <View
           style={{
@@ -92,7 +64,7 @@ export default function Setting() {
             borderBottomWidth: 0.4,
             borderBottomColor: COLORS.textGray,
           }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Icon name="documents-outline" color={COLORS.textGray} size={40} />
           <Text
             style={{
               fontSize: 14,
@@ -120,7 +92,7 @@ export default function Setting() {
             borderBottomWidth: 0.4,
             borderBottomColor: COLORS.textGray,
           }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Icon name="gift-outline" color={COLORS.textGray} size={40} />
           <Text
             style={{
               fontSize: 14,
@@ -148,7 +120,7 @@ export default function Setting() {
             borderBottomWidth: 0.4,
             borderBottomColor: COLORS.textGray,
           }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Icon name="cash-outline" color={COLORS.textGray} size={40} />
           <Text
             style={{
               fontSize: 14,
@@ -176,7 +148,7 @@ export default function Setting() {
             borderBottomWidth: 0.4,
             borderBottomColor: COLORS.textGray,
           }}>
-          <Icon name="ellipse" color={COLORS.textGray} size={50} />
+          <Icon name="paper-plane-outline" color={COLORS.textGray} size={40} />
           <Text
             style={{
               fontSize: 14,

@@ -9,12 +9,14 @@ import {
   StatusBar,
   SafeAreaView,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import Header from '../Header/Header';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS, icons } from '../../constants';
 import { films } from '../../constants/data/fakeData';
 import Item from '../views/Item';
-import ItemProduct from '../views/ItemProduct';
+// import ItemProduct from '../views/ItemProduct';
+import ItemProduct from '../views/ItemProduct_1';
 import Swiper from 'react-native-swiper';
 import {
   WIDTH_SCALE,
@@ -26,6 +28,9 @@ import { Text } from '../../components';
 import { getCategory } from '../../api/categoryApi';
 import { getProduct } from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {Button, Text} from '../../components';
+
+
 export default function Home() {
   const [idcategory, setIDCategory] = useState('ps09830');
   const [category, setCategory] = useState();
@@ -37,14 +42,24 @@ export default function Home() {
     getAllProduct();
     getDataParams()
     console.log('phone ------------>>', phone)
-  }, []);
+  const [page, setPage] = useState();
+  // const phone = route.params.phone;
   const getAllCategory = async () => {
     let getApi = await getCategory();
     setCategory(getApi.data);
   };
   const getAllProduct = async () => {
     let getApi = await getProduct();
-    setProduct(getApi.data.products);
+    const listTmp = getApi.data.products.sort((a, b) => {
+      return new Date(b.createAt) - new Date(a.createAt);
+    });
+    setProduct(listTmp);
+  };
+  // đọc dữ liệu mà thằng ml tân lưu trong storage
+  getDataParams = async () => {
+    await AsyncStorage.getItem('SDT')
+      .then((res) => setPhone(res))
+      .catch((err) => console.log('do thằng tân'));
   };
   // đọc dữ liệu mà thằng ml tân lưu trong storage
   getDataParams = async () =>{
@@ -53,6 +68,7 @@ export default function Home() {
   }
   return (
     <SafeAreaView style={styles.container}>
+      <Header title="Trang Chủ" />
       <ScrollView>
         <TouchableOpacity style={{ padding: 5 }}>
           <View
@@ -68,7 +84,7 @@ export default function Home() {
                 paddingRight: 5,
                 color: COLORS.black,
               }}>
-              ĐỊA CHỈ {phone?phone:'tan cut heo'}
+              ĐỊA CHỈ
             </Text>
             <Icon name="chevron-down-outline" color={COLORS.black} size={20} />
           </View>
@@ -135,7 +151,7 @@ export default function Home() {
               <Item item={item} />
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.title}
+          keyExtractor={(item) => item._id}
         />
 
         <View
@@ -146,23 +162,41 @@ export default function Home() {
             width: WIDTH - 20,
             marginTop: 10,
           }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>SẢN PHẨM MỚI</Text>
-          <Text style={{ color: COLORS.blue }}>Xem tất cả</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>SẢN PHẨM</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('AllProduct')}>
+            <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
           // numColumns={2}
           data={product}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <TouchableOpacity
+          renderItem={({item}) => (
+            <Button
+              margin={5}
+              radius={10}
+              row
+              space={'between'}
+              justifyCenter
+              alignCenter
+              backgroundColor={'#F9F9F9'}
+              padding={20}
+              style={{
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              }}
               onPress={() =>
                 navigation.navigate('DetailsProduct', { product: item })
               }>
               <ItemProduct item={item} />
-            </TouchableOpacity>
+            </Button>
           )}
-          keyExtractor={(item) => item.title}
+          keyExtractor={(item) => item._id}
         />
       </ScrollView>
     </SafeAreaView>
