@@ -24,7 +24,7 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import {Text} from '../../components';
+import {Button, Text} from '../../components';
 import {getCategory} from '../../api/categoryApi';
 import {getProduct} from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
