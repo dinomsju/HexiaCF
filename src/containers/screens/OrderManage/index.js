@@ -14,7 +14,7 @@ export default function OrderManage() {
   const [routes] = useState([
     {key: 'pending', title: 'Chờ duyệt'},
     {key: 'wait', title: 'Đang giao'},
-    {key: 'all', title: 'Đã giao'},
+    {key: 'all', title: 'Hoàn thành'},
   ]);
   const isFocused = useIsFocused();
   const [reload, setReload] = useState(false);

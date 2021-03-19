@@ -49,6 +49,7 @@ export default function Home() {
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
     setUser(getApi.data);
+    console.log(getApi.data);
   };
 
   const getAllCategory = async () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   StyleSheet,
   Image,
@@ -10,10 +11,9 @@ import {
 import {greaterOrEq} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {COLORS, icons} from '../../constants';
-import {WIDTH} from '../../constants/constants';
-import {useNavigation} from '@react-navigation/native';
+import {HEIGHT, WIDTH} from '../../constants/constants';
 
-const HeaderCart = ({title}) => {
+const FooterDetailPro = ({title, price, onPress}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -30,27 +30,49 @@ const HeaderCart = ({title}) => {
       {/* <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="arrow-back" color={COLORS.orange} size={30} />
       </TouchableOpacity> */}
-      <Image
-        style={styles.logo}
-        source={require('../../constants/icons/logo.png')}
-        resizeMode="center"
-      />
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>{title}</Text>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        {/* <Icon name="remove" color={COLORS.black} size={30} /> */}
+      <View
+        style={{
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}>
+        {/* <Text style={{fontSize: 12, color: COLORS.white}}>{title}</Text> */}
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: COLORS.white,
+            marginLeft: 10,
+          }}>
+          {price}đ
+        </Text>
+      </View>
+
+      <TouchableOpacity
+        style={{
+          backgroundColor: COLORS.textOrange,
+          width: WIDTH / 2,
+          height: HEIGHT / 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 8,
+        }}
+        onPress={onPress}>
+        <Text style={{fontSize: 16, fontWeight: 'bold', color: COLORS.white}}>
+          THÊM VÀO GIỎ HÀNG
+        </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default HeaderCart;
+export default FooterDetailPro;
 
 const styles = StyleSheet.create({
   container: {
     width: WIDTH,
     height: 55,
     marginTop: 28,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.footer,
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderWidth: 0.19,
@@ -58,7 +80,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   logo: {
-    width: WIDTH / 9,
-    height: WIDTH / 9,
+    width: WIDTH / 8,
+    height: WIDTH / 8,
   },
 });

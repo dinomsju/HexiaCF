@@ -44,14 +44,14 @@ const FooterCart = ({title, price, onPress}) => {
       <TouchableOpacity
         style={{
           backgroundColor: COLORS.textOrange,
-          width: WIDTH / 6,
-          height: HEIGHT / 30,
+          width: WIDTH / 2,
+          height: HEIGHT / 22,
           justifyContent: 'center',
           alignItems: 'center',
-          borderRadius: 20,
+          borderRadius: 8,
         }}
         onPress={() => navigation.navigate('Payment')}>
-        <Text style={{fontSize: 8, fontWeight: 'bold', color: COLORS.white}}>
+        <Text style={{fontSize: 18, fontWeight: 'bold', color: COLORS.white}}>
           ĐẶT HÀNG
         </Text>
       </TouchableOpacity>

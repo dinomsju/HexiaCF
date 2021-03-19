@@ -4,15 +4,29 @@ import {FlatList, Image, SafeAreaView, ScrollView} from 'react-native';
 import {Block, Text, Button} from '../../components';
 import Header from '../Header/HeaderPayment';
 import {RadioButton} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/AntDesign';
 //example
-import {getProduct} from '../../api/productApi';
+import {getProduct, getUserByPhone} from '../../api/productApi';
 import Item from '../views/ItemPayment';
 import Footer from '../Footer/FooterPayment';
+import auth from '@react-native-firebase/auth';
 
 const Payment = () => {
   const navigation = useNavigation();
   const [value, setValue] = useState('Giao hàng tận nơi');
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    getUser();
+  });
+
+  const getUser = async () => {
+    const user = auth().currentUser;
+    const phone = user.phoneNumber.slice(3);
+    let getApi = await getUserByPhone(phone);
+    setUser(getApi.data);
+  };
+
   const [product, setProduct] = useState([
     {
       title: 'Cà phê sữa đá',
@@ -55,12 +69,10 @@ const Payment = () => {
           </RadioButton.Group>
           <Block marginHorizontal={10}>
             <Text bold size={15}>
-              Nguyễn Duy Tân
+              {user?.name}
             </Text>
-            <Text color={'#848484'}>0375112018</Text>
-            <Text color={'#848484'}>
-              107/2 Hoàng Hoa Thám, Phường 6, Quận Bình Thạnh, TP. Hồ Chí Minh
-            </Text>
+            <Text color={'#848484'}>0{user?.phone.slice(3)}</Text>
+            <Text color={'#848484'}>{user?.address}</Text>
           </Block>
         </Block>
         <Block marginHorizontal={10} marginVertical={5}>
@@ -106,10 +118,11 @@ const Payment = () => {
               Tổng cộng
             </Text>
           </Block>
-          <Block padding={5}
-          row
-          space={'between'}
-          style={{
+          <Block
+            padding={5}
+            row
+            space={'between'}
+            style={{
               borderBottomWidth: 1,
               paddingBottom: 10,
               borderColor: '#CDD0D9',
@@ -117,30 +130,33 @@ const Payment = () => {
             <Text>Tổng tạm tính:</Text>
             <Text color={'#EA8025'}>127.000đ</Text>
           </Block>
-          <Block padding={5}
-          row
-          space={'between'}
-          alignCenter
-          style={{
+          <Block
+            padding={5}
+            row
+            space={'between'}
+            alignCenter
+            style={{
               borderBottomWidth: 1,
               paddingBottom: 10,
               borderColor: '#CDD0D9',
             }}>
-              <Block>
-            <Text bold color={'#EA8025'}>Khuyến mãi</Text>
-            <Text>Bấm vào để chọn khuyến mãi</Text>
+            <Block>
+              <Text bold color={'#EA8025'}>
+                Khuyến mãi
+              </Text>
+              <Text>Bấm vào để chọn khuyến mãi</Text>
             </Block>
-              <Icon name="right" size={18}/>
+            <Icon name="right" size={18} />
           </Block>
-          <Block padding={5}
-          row
-          space={'between'}>
+          <Block padding={5} row space={'between'}>
             <Text bold>Thành tiền</Text>
-            <Text color={'#EA8025'} bold>127.000đ</Text>
+            <Text color={'#EA8025'} bold>
+              127.000đ
+            </Text>
           </Block>
         </Block>
       </ScrollView>
-      <Footer title={` 1 món trong giỏ hàng`} price={`82.000đ`} goTo={'Cart'}/>
+      <Footer title={` 1 món trong giỏ hàng`} price={`82.000đ`} goTo={'Cart'} />
     </SafeAreaView>
   );
 };

@@ -21,6 +21,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
 import {IMAGE_URL} from '../../api/BASE_URL';
+import Footer from '../Footer/FooterDetailPro';
 
 export default function DetailsProduct(props) {
   const navigation = useNavigation();
@@ -30,30 +31,31 @@ export default function DetailsProduct(props) {
   const [hearColor, setHearColor] = useState(COLORS.textGray);
   const [condition, setCondition] = useState(false);
 
-  numberPlus = (number) => {
+  const numberPlus = (number) => {
     setNumber(number + 1);
     setLimit(false);
   };
-  numberMinus = (number) => {
+  const numberMinus = (number) => {
     if (number > 1) {
       setNumber(number - 1);
     } else {
       setLimit(true);
     }
   };
-  addCart = () => {
+  const addCart = () => {
     navigation.push('Home');
 
     console.log('addCart -------> ' + number);
+    console.log('Tổng tiền -------->' + product.price * number);
     console.log('condition -------> ' + condition);
     console.log('hearColor -------> ' + hearColor);
   };
-  heartCondition = () => {
+  const heartCondition = () => {
     setCondition(condition === false ? true : false);
   };
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <ImageBackground
           style={styles.header}
           source={{uri: `${IMAGE_URL}${product.imageUrl}`}}>
@@ -94,64 +96,48 @@ export default function DetailsProduct(props) {
             ellipsizeMode="tail">
             {product.description}
           </Text>
-          <View
-            style={{
-              justifyContent: 'flex-start',
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingTop: 10,
-            }}>
-            <TouchableOpacity
-              onPress={() => numberMinus(number)}
-              disabled={limit}>
-              <Icon
-                name="remove-circle-outline"
-                color={COLORS.textGray}
-                size={25}
-              />
-            </TouchableOpacity>
-
-            <Text style={{paddingHorizontal: 10}}>{number}</Text>
-
-            <TouchableOpacity onPress={() => numberPlus(number)}>
-              <Icon
-                name="add-circle-outline"
-                color={COLORS.textGray}
-                size={25}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              paddingTop: 20,
-            }}>
-            <Text
-              style={{
-                color: COLORS.textOrange,
-                fontSize: 20,
-                fontWeight: 'bold',
-              }}
-              ellipsizeMode="tail"
-              numberOfLines={1}>
-              {product.price}đ
-            </Text>
-            <TouchableOpacity style={styles.add} onPress={() => addCart()}>
-              <Text
-                style={{
-                  color: COLORS.white,
-                  fontWeight: 'bold',
-                  fontSize: 14,
-                  fontStyle: 'normal',
-                }}>
-                THÊM VÀO GIỎ HÀNG
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </ScrollView>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: 10,
+          justifyContent: 'center',
+        }}>
+        <TouchableOpacity onPress={() => numberMinus(number)} disabled={limit}>
+          <View
+            style={{
+              width: 100,
+              height: 30,
+              borderColor: 'gray',
+              borderWidth: 2,
+              borderRadius: 8,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon name="remove" color={COLORS.textGray} size={30} />
+          </View>
+        </TouchableOpacity>
+
+        <Text style={{paddingHorizontal: 10}}>{number}</Text>
+
+        <TouchableOpacity onPress={() => numberPlus(number)}>
+          <View
+            style={{
+              width: 100,
+              height: 30,
+              borderColor: 'gray',
+              borderWidth: 2,
+              borderRadius: 8,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon name="add" color={COLORS.textGray} size={30} />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <Footer price={product.price * number} onPress={() => addCart()} />
     </View>
   );
 }

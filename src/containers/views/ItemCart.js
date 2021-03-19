@@ -19,6 +19,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
+import {IMAGE_URL} from '../../api/BASE_URL';
 export default function ItemCart({item}) {
   const [number, setNumber] = useState(item.quality);
   const [limit, setLimit] = useState(false);
@@ -26,13 +27,13 @@ export default function ItemCart({item}) {
 
   const Plus = (number) => {
     setNumber(number + 1);
-    setPrice(number * item?._idProduct?.price)
+    setPrice(number * item?._idProduct?.price);
     setLimit(false);
   };
   const Minus = (number) => {
     if (number > 1) {
       setNumber(number - 1);
-      setPrice(number * item?._idProduct?.price)
+      setPrice(number * item?._idProduct?.price);
     } else {
       setLimit(true);
     }
@@ -56,7 +57,7 @@ export default function ItemCart({item}) {
             paddingVertical: 5,
           }}>
           <Image
-            source={{uri: item?._idProduct?.imageUrl}}
+            source={{uri: `${IMAGE_URL}${item?._idProduct?.imageUrl}`}}
             style={styles.image_box}
             resizeMode="cover"
           />
@@ -77,7 +78,7 @@ export default function ItemCart({item}) {
               style={styles.text_box_name}
               ellipsizeMode="tail"
               numberOfLines={1}>
-              {item.title}
+              {item?._idProduct?.title}
             </Text>
             <TouchableOpacity>
               <FontAwesome name="remove" color={COLORS.textGray} size={25} />

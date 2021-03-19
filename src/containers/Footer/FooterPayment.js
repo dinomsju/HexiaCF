@@ -37,14 +37,14 @@ const FooterPayment = ({title, price, goTo}) => {
       <TouchableOpacity
         style={{
           backgroundColor: COLORS.textOrange,
-          width: WIDTH / 6,
-          height: HEIGHT / 30,
+          width: WIDTH / 2,
+          height: HEIGHT / 22,
           justifyContent: 'center',
           alignItems: 'center',
-          borderRadius: 20,
+          borderRadius: 8,
         }}
         onPress={() => navigation.navigate('Cart')}>
-        <Text style={{fontSize: 8, fontWeight: 'bold', color: COLORS.white}}>
+        <Text style={{fontSize: 16, fontWeight: 'bold', color: COLORS.white}}>
           THANH TOÁN
         </Text>
       </TouchableOpacity>

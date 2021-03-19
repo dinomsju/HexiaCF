@@ -31,19 +31,15 @@ export default function Cart() {
 
   const getDataUser = async () => {
     let getApiUser = await getUserByPhone('906288042');
-    setUserID(getApiUser.data._id)
-   console.log('getApiUser -------------> ', getApiUser.data);
-  
-  };
- 
-  const getDataCart = async () => {
-    let getApiCart = await getCartByUser(userID);
-    setDataCart(getApiCart?.data?.cart.products);
-  //  console.log('getApiCart -------------> ', getApiCart.data.cart.products);
-   console.log('setDataCart -------------> ', dataCart);
+    setUserID(getApiUser?.data?._id);
   };
 
-  console.log('setUserID1 -------------> ', userID); 
+  const getDataCart = async () => {
+    let getApiCart = await getCartByUser(userID);
+    setDataCart(getApiCart?.data?.cart?.products);
+  };
+
+  console.log('setUserID1 -------------> ', userID);
   return (
     <View style={styles.container}>
       <Header title="GIỎ HÀNG" />
