@@ -20,11 +20,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
 import {IMAGE_URL} from '../../api/BASE_URL';
+import auth from '@react-native-firebase/auth';
+import {getUserByPhone, updateCartByID} from '../../api/cartApi';
 export default function ItemCart({item}) {
   const [number, setNumber] = useState(item.quality);
   const [limit, setLimit] = useState(false);
   const [price, setPrice] = useState(item?._idProduct.price);
   const [total, setTotal] = useState(item.quality * item._idProduct.price);
+  const [userItem, setUserItem] = useState();
   const Plus = (number, price) => {
     setNumber(number + 1);
     setLimit(false);
@@ -36,9 +39,21 @@ export default function ItemCart({item}) {
       setLimit(true);
     }
   };
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  getUser = async () => {
+    const userAuth = auth().currentUser;
+    const phone = userAuth.phoneNumber.slice(3);
+    let getApi = await getUserByPhone(phone);
+    setUserItem(getApi.data);
+  };
   // console.log('number', item.quality);
   // console.log('price', item?._idProduct?.price);
-  // console.log('total', total);
+  console.log('id', item._idProduct._id);
+  console.log('user123456 ', userItem);
+
   return (
     <View style={styles.box}>
       <View
@@ -80,7 +95,7 @@ export default function ItemCart({item}) {
               numberOfLines={1}>
               {item?._idProduct?.title}
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => deleteProduct()}>
               <FontAwesome name="remove" color={COLORS.textGray} size={25} />
             </TouchableOpacity>
           </View>

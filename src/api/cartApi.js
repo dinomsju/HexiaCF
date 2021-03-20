@@ -41,4 +41,26 @@ const addCartByID = async (_uid, _idProduct, quality) => {
     return 'error';
   }
 };
-export {getCartByUser, getUserByPhone, addCartByID};
+const updateCartByID = async (_uid, _idProduct, quality) => {
+  try {
+    let updateCart = await axios.post(
+      `${BASE_URL}/api/updateCart`,
+      {
+        _uid,
+        _idProduct,
+        quality,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    return addCart;
+  } catch (error) {
+    console.log('loi add cart-------> ', error);
+    return 'error';
+  }
+};
+export {getCartByUser, getUserByPhone, addCartByID, updateCartByID};

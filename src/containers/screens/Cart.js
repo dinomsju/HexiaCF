@@ -50,7 +50,14 @@ export default function Cart() {
   let totalA = sl?.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
   );
-
+  if (dataCart === undefined) {
+    return (
+      <View>
+        <Header title="GIỎ HÀNG" />
+        <Text style={styles.alertWarning}>chưa có giỏ hàng!</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Header title="GIỎ HÀNG" />
@@ -69,28 +76,24 @@ export default function Cart() {
             <Text style={{color: COLORS.blue}}>Xóa tất cả</Text>
           </TouchableOpacity>
         </View>
-        {dataCart?.length === 0 ? (
-          <Text style={styles.alertWarning}>Tìm thấy (0) kết quả!</Text>
-        ) : (
-          <FlatList
-            numColumns={1}
-            data={dataCart}
-            renderItem={({item}) => (
-              // onPress={() =>
-              //   navigation.navigate('DetailsCategory', {data: item})
-              // }
 
-              <Item item={item} />
-            )}
-            keyExtractor={(item) => item._id}
-          />
-        )}
+        <FlatList
+          numColumns={1}
+          data={dataCart}
+          renderItem={({item}) => (
+            // onPress={() =>
+            //   navigation.navigate('DetailsCategory', {data: item})
+            // }
+
+            <Item item={item} />
+          )}
+          keyExtractor={(item) => item._id}
+        />
       </ScrollView>
       <FooterCart title={`${number} món trong giỏ hàng`} price={`${totalA}đ`} />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

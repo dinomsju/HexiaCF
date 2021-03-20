@@ -37,6 +37,7 @@ const FooterCart = ({title, price, onPress}) => {
           flexDirection: 'column',
         }}>
         <Text style={{fontSize: 12, color: COLORS.white}}>{title}</Text>
+
         <Text style={{fontSize: 12, fontWeight: 'bold', color: COLORS.white}}>
           {price}
         </Text>
