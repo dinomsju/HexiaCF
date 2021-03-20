@@ -15,6 +15,7 @@ import {HEIGHT, WIDTH} from '../../constants/constants';
 
 const FooterCart = ({title, price, onPress}) => {
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <StatusBar

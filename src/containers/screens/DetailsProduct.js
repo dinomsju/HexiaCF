@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   StyleSheet,
@@ -10,6 +10,7 @@ import {
   Animated,
   ScrollView,
   FlatList,
+  ToastAndroid,
 } from 'react-native';
 import {
   WIDTH_SCALE,
@@ -22,7 +23,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, icons} from '../../constants';
 import {IMAGE_URL} from '../../api/BASE_URL';
 import Footer from '../Footer/FooterDetailPro';
-
+import auth from '@react-native-firebase/auth';
+import {getUserByPhone} from '../../api/productApi';
+import {addCartByID} from '../../api/cartApi';
 export default function DetailsProduct(props) {
   const navigation = useNavigation();
   const {product} = props.route.params;
@@ -30,6 +33,10 @@ export default function DetailsProduct(props) {
   const [limit, setLimit] = useState(false);
   const [hearColor, setHearColor] = useState(COLORS.textGray);
   const [condition, setCondition] = useState(false);
+  const [user, setUser] = useState();
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const numberPlus = (number) => {
     setNumber(number + 1);
@@ -50,9 +57,37 @@ export default function DetailsProduct(props) {
     console.log('condition -------> ' + condition);
     console.log('hearColor -------> ' + hearColor);
   };
+
+  addCartByIDUser = async () => {
+    let addCart = await addCartByID(user._id, product._id, number);
+    console.log('userrrrrr ------->>>> ', addCart);
+    toastAndroid('Thêm vào giỏ hàng thành công!');
+    navigation.push('Home');
+
+    // console.log('id user -------> ' + user._id);
+    // console.log('id product -------> ' + product._id);
+    // console.log('number -------> ' + number);
+  };
   const heartCondition = () => {
     setCondition(condition === false ? true : false);
   };
+  const getUser = async () => {
+    const user = auth().currentUser;
+    const phone = user.phoneNumber.slice(3);
+    let getApi = await getUserByPhone(phone);
+    setUser(getApi.data);
+    console.log('data-----------> ', getApi.data);
+  };
+  const toastAndroid = (text) => {
+    ToastAndroid.showWithGravityAndOffset(
+      text,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      0,
+      100,
+    );
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -137,7 +172,10 @@ export default function DetailsProduct(props) {
           </View>
         </TouchableOpacity>
       </View>
-      <Footer price={product.price * number} onPress={() => addCart()} />
+      <Footer
+        price={product.price * number}
+        onPress={() => addCartByIDUser()}
+      />
     </View>
   );
 }

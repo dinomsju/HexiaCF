@@ -23,22 +23,22 @@ import {IMAGE_URL} from '../../api/BASE_URL';
 export default function ItemCart({item}) {
   const [number, setNumber] = useState(item.quality);
   const [limit, setLimit] = useState(false);
-  const [price, setPrice] = useState(item?.quality * item?._idProduct?.price);
-
-  const Plus = (number) => {
+  const [price, setPrice] = useState(item?._idProduct.price);
+  const [total, setTotal] = useState(item.quality * item._idProduct.price);
+  const Plus = (number, price) => {
     setNumber(number + 1);
-    setPrice(number * item?._idProduct?.price);
     setLimit(false);
   };
   const Minus = (number) => {
     if (number > 1) {
       setNumber(number - 1);
-      setPrice(number * item?._idProduct?.price);
     } else {
       setLimit(true);
     }
   };
-
+  // console.log('number', item.quality);
+  // console.log('price', item?._idProduct?.price);
+  // console.log('total', total);
   return (
     <View style={styles.box}>
       <View
@@ -133,7 +133,7 @@ export default function ItemCart({item}) {
                 }}
                 ellipsizeMode="tail"
                 numberOfLines={1}>
-                {price}
+                {number * price}
               </Text>
             </View>
           </View>

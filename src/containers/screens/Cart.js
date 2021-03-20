@@ -18,28 +18,39 @@ import {
 import {COLORS, icons} from '../../constants';
 import {getUserByPhone, getCartByUser} from '../../api/cartApi';
 import Item from '../views/ItemCart';
+
+import auth from '@react-native-firebase/auth';
 export default function Cart() {
-  const [userID, setUserID] = useState();
   const [dataCart, setDataCart] = useState();
-  const [number, setNumber] = useState(3);
+  const [number, setNumber] = useState(0);
   const [money, setMoney] = useState(127000 + '');
-  const format = money.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const [user, setUser] = useState();
+
   useEffect(() => {
-    getDataUser();
-    getDataCart();
+    getUser();
   }, []);
 
-  const getDataUser = async () => {
-    let getApiUser = await getUserByPhone('906288042');
-    setUserID(getApiUser?.data?._id);
+  getUser = async () => {
+    const userAuth = auth().currentUser;
+    const phone = userAuth.phoneNumber.slice(3);
+    let getApi = await getUserByPhone(phone);
+    getDataCart(getApi.data._id);
   };
-
-  const getDataCart = async () => {
+  getDataCart = async (userID) => {
     let getApiCart = await getCartByUser(userID);
+
+    setNumber(getApiCart?.data?.cart?.products?.length);
+
     setDataCart(getApiCart?.data?.cart?.products);
   };
+  let sl = dataCart?.map((dataCart, index) => {
+    return dataCart.quality * dataCart?._idProduct.price;
+  });
 
-  console.log('setUserID1 -------------> ', userID);
+  let totalA = sl?.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+  );
+
   return (
     <View style={styles.container}>
       <Header title="GIỎ HÀNG" />
@@ -58,24 +69,24 @@ export default function Cart() {
             <Text style={{color: COLORS.blue}}>Xóa tất cả</Text>
           </TouchableOpacity>
         </View>
+        {dataCart?.length === 0 ? (
+          <Text style={styles.alertWarning}>Tìm thấy (0) kết quả!</Text>
+        ) : (
+          <FlatList
+            numColumns={1}
+            data={dataCart}
+            renderItem={({item}) => (
+              // onPress={() =>
+              //   navigation.navigate('DetailsCategory', {data: item})
+              // }
 
-        <FlatList
-          numColumns={1}
-          data={dataCart}
-          renderItem={({item}) => (
-            // <TouchableOpacity
-            // // onPress={() =>
-            // //   navigation.navigate('DetailsCategory', {data: item})
-            // // }
-            // >
-            //   <Item item={item} />
-            // </TouchableOpacity>
-            <Item item={item} />
-          )}
-          keyExtractor={(item) => item.title}
-        />
+              <Item item={item} />
+            )}
+            keyExtractor={(item) => item._id}
+          />
+        )}
       </ScrollView>
-      <FooterCart title={`${number} món trong giỏ hàng`} price={`${format}đ`} />
+      <FooterCart title={`${number} món trong giỏ hàng`} price={`${totalA}đ`} />
     </View>
   );
 }
@@ -83,5 +94,16 @@ export default function Cart() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  alertWarning: {
+    backgroundColor: '#fcf8e3',
+    borderColor: '#faebcc',
+    padding: 10,
+    marginTop: 5,
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#8a6d3b',
+    fontSize: 20,
   },
 });
