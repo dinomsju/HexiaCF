@@ -22,7 +22,7 @@ import {COLORS, icons} from '../../constants';
 import {IMAGE_URL} from '../../api/BASE_URL';
 import auth from '@react-native-firebase/auth';
 import {getUserByPhone, updateCartByID} from '../../api/cartApi';
-export default function ItemCart({item}) {
+export default function ItemCart({item, onPress}) {
   const [number, setNumber] = useState(item.quality);
   const [limit, setLimit] = useState(false);
   const [price, setPrice] = useState(item?._idProduct.price);
@@ -95,7 +95,7 @@ export default function ItemCart({item}) {
               numberOfLines={1}>
               {item?._idProduct?.title}
             </Text>
-            <TouchableOpacity onPress={() => deleteProduct()}>
+            <TouchableOpacity onPress={onPress}>
               <FontAwesome name="remove" color={COLORS.textGray} size={25} />
             </TouchableOpacity>
           </View>

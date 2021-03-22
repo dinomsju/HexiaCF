@@ -41,14 +41,13 @@ const addCartByID = async (_uid, _idProduct, quality) => {
     return 'error';
   }
 };
-const updateCartByID = async (_uid, _idProduct, quality) => {
+const updateCartByID = async (_uid, _idProduct) => {
   try {
     let updateCart = await axios.post(
-      `${BASE_URL}/api/updateCart`,
+      `${BASE_URL}/api/removeProductbyCart`,
       {
         _uid,
         _idProduct,
-        quality,
       },
       {
         headers: {
@@ -57,10 +56,30 @@ const updateCartByID = async (_uid, _idProduct, quality) => {
       },
     );
 
-    return addCart;
+    return updateCart;
   } catch (error) {
-    console.log('loi add cart-------> ', error);
+    console.log('loi remove-------> ', error);
     return 'error';
   }
 };
-export {getCartByUser, getUserByPhone, addCartByID, updateCartByID};
+const updateAllCart = async (_uid) => {
+  try {
+    let updateCart = await axios.post(`${BASE_URL}/api/removeCart/${_uid}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return updateCart;
+  } catch (error) {
+    console.log('loi remove-------> ', error);
+    return 'error';
+  }
+};
+export {
+  getCartByUser,
+  getUserByPhone,
+  addCartByID,
+  updateCartByID,
+  updateAllCart,
+};
