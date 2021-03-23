@@ -35,7 +35,7 @@ export default function Home() {
   const [idcategory, setIDCategory] = useState('ps09830');
   const [category, setCategory] = useState();
   const [product, setProduct] = useState();
-  const [dataBanner, setDataBanner] = useState();
+  const [dataBanner, setDataBanner] = useState([]);
   const [user, setUser] = useState();
   const [page, setPage] = useState();
 
@@ -49,7 +49,7 @@ export default function Home() {
     let getApiBanner = await getBanner();
     setDataBanner(getApiBanner?.data);
 
-    // console.log('getApiBanner ------->>> ', getApiBanner.data);
+    console.log('getApiBanner ------->>> ', getApiBanner.data);
   };
   const getUser = async () => {
     const user = auth().currentUser;
@@ -72,7 +72,7 @@ export default function Home() {
     setProduct(listTmp);
   };
   // console.log('banner ------->>> ', dataBanner);
-  films === dataBanner;
+
   return (
     <SafeAreaView style={styles.container}>
       <Header title="TRANG CHỦ"></Header>
@@ -112,8 +112,9 @@ export default function Home() {
             autoplayTimeout={3}
             paginationStyle={{height: WIDTH / 2 - 240}}
             dotColor={'#bebebe'}
+            // loop={true}
             showsPagination={true}>
-            {films.map((item) => {
+            {dataBanner.map((item) => {
               // console.log('item -------->', item);
               return (
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
