@@ -29,13 +29,13 @@ import {getCategory} from '../../api/categoryApi';
 import {getProduct, getUserByPhone, getBanner} from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Text} from '../../components';
-
+import {IMAGE_URL} from '../../api/BASE_URL';
 export default function Home() {
   const navigation = useNavigation();
   const [idcategory, setIDCategory] = useState('ps09830');
   const [category, setCategory] = useState();
   const [product, setProduct] = useState();
-  const [banner, setBanner] = useState();
+  const [dataBanner, setDataBanner] = useState();
   const [user, setUser] = useState();
   const [page, setPage] = useState();
 
@@ -44,10 +44,10 @@ export default function Home() {
     getAllCategory();
     getAllProduct();
     getUser();
-  }, [banner]);
+  }, []);
   const getAllBanner = async () => {
     let getApiBanner = await getBanner();
-    setBanner(getApiBanner?.data);
+    setDataBanner(getApiBanner?.data);
 
     console.log('getApiBanner ------->>> ', getApiBanner.data);
   };
@@ -71,8 +71,8 @@ export default function Home() {
     });
     setProduct(listTmp);
   };
-  console.log('banner ------->>> ', banner);
-  films === banner;
+  console.log('banner ------->>> ', dataBanner);
+  films === dataBanner;
   return (
     <SafeAreaView style={styles.container}>
       <Header title="TRANG CHỦ"></Header>
@@ -113,17 +113,15 @@ export default function Home() {
             paginationStyle={{height: WIDTH / 2 - 240}}
             dotColor={'#bebebe'}
             showsPagination={true}>
-            {banner.map((item) => {
+            {dataBanner.map((item) => {
               console.log('item -------->', item);
               return (
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                   {/* <TouchableOpacity onPress={() => console.log(item)}> */}
                   <TouchableOpacity>
                     <Image
-                      style={styles.banner}
-                      source={{
-                        uri: item.imageUrl,
-                      }}
+                      style={styles.poster}
+                      source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
                     />
                   </TouchableOpacity>
                 </View>
@@ -222,7 +220,7 @@ const styles = StyleSheet.create({
     width: WIDTH / 10,
     height: WIDTH / 10,
   },
-  banner: {
+  poster: {
     width: WIDTH,
     height: WIDTH - 220,
     borderRadius: 5,
