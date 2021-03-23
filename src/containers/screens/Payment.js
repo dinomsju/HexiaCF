@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {FlatList, Image, SafeAreaView, ScrollView} from 'react-native';
 import {Block, Text, Button} from '../../components';
 import Header from '../Header/HeaderPayment';
@@ -10,11 +10,16 @@ import {getProduct, getUserByPhone} from '../../api/productApi';
 import Item from '../views/ItemPayment';
 import Footer from '../Footer/FooterPayment';
 import auth from '@react-native-firebase/auth';
+import {addOrderById, updateAllCart, getCartByUser} from '../../api/cartApi';
 
 const Payment = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const {dataCart} = route.params;
   const [value, setValue] = useState('Giao hàng tận nơi');
   const [user, setUser] = useState();
+  const [userId, setUserId] = useState();
+  const [products, setProducts] = useState({});
 
   useEffect(() => {
     getUser();
@@ -25,22 +30,33 @@ const Payment = () => {
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
     setUser(getApi.data);
+    setUserId(getApi.data._id);
   };
 
-  const [product, setProduct] = useState([
-    {
-      title: 'Cà phê sữa đá',
-      soLuong: 1,
-      imageUrl:
-        'https://product.hstatic.net/1000075078/product/cfsd_615a3cb2b1e342d2b1986bfeb6572070_master.jpg',
-    },
-    {
-      title: 'Trà bưởi mật ong',
-      soLuong: 1,
-      imageUrl:
-        'https://product.hstatic.net/1000075078/product/tra_buoi_5c4c5ce2d4e44042a069ec9011ef1a9f_master.jpg',
-    },
-  ]);
+  const removeAllCart = async () => {
+    let removeCartAll = await updateAllCart(userId);
+    console.log('userrrrrr ------->>>> ', removeCartAll);
+
+    console.log('Xóa thành công!');
+    onRefresh(userId);
+    // console.log('test thôi nè ---- > ', _idProduct);
+    // console.log('id user  ---- > ', _idUser);
+  };
+
+  const addOrder = async () => {
+    const addOrder = await addOrderById(userId, dataCart);
+    console.log(addOrder);
+    removeAllCart();
+    navigation.push('Home');
+  };
+
+  let sl = dataCart?.map((dataCart, index) => {
+    return dataCart.quality * dataCart?._idProduct.price;
+  });
+
+  let totalA = sl?.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+  );
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -71,8 +87,8 @@ const Payment = () => {
             <Text bold size={15}>
               {user?.name}
             </Text>
-            <Text color={'#848484'}>0{user?.phone.slice(3)}</Text>
-            <Text color={'#848484'}>{user?.address}</Text>
+            <Text color={'#848484'}>Sđt: 0{user?.phone.slice(3)}</Text>
+            <Text color={'#848484'}>Địa chỉ: {user?.address}</Text>
           </Block>
         </Block>
         <Block marginHorizontal={10} marginVertical={5}>
@@ -83,7 +99,7 @@ const Payment = () => {
         <Block backgroundColor={'white'} paddingHorizontal={10}>
           <FlatList
             numColumns={1}
-            data={product}
+            data={dataCart}
             renderItem={({item}) => <Item item={item} />}
             keyExtractor={(item) => item.title}
           />
@@ -128,7 +144,7 @@ const Payment = () => {
               borderColor: '#CDD0D9',
             }}>
             <Text>Tổng tạm tính:</Text>
-            <Text color={'#EA8025'}>127.000đ</Text>
+            <Text color={'#EA8025'}>{totalA}đ</Text>
           </Block>
           <Block
             padding={5}
@@ -151,12 +167,16 @@ const Payment = () => {
           <Block padding={5} row space={'between'}>
             <Text bold>Thành tiền</Text>
             <Text color={'#EA8025'} bold>
-              127.000đ
+              {totalA}đ
             </Text>
           </Block>
         </Block>
       </ScrollView>
-      <Footer title={` 1 món trong giỏ hàng`} price={`82.000đ`} goTo={'Cart'} />
+      <Footer
+        title={` 1 món trong giỏ hàng`}
+        price={`${totalA}đ`}
+        onPress={() => addOrder()}
+      />
     </SafeAreaView>
   );
 };

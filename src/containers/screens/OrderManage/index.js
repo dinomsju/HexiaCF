@@ -24,9 +24,9 @@ export default function OrderManage() {
   }, [isFocused]);
 
   const renderScene = SceneMap({
-    pending: () => <ViewTab isPending={0} />,
-    wait: () => <ViewTab isPending={1} />,
-    all: () => <ViewTab isPending={2} />,
+    pending: () => <ViewTab status={0} />,
+    wait: () => <ViewTab status={1} />,
+    all: () => <ViewTab status={2} />,
   });
   return (
     <SafeAreaView style={{flex: 1, marginTop: 28}}>

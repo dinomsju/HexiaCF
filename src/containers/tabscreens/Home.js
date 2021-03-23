@@ -49,7 +49,7 @@ export default function Home() {
     let getApiBanner = await getBanner();
     setDataBanner(getApiBanner?.data);
 
-    console.log('getApiBanner ------->>> ', getApiBanner.data);
+    // console.log('getApiBanner ------->>> ', getApiBanner.data);
   };
   const getUser = async () => {
     const user = auth().currentUser;
@@ -71,7 +71,7 @@ export default function Home() {
     });
     setProduct(listTmp);
   };
-  console.log('banner ------->>> ', dataBanner);
+  // console.log('banner ------->>> ', dataBanner);
   films === dataBanner;
   return (
     <SafeAreaView style={styles.container}>
@@ -113,8 +113,8 @@ export default function Home() {
             paginationStyle={{height: WIDTH / 2 - 240}}
             dotColor={'#bebebe'}
             showsPagination={true}>
-            {dataBanner.map((item) => {
-              console.log('item -------->', item);
+            {films.map((item) => {
+              // console.log('item -------->', item);
               return (
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                   {/* <TouchableOpacity onPress={() => console.log(item)}> */}

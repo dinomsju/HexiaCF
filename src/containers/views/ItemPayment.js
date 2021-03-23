@@ -17,6 +17,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {COLORS, icons} from '../../constants';
+import {IMAGE_URL} from '../../api/BASE_URL';
 export default function ItemPayment({item}) {
   const [number, setNumber] = useState(1);
   const [limit, setLimit] = useState(false);
@@ -37,7 +38,7 @@ export default function ItemPayment({item}) {
             paddingHorizontal: 10,
           }}>
           <Image
-            source={{uri: item.imageUrl}}
+            source={{uri: `${IMAGE_URL}${item?._idProduct?.imageUrl}`}}
             style={styles.image_box}
             resizeMode="cover"
           />
@@ -50,7 +51,7 @@ export default function ItemPayment({item}) {
               alignItems: 'center',
             }}>
             <Text bold size={16} ellipsizeMode="tail" numberOfLines={1}>
-              {item.title}
+              {`${item?.quality}x ${item?._idProduct.title}`}
             </Text>
           </Block>
           <Block
@@ -59,9 +60,6 @@ export default function ItemPayment({item}) {
             alignCenter
             width={WIDTH / 1.8}
             marginTop={10}>
-            <Block>
-              <Text size={15}>{`Số lượng: ${item.soLuong}`}</Text>
-            </Block>
             <Block
               style={{
                 flexDirection: 'row',

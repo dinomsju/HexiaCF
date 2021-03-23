@@ -51,8 +51,6 @@ export default function ItemCart({item, onPress}) {
   };
   // console.log('number', item.quality);
   // console.log('price', item?._idProduct?.price);
-  console.log('id', item._idProduct._id);
-  console.log('user123456 ', userItem);
 
   return (
     <View style={styles.box}>
@@ -87,13 +85,12 @@ export default function ItemCart({item, onPress}) {
               justifyContent: 'space-between',
               alignItems: 'center',
               width: WIDTH / 1.8,
-              marginBottom: 30,
             }}>
             <Text
               style={styles.text_box_name}
               ellipsizeMode="tail"
-              numberOfLines={1}>
-              {item?._idProduct?.title}
+              numberOfLines={2}>
+              {item?.quality}x {item?._idProduct?.title}
             </Text>
             <TouchableOpacity onPress={onPress}>
               <FontAwesome name="remove" color={COLORS.textGray} size={25} />
@@ -108,7 +105,7 @@ export default function ItemCart({item, onPress}) {
               width: WIDTH / 1.8,
               marginRight: 10,
             }}>
-            <View
+            {/* <View
               style={{
                 justifyContent: 'flex-start',
                 flexDirection: 'row',
@@ -132,7 +129,7 @@ export default function ItemCart({item, onPress}) {
                   size={25}
                 />
               </TouchableOpacity>
-            </View>
+            </View> */}
             <View
               style={{
                 flexDirection: 'row',
@@ -148,7 +145,7 @@ export default function ItemCart({item, onPress}) {
                 }}
                 ellipsizeMode="tail"
                 numberOfLines={1}>
-                {number * price}
+                {number * price}đ
               </Text>
             </View>
           </View>
@@ -181,6 +178,7 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     fontSize: 16,
     fontWeight: 'bold',
+    width: '90%',
   },
   text_box_price: {
     color: COLORS.textOrange,

@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {COLORS, icons} from '../../constants';
 import {HEIGHT, WIDTH} from '../../constants/constants';
 
-const FooterPayment = ({title, price, goTo}) => {
+const FooterPayment = ({title, price, onPress}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -43,7 +43,7 @@ const FooterPayment = ({title, price, goTo}) => {
           alignItems: 'center',
           borderRadius: 8,
         }}
-        onPress={() => navigation.navigate('Cart')}>
+        onPress={onPress}>
         <Text style={{fontSize: 16, fontWeight: 'bold', color: COLORS.white}}>
           THANH TOÁN
         </Text>

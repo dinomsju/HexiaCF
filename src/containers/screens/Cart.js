@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {
   ScrollView,
   StyleSheet,
@@ -28,6 +29,7 @@ import Item from '../views/ItemCart';
 import auth from '@react-native-firebase/auth';
 
 export default function Cart() {
+  const navigation = useNavigation();
   const [dataCart, setDataCart] = useState();
   const [number, setNumber] = useState(0);
   const [money, setMoney] = useState(127000 + '');
@@ -38,14 +40,14 @@ export default function Cart() {
     getUser();
   }, []);
 
-  getUser = async () => {
+  const getUser = async () => {
     const userAuth = auth().currentUser;
     const phone = userAuth.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
     getDataCart(getApi.data._id);
     set_idUser(getApi.data._id);
   };
-  getDataCart = async (userID) => {
+  const getDataCart = async (userID) => {
     let getApiCart = await getCartByUser(userID);
 
     setNumber(getApiCart?.data?.cart?.products?.length);
@@ -59,7 +61,7 @@ export default function Cart() {
   let totalA = sl?.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
   );
-  removeCart = async (_idProduct) => {
+  const removeCart = async (_idProduct) => {
     let removeCartBy_id = await updateCartByID(_idUser, _idProduct);
     console.log('userrrrrr ------->>>> ', removeCartBy_id);
 
@@ -68,7 +70,7 @@ export default function Cart() {
     // console.log('test thôi nè ---- > ', _idProduct);
     // console.log('id user  ---- > ', _idUser);
   };
-  removeAllCart = async () => {
+  const removeAllCart = async () => {
     let removeCartAll = await updateAllCart(_idUser);
     console.log('userrrrrr ------->>>> ', removeCartAll);
 
@@ -77,7 +79,7 @@ export default function Cart() {
     // console.log('test thôi nè ---- > ', _idProduct);
     // console.log('id user  ---- > ', _idUser);
   };
-  onRefresh = async (_idUser) => {
+  const onRefresh = async (_idUser) => {
     await getDataCart(_idUser);
   };
   if (dataCart === undefined) {
@@ -130,7 +132,11 @@ export default function Cart() {
           keyExtractor={(item) => item._id}
         />
       </ScrollView>
-      <FooterCart title={`${number} món trong giỏ hàng`} price={`${totalA}đ`} />
+      <FooterCart
+        title={`${number} món trong giỏ hàng`}
+        price={`${totalA}đ`}
+        onPress={() => navigation.navigate('Payment', {dataCart})}
+      />
     </View>
   );
 }

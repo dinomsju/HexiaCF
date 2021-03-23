@@ -52,7 +52,7 @@ const FooterCart = ({title, price, onPress}) => {
           alignItems: 'center',
           borderRadius: 8,
         }}
-        onPress={() => navigation.navigate('Payment')}>
+        onPress={onPress}>
         <Text style={{fontSize: 18, fontWeight: 'bold', color: COLORS.white}}>
           ĐẶT HÀNG
         </Text>

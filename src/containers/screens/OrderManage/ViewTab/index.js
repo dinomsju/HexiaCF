@@ -1,7 +1,33 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Block, Text} from '../../../../components';
+import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import {getUserByPhone} from '../../../../api/productApi';
+import {getOrderByUserId} from '../../../../api/orderApi';
 
-const ViewTab = () => {
+const ViewTab = ({status}) => {
+  const navigation = useNavigation();
+  const [user, setUser] = useState();
+  const [userId, setUserId] = useState();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getUser();
+  });
+
+  const getUser = async () => {
+    const user = auth().currentUser;
+    const phone = user.phoneNumber.slice(3);
+    let getApi = await getUserByPhone(phone);
+    setUser(getApi.data);
+    setUserId(getApi.data._id);
+  };
+
+  const getOrderByUserID = async () => {
+    const getApi = await getOrderByUserId(userId);
+    console.log(getApi.data);
+  };
+
   return (
     <Block>
       <Button

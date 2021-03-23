@@ -76,10 +76,19 @@ const updateAllCart = async (_uid) => {
     return 'error';
   }
 };
+
+const addOrderById = async (_uid, products) => {
+  let getApi = await axios.post(`${BASE_URL}/api/order`, {
+    _uid,
+    products,
+  });
+};
+
 export {
   getCartByUser,
   getUserByPhone,
   addCartByID,
   updateCartByID,
   updateAllCart,
+  addOrderById,
 };
