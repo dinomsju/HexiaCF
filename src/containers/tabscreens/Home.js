@@ -26,7 +26,7 @@ import {
   HEIGHT,
 } from '../../constants/constants';
 import {getCategory} from '../../api/categoryApi';
-import {getProduct, getUserByPhone} from '../../api/productApi';
+import {getProduct, getUserByPhone, getBanner} from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Text} from '../../components';
 
@@ -35,27 +35,35 @@ export default function Home() {
   const [idcategory, setIDCategory] = useState('ps09830');
   const [category, setCategory] = useState();
   const [product, setProduct] = useState();
+  const [banner, setBanner] = useState();
   const [user, setUser] = useState();
   const [page, setPage] = useState();
 
   useEffect(() => {
+    getAllBanner();
     getAllCategory();
     getAllProduct();
     getUser();
-  }, []);
+  }, [banner]);
+  const getAllBanner = async () => {
+    let getApiBanner = await getBanner();
+    setBanner(getApiBanner?.data);
 
+    console.log('getApiBanner ------->>> ', getApiBanner.data);
+  };
   const getUser = async () => {
     const user = auth().currentUser;
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
     setUser(getApi.data);
-    console.log(getApi.data);
+    // console.log(getApi.data);
   };
 
   const getAllCategory = async () => {
     let getApi = await getCategory();
     setCategory(getApi.data);
   };
+
   const getAllProduct = async () => {
     let getApi = await getProduct();
     const listTmp = getApi.data.products.sort((a, b) => {
@@ -63,7 +71,8 @@ export default function Home() {
     });
     setProduct(listTmp);
   };
-
+  console.log('banner ------->>> ', banner);
+  films === banner;
   return (
     <SafeAreaView style={styles.container}>
       <Header title="TRANG CHỦ"></Header>
@@ -104,14 +113,16 @@ export default function Home() {
             paginationStyle={{height: WIDTH / 2 - 240}}
             dotColor={'#bebebe'}
             showsPagination={true}>
-            {films.map((item) => {
+            {banner.map((item) => {
+              console.log('item -------->', item);
               return (
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                  <TouchableOpacity onPress={() => console.log(item)}>
+                  {/* <TouchableOpacity onPress={() => console.log(item)}> */}
+                  <TouchableOpacity>
                     <Image
                       style={styles.banner}
                       source={{
-                        uri: item.thumb,
+                        uri: item.imageUrl,
                       }}
                     />
                   </TouchableOpacity>
@@ -212,7 +223,7 @@ const styles = StyleSheet.create({
     height: WIDTH / 10,
   },
   banner: {
-    width: WIDTH - 20,
+    width: WIDTH,
     height: WIDTH - 220,
     borderRadius: 5,
   },

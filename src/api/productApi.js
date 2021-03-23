@@ -13,9 +13,7 @@ const getProduct = async () => {
 };
 const getProductByCat = async (id) => {
   try {
-    let getData = await axios.get(
-      `${BASE_URL}/api/product/cate/${id}`,
-    );
+    let getData = await axios.get(`${BASE_URL}/api/product/cate/${id}`);
     return getData;
   } catch (error) {
     console.log(error);
@@ -24,13 +22,21 @@ const getProductByCat = async (id) => {
 };
 const getUserByPhone = async (phone) => {
   try {
-    let getData = await axios.get(
-      `${BASE_URL}/api/authUser/${phone}`,
-    );
+    let getData = await axios.get(`${BASE_URL}/api/authUser/${phone}`);
     return getData;
   } catch (error) {
     console.log(error);
     return null;
   }
 };
-export {getProduct, getProductByCat, getUserByPhone};
+
+const getBanner = async () => {
+  try {
+    let getBanner = await axios.get(`${BASE_URL}/api/banner`);
+    return getBanner;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+export {getProduct, getProductByCat, getUserByPhone, getBanner};
