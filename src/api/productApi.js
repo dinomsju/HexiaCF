@@ -23,9 +23,10 @@ const getProductByCat = async (id) => {
 const getUserByPhone = async (phone) => {
   try {
     let getData = await axios.get(`${BASE_URL}/api/authUser/${phone}`);
+    // console.log('getUserByPhone', getData.data);
     return getData;
   } catch (error) {
-    console.log(error);
+    console.log('getUserByPhone Error', error);
     return null;
   }
 };
