@@ -16,7 +16,7 @@ const Payment = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const {dataCart} = route.params;
-  const [value, setValue] = useState('Giao hàng tận nơi');
+  const [value, setValue] = useState('0');
   const [user, setUser] = useState();
   const [userId, setUserId] = useState();
   const [products, setProducts] = useState({});
@@ -35,17 +35,11 @@ const Payment = () => {
 
   const removeAllCart = async () => {
     let removeCartAll = await updateAllCart(userId);
-    console.log('userrrrrr ------->>>> ', removeCartAll);
-
-    console.log('Xóa thành công!');
-    onRefresh(userId);
-    // console.log('test thôi nè ---- > ', _idProduct);
-    // console.log('id user  ---- > ', _idUser);
   };
 
   const addOrder = async () => {
-    const addOrder = await addOrderById(userId, dataCart);
-    console.log(addOrder);
+    const addOrder = await addOrderById(userId, value, dataCart);
+    console.log('addOrder', addOrder);
     removeAllCart();
     navigation.push('Home');
   };
@@ -75,11 +69,11 @@ const Payment = () => {
             onValueChange={(newValue) => setValue(newValue)}
             value={value}>
             <Block row alignCenter>
-              <RadioButton value="Giao hàng tận nơi" />
+              <RadioButton value="0" />
               <Text>Giao hàng tận nơi</Text>
             </Block>
             <Block row alignCenter>
-              <RadioButton value="Nhận hàng tại quán" />
+              <RadioButton value="1" />
               <Text>Nhận hàng tại quán</Text>
             </Block>
           </RadioButton.Group>

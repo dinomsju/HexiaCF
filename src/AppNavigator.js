@@ -15,6 +15,7 @@ import EditLocation from './containers/screens/EditLocation';
 import OrderManage from './containers/screens/OrderManage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AllProduct from './containers/screens/AllProduct';
+import DetailOrder from './containers/screens/OrderManage/DetailOrder';
 const Stack = createStackNavigator();
 const Auth = createStackNavigator();
 
@@ -38,6 +39,7 @@ function StackNavigator() {
       <Stack.Screen name="Payment" component={Payment} />
       <Stack.Screen name="EditLocation" component={EditLocation} />
       <Stack.Screen name="OrderManage" component={OrderManage} />
+      <Stack.Screen name="DetailOrder" component={DetailOrder} />
       <Stack.Screen name="AllProduct" component={AllProduct} />
     </Stack.Navigator>
   );

@@ -73,7 +73,7 @@ export default function ItemPayment({item}) {
                 }}
                 ellipsizeMode="tail"
                 numberOfLines={1}>
-                32.000đ
+                {item?._idProduct.price}đ
               </Text>
             </Block>
           </Block>

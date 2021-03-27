@@ -24,20 +24,38 @@ const ViewTab = ({status}) => {
     const user = auth().currentUser;
     const phone = user?.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
-    // setUser(getApi?.data);
     setUserId(getApi?.data?._id);
   };
 
   const getOrderByUserID = async () => {
     const getApi = await getOrderByUserId(userId);
     if (getApi) {
+      const listTmp = getApi?.data?.Order?.sort((a, b) => {
+        return new Date(b.createAt) - new Date(a.createAt);
+      });
       setOrder(
-        getApi?.data?.Order?.filter((value) => {
+        listTmp?.filter((value) => {
           return value.status === status;
         }),
       );
     }
     setLoading(false);
+  };
+
+  const renderDelivery = (delivery) => {
+    if (delivery === 1) {
+      return (
+        <Text size={15} color={'#29b6f6'} marginVertical={5}>
+          • Nhận hàng tại quán
+        </Text>
+      );
+    } else {
+      return (
+        <Text color={'#29b6f6'} size={15} marginVertical={5}>
+          • Giao hàng tận nơi
+        </Text>
+      );
+    }
   };
 
   return loading ? (
@@ -69,13 +87,15 @@ const ViewTab = ({status}) => {
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
               elevation: 5,
-            }}>
+            }}
+            onPress={() => navigation.navigate('DetailOrder', {item})}>
             <Block>
               <Text size={15} marginVertical={5} bold>
                 Mã đơn: {item._id}
               </Text>
+              {renderDelivery(item.delivery)}
               <Text color={'#29b6f6'} size={15} marginVertical={5}>
-                Ngày tạo: {moment(item.createAt).format('DD/MM/YYYY hh:mm')}
+                Ngày tạo: {moment(item.createAt).format('DD/MM/YYYY hh:mm a')}
               </Text>
             </Block>
           </Button>
