@@ -32,7 +32,8 @@ export default function ItemNew({item}) {
         style={styles.image_box}
         resizeMode={FastImage.resizeMode.cover}
       /> */}
-      <View style={{marginHorizontal: 15, marginVertical: 5}}>
+      <View
+        style={{marginHorizontal: 15, marginVertical: 5, alignItems: 'center'}}>
         <Text
           style={styles.text_box_artist}
           ellipsizeMode="tail"
@@ -40,7 +41,6 @@ export default function ItemNew({item}) {
           {item.title}
         </Text>
         {/* <Text style={styles.text_box_title}>{item.artist}</Text> */}
-        <Text style={styles.text_box_title}>{item.price}đ</Text>
       </View>
     </View>
     // </TouchableOpacity>
@@ -50,7 +50,7 @@ export default function ItemNew({item}) {
 const styles = StyleSheet.create({
   box: {
     width: WIDTH / 2 - 20,
-    height: WIDTH / 2 + 20,
+    height: WIDTH / 2,
     margin: 5,
     // backgroundColor: '#000',
     borderRadius: 15,
