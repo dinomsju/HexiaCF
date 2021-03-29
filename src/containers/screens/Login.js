@@ -24,7 +24,6 @@ import auth from '@react-native-firebase/auth';
 import {Modal} from 'react-native-paper';
 import {getUserByPhone} from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export default function Login() {
   const navigation = useNavigation();
   const [userPhone, setUserPhone] = useState();

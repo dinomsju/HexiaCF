@@ -30,7 +30,7 @@ import {getProduct, getUserByPhone, getBanner} from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Text} from '../../components';
 import {IMAGE_URL} from '../../api/BASE_URL';
-
+import LottieView from 'lottie-react-native';
 import Carousel, {ParallaxImage, Pagination} from 'react-native-snap-carousel';
 export default function Home() {
   const navigation = useNavigation();
@@ -42,6 +42,7 @@ export default function Home() {
   const [page, setPage] = useState();
   const carouselRef = useRef(null);
   const [acTive, setActive] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getAllBanner();
     getAllCategory();
@@ -51,20 +52,22 @@ export default function Home() {
 
   const getAllBanner = async () => {
     let getApiBanner = await getBanner();
+    setIsLoading(false);
     setDataBanner(getApiBanner?.data);
-
     console.log('getApiBanner ------->>> ', getApiBanner.data);
   };
   const getUser = async () => {
     const user = auth().currentUser;
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
+    setIsLoading(false);
     setUser(getApi.data);
     // console.log(getApi.data);
   };
 
   const getAllCategory = async () => {
     let getApi = await getCategory();
+    setIsLoading(false);
     setCategory(getApi.data);
   };
 
@@ -73,8 +76,10 @@ export default function Home() {
     const listTmp = getApi.data.products.sort((a, b) => {
       return new Date(b.createAt) - new Date(a.createAt);
     });
+    setIsLoading(false);
     setProduct(listTmp);
   };
+
   // console.log('banner ------->>> ', dataBanner);
   const renderItem = ({item, index}, parallaxProps) => {
     return (
@@ -94,6 +99,21 @@ export default function Home() {
     );
   };
 
+  if (isLoading) {
+    return (
+      <LottieView
+        style={{
+          backgroundColor: '#ffffff',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        source={require('../../../assets/8707-loading.json')}
+        autoPlay
+        loop
+      />
+    );
+  }
   return (
     <SafeAreaView style={styles.container}>
       <Header title="TRANG CHỦ"></Header>
