@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,7 +17,7 @@ import {films} from '../../constants/data/fakeData';
 import Item from '../views/Item';
 // import ItemProduct from '../views/ItemProduct';
 import ItemProduct from '../views/ItemProduct_1';
-import Swiper from 'react-native-swiper';
+
 import auth from '@react-native-firebase/auth';
 import {
   WIDTH_SCALE,
@@ -30,6 +30,8 @@ import {getProduct, getUserByPhone, getBanner} from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Text} from '../../components';
 import {IMAGE_URL} from '../../api/BASE_URL';
+
+import Carousel, {ParallaxImage, Pagination} from 'react-native-snap-carousel';
 export default function Home() {
   const navigation = useNavigation();
   const [idcategory, setIDCategory] = useState('ps09830');
@@ -38,13 +40,15 @@ export default function Home() {
   const [dataBanner, setDataBanner] = useState([]);
   const [user, setUser] = useState();
   const [page, setPage] = useState();
-
+  const carouselRef = useRef(null);
+  const [acTive, setActive] = useState(0);
   useEffect(() => {
     getAllBanner();
     getAllCategory();
     getAllProduct();
     getUser();
   }, []);
+
   const getAllBanner = async () => {
     let getApiBanner = await getBanner();
     setDataBanner(getApiBanner?.data);
@@ -72,6 +76,23 @@ export default function Home() {
     setProduct(listTmp);
   };
   // console.log('banner ------->>> ', dataBanner);
+  const renderItem = ({item, index}, parallaxProps) => {
+    return (
+      <View style={styles.item}>
+        <ParallaxImage
+          source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
+          containerStyle={styles.imageContainer}
+          style={styles.image}
+          parallaxFactor={0}
+          {...parallaxProps}
+        />
+        {/* <Image
+          style={styles.image}
+          source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
+        /> */}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,31 +127,49 @@ export default function Home() {
             </Text>
           </View>
         </TouchableOpacity>
-        <View style={{height: WIDTH / 2 - 20}}>
-          <Swiper
-            autoplay={true}
-            autoplayTimeout={3}
-            paginationStyle={{height: WIDTH / 2 - 240}}
-            dotColor={'#bebebe'}
-            // loop={true}
-            showsPagination={true}>
-            {dataBanner.map((item) => {
-              // console.log('item -------->', item);
-              return (
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                  {/* <TouchableOpacity onPress={() => console.log(item)}> */}
-                  <TouchableOpacity>
-                    <Image
-                      style={styles.poster}
-                      source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
-                    />
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
-          </Swiper>
-        </View>
 
+        <Carousel
+          onSnapToItem={(index) => setActive(index)}
+          autoplay={true}
+          enableMomentum={false}
+          lockScrollWhileSnapping={true}
+          autoplayDelay={1500}
+          loop={true}
+          enableSnap={true}
+          ref={carouselRef}
+          sliderWidth={WIDTH}
+          sliderHeight={WIDTH}
+          itemWidth={WIDTH - 30}
+          data={dataBanner}
+          renderItem={renderItem}
+          hasParallaxImages={true}
+        />
+        <Pagination
+          dotsLength={dataBanner.length}
+          activeDotIndex={acTive}
+          animatedTension={0}
+          animatedDuration={0}
+          containerStyle={{
+            position: 'absolute',
+            top: WIDTH / 2 + 5,
+            left: WIDTH - 300,
+            // backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          }}
+          dotStyle={{
+            width: 10,
+            height: 10,
+            borderRadius: 5,
+            marginHorizontal: 8,
+            backgroundColor: 'rgba(255, 255, 255, 0.92)',
+          }}
+          inactiveDotStyle={
+            {
+              // Define styles for inactive dots here
+            }
+          }
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.6}
+        />
         <View
           style={{
             flexDirection: 'row',
@@ -221,9 +260,18 @@ const styles = StyleSheet.create({
     width: WIDTH / 10,
     height: WIDTH / 10,
   },
-  poster: {
-    width: WIDTH,
-    height: WIDTH - 220,
-    borderRadius: 5,
+  item: {
+    width: WIDTH - 50,
+    height: WIDTH - 200,
+    // backgroundColor: 'blue',
+  },
+  imageContainer: {
+    flex: 1,
+    marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
+    borderRadius: 8,
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'cover',
   },
 });

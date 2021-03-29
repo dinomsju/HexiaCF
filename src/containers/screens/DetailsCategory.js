@@ -24,6 +24,7 @@ import {COLORS, icons} from '../../constants';
 import {Searchbar} from 'react-native-paper';
 import Item from '../views/ItemDetailsCategory';
 import {getProductByCat} from '../../api/productApi';
+import {IMAGE_URL} from '../../api/BASE_URL';
 export default function DetailsCategory(props) {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -44,10 +45,10 @@ export default function DetailsCategory(props) {
     <View style={styles.container}>
       <ImageBackground
         style={styles.header}
-        source={{uri: 'https://img.anime47.com/imgur/6hhR2bl.jpg'}}>
+        source={{uri: `${IMAGE_URL}${data.imageUrl}`}}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={{marginTop: 140}}>
+          style={{marginTop: 100}}>
           <Icon name="arrow-back" color={COLORS.textOrange} size={40} />
         </TouchableOpacity>
       </ImageBackground>
@@ -101,11 +102,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: COLORS.white,
   },
   header: {
     width: WIDTH,
-    height: WIDTH,
-    padding: 20,
+    height: WIDTH - 60,
+    marginTop: WIDTH / 2,
   },
   footer: {
     width: WIDTH,
