@@ -31,7 +31,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Text} from '../../components';
 import {IMAGE_URL} from '../../api/BASE_URL';
 import LottieView from 'lottie-react-native';
-import Carousel, {ParallaxImage, Pagination} from 'react-native-snap-carousel';
+import Swiper from 'react-native-swiper';
 export default function Home() {
   const navigation = useNavigation();
   const [idcategory, setIDCategory] = useState('ps09830');
@@ -41,7 +41,6 @@ export default function Home() {
   const [user, setUser] = useState();
   const [page, setPage] = useState();
   const carouselRef = useRef(null);
-  const [acTive, setActive] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getAllBanner();
@@ -78,25 +77,6 @@ export default function Home() {
     });
     setIsLoading(false);
     setProduct(listTmp);
-  };
-
-  // console.log('banner ------->>> ', dataBanner);
-  const renderItem = ({item, index}, parallaxProps) => {
-    return (
-      <View style={styles.item}>
-        <ParallaxImage
-          source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0}
-          {...parallaxProps}
-        />
-        {/* <Image
-          style={styles.image}
-          source={{uri: `${IMAGE_URL}${item.imageUrl}`}}
-        /> */}
-      </View>
-    );
   };
 
   if (isLoading) {
@@ -148,55 +128,27 @@ export default function Home() {
           </View>
         </TouchableOpacity>
 
-        <Carousel
-          onSnapToItem={(index) => setActive(index)}
-          autoplay={true}
-          enableMomentum={false}
-          lockScrollWhileSnapping={true}
-          autoplayDelay={1500}
+        <Swiper
+          style={styles.wrapper}
           loop={true}
-          enableSnap={true}
-          ref={carouselRef}
-          sliderWidth={WIDTH}
-          sliderHeight={WIDTH}
-          itemWidth={WIDTH - 30}
-          data={dataBanner}
-          renderItem={renderItem}
-          hasParallaxImages={true}
-        />
-        <Pagination
-          dotsLength={dataBanner.length}
-          activeDotIndex={acTive}
-          animatedTension={0}
-          animatedDuration={0}
-          containerStyle={{
-            position: 'absolute',
-            top: WIDTH / 2 + 5,
-            left: WIDTH - 300,
-            // backgroundColor: 'rgba(0, 0, 0, 0.75)',
-          }}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            marginHorizontal: 8,
-            backgroundColor: 'rgba(255, 255, 255, 0.92)',
-          }}
-          inactiveDotStyle={
-            {
-              // Define styles for inactive dots here
-            }
-          }
-          inactiveDotOpacity={0.4}
-          inactiveDotScale={0.6}
-        />
+          autoplay
+          showsPagination
+          dotColor={COLORS.white}
+          autoplayTimeout={2}>
+          {dataBanner?.map((value, index) => (
+            <Image
+              resizeMode={'cover'}
+              style={{width: WIDTH - 20, height: WIDTH / 2}}
+              source={{uri: `${IMAGE_URL}${value.imageUrl}`}}
+            />
+          ))}
+        </Swiper>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             width: WIDTH - 20,
-            marginTop: 10,
           }}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>THỰC ĐƠN</Text>
           <TouchableOpacity
@@ -280,18 +232,8 @@ const styles = StyleSheet.create({
     width: WIDTH / 10,
     height: WIDTH / 10,
   },
-  item: {
-    width: WIDTH - 50,
-    height: WIDTH - 200,
-    // backgroundColor: 'blue',
-  },
-  imageContainer: {
-    flex: 1,
-    marginBottom: Platform.select({ios: 0, android: 1}), // Prevent a random Android rendering issue
-    borderRadius: 8,
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
+  wrapper: {
+    height: WIDTH / 2 + 10,
+    paddingTop: 10,
   },
 });
