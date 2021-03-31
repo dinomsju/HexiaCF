@@ -66,7 +66,7 @@ const ViewTab = ({status}) => {
     <FlatList
       data={order}
       showsVerticalScrollIndicator={false}
-      keyExtractor={(item) => item._id.toString()}
+      keyExtractor={(item) => item._id}
       renderItem={({item}) => {
         return (
           <Button
@@ -95,7 +95,8 @@ const ViewTab = ({status}) => {
               </Text>
               {renderDelivery(item.delivery)}
               <Text color={'#29b6f6'} size={15} marginVertical={5}>
-                Ngày tạo: {moment(item.createAt).format('DD/MM/YYYY hh:mm a')}
+                Ngày đặt hàng:{' '}
+                {moment(item.createAt).format('DD/MM/YYYY hh:mm a')}
               </Text>
             </Block>
           </Button>

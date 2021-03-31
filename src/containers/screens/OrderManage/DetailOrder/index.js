@@ -49,9 +49,11 @@ const DetailOrder = () => {
     return sll;
   });
 
-  let totalA = sl?.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-  );
+  let totalA = sl?.map((item) => {
+    return item?.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+    );
+  });
 
   return (
     <SafeAreaView style={{flex: 1}}>

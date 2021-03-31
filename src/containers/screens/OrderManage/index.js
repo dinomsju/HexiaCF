@@ -13,8 +13,8 @@ export default function OrderManage() {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     {key: 'pending', title: 'Chờ duyệt'},
-    {key: 'wait', title: 'Đang giao'},
-    {key: 'all', title: 'Hoàn thành'},
+    {key: 'delivery', title: 'Đang giao'},
+    {key: 'success', title: 'Hoàn thành'},
   ]);
   const isFocused = useIsFocused();
   const [reload, setReload] = useState(false);
@@ -25,8 +25,8 @@ export default function OrderManage() {
 
   const renderScene = SceneMap({
     pending: () => <ViewTab status={0} />,
-    wait: () => <ViewTab status={1} />,
-    all: () => <ViewTab status={2} />,
+    delivery: () => <ViewTab status={1} />,
+    success: () => <ViewTab status={2} />,
   });
   return (
     <SafeAreaView style={{flex: 1, marginTop: 28}}>
