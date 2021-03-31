@@ -7,10 +7,11 @@ import {films} from '../../constants/data/fakeData';
 import {songs} from '../../constants/data/song';
 import {getCategory} from '../../api/categoryApi';
 import {COLORS, icons} from '../../constants';
+import LottieView from 'lottie-react-native';
 export default function Menu() {
   const navigation = useNavigation();
   const [category, setCategory] = useState();
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getAllCategory();
   }, []);
@@ -19,7 +20,21 @@ export default function Menu() {
     let getApi = await getCategory();
     setCategory(getApi.data);
   };
-
+  if (category === undefined) {
+    return (
+      <LottieView
+        style={{
+          backgroundColor: '#ffffff',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        source={require('../../../assets/8707-loading.json')}
+        autoPlay
+        loop
+      />
+    );
+  }
   return (
     <View style={styles.container}>
       <HeaderPro title="THỰC ĐƠN" />

@@ -26,6 +26,7 @@ import Footer from '../Footer/FooterDetailPro';
 import auth from '@react-native-firebase/auth';
 import {getUserByPhone} from '../../api/productApi';
 import {addCartByID} from '../../api/cartApi';
+import LottieView from 'lottie-react-native';
 export default function DetailsProduct(props) {
   const navigation = useNavigation();
   const {product} = props.route.params;
@@ -34,6 +35,7 @@ export default function DetailsProduct(props) {
   const [hearColor, setHearColor] = useState(COLORS.textGray);
   const [condition, setCondition] = useState(false);
   const [user, setUser] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getUser();
   }, []);
@@ -88,6 +90,21 @@ export default function DetailsProduct(props) {
     );
   };
 
+  if (product === undefined) {
+    return (
+      <LottieView
+        style={{
+          backgroundColor: '#ffffff',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        source={require('../../../assets/8707-loading.json')}
+        autoPlay
+        loop
+      />
+    );
+  }
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>

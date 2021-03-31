@@ -25,10 +25,12 @@ import {Searchbar} from 'react-native-paper';
 import Item from '../views/ItemDetailsCategory';
 import {getProductByCat} from '../../api/productApi';
 import {IMAGE_URL} from '../../api/BASE_URL';
+import LottieView from 'lottie-react-native';
 export default function DetailsCategory(props) {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = React.useState('');
   const [product, setProduct] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const {data} = props.route.params;
   const onChangeSearch = (query) => setSearchQuery(query);
 
@@ -39,8 +41,24 @@ export default function DetailsCategory(props) {
   const getData = async () => {
     let getApi = await getProductByCat(data._id);
     setProduct(getApi.data.products);
+    setIsLoading(false);
   };
 
+  if (isLoading) {
+    return (
+      <LottieView
+        style={{
+          backgroundColor: '#ffffff',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        source={require('../../../assets/8707-loading.json')}
+        autoPlay
+        loop
+      />
+    );
+  }
   return (
     <View style={styles.container}>
       <ImageBackground
