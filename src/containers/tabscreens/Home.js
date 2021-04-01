@@ -59,14 +59,14 @@ export default function Home() {
     const user = auth().currentUser;
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
-    setIsLoading(false);
+    // setIsLoading(false);
     setUser(getApi.data);
     // console.log(getApi.data);
   };
 
   const getAllCategory = async () => {
     let getApi = await getCategory();
-    setIsLoading(false);
+    // setIsLoading(false);
     setCategory(getApi.data);
   };
 
@@ -75,7 +75,7 @@ export default function Home() {
     const listTmp = getApi.data.products.sort((a, b) => {
       return new Date(b.createAt) - new Date(a.createAt);
     });
-    setIsLoading(false);
+    // setIsLoading(false);
     setProduct(listTmp);
   };
 
