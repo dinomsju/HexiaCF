@@ -40,4 +40,32 @@ const getBanner = async () => {
     return null;
   }
 };
-export {getProduct, getProductByCat, getUserByPhone, getBanner};
+
+const updateUserByPhone = async (phone, name, address) => {
+  try {
+    let updateUser = await axios.post(
+      `${BASE_URL}/api/updateUser/${phone}`,
+      {
+        name,
+        address,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    return updateUser;
+  } catch (error) {
+    console.log('loi remove-------> ', error);
+    return 'error';
+  }
+};
+export {
+  getProduct,
+  getProductByCat,
+  getUserByPhone,
+  getBanner,
+  updateUserByPhone,
+};
