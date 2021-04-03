@@ -17,7 +17,7 @@ import {films} from '../../constants/data/fakeData';
 import Item from '../views/Item';
 // import ItemProduct from '../views/ItemProduct';
 import ItemProduct from '../views/ItemProduct_1';
-
+import ItemSeller from '../views/ItemSeller';
 import auth from '@react-native-firebase/auth';
 import {
   WIDTH_SCALE,
@@ -26,7 +26,12 @@ import {
   HEIGHT,
 } from '../../constants/constants';
 import {getCategory} from '../../api/categoryApi';
-import {getProduct, getUserByPhone, getBanner} from '../../api/productApi';
+import {
+  getProduct,
+  getUserByPhone,
+  getBanner,
+  getBestProduct,
+} from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Text} from '../../components';
 import {IMAGE_URL} from '../../api/BASE_URL';
@@ -41,11 +46,13 @@ export default function Home() {
   const [user, setUser] = useState();
   const [page, setPage] = useState();
   const carouselRef = useRef(null);
+  const [bestProduct, setBestProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getAllBanner();
     getAllCategory();
     getAllProduct();
+    getBestSeller();
     getUser();
   }, []);
 
@@ -77,6 +84,27 @@ export default function Home() {
     });
     // setIsLoading(false);
     setProduct(listTmp);
+  };
+
+  const getBestSeller = async () => {
+    let getApi = await getBestProduct();
+
+    // let dataSeller = getApi.data?.map((data, index) => {
+    //   return data.products;
+    // });
+    setBestProduct(getApi.data);
+    // getApi.data.forEach(function (element) {
+    //   console.log('best seller ------> 00001 ', element.products);
+    //   setBestProduct(element.products);
+    // });
+    // var data = getApi.data.filter(function (data) {
+    //   data.products.forEach(function (hoang) {
+    //     console.log('best seller ------> 111111', hoang);
+    //     setBestProduct(hoang);
+    //   });
+    //   // return data.products;
+    // });
+    // console.log('best seller ------> 111111 ', data);
   };
 
   if (isLoading) {
@@ -171,7 +199,55 @@ export default function Home() {
           )}
           keyExtractor={(item) => item._id}
         />
-
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: WIDTH - 20,
+            marginTop: 10,
+          }}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+            SẢN PHẨM BÁN CHẠY NHẤT
+          </Text>
+          {/* <TouchableOpacity onPress={() => navigation.navigate('AllProduct')}>
+            <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
+          </TouchableOpacity> */}
+        </View>
+        <FlatList
+          // numColumns={2}
+          horizontal
+          data={bestProduct}
+          renderItem={({item}) => (
+            <Button
+              margin={5}
+              radius={10}
+              row
+              space={'between'}
+              justifyCenter
+              alignCenter
+              backgroundColor={'#F9F9F9'}
+              padding={20}
+              style={{
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              }}
+              onPress={() =>
+                navigation.navigate('DetailsProduct', {
+                  product: item.products[0],
+                })
+              }>
+              <ItemSeller item={item} />
+            </Button>
+          )}
+          keyExtractor={(item) => item._id}
+        />
         <View
           style={{
             flexDirection: 'row',

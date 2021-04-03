@@ -39,7 +39,7 @@ export default function DetailsProduct(props) {
   useEffect(() => {
     getUser();
   }, []);
-
+  console.log('product -------> ' + product.title);
   const numberPlus = (number) => {
     setNumber(number + 1);
     setLimit(false);

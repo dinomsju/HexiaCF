@@ -62,10 +62,22 @@ const updateUserByPhone = async (phone, name, address) => {
     return 'error';
   }
 };
+
+const getBestProduct = async () => {
+  try {
+    let getProduct = await axios.get(`${BASE_URL}/api/bestSeller`);
+    return getProduct;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export {
   getProduct,
   getProductByCat,
   getUserByPhone,
   getBanner,
   updateUserByPhone,
+  getBestProduct,
 };
