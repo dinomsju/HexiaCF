@@ -154,6 +154,20 @@ const DetailOrder = () => {
                   </Text>
                 </Block>
               </Block>
+              {item?.delivery === 0 ? (
+                <Button
+                  marginTop={10}
+                  radius={8}
+                  padding={10}
+                  backgroundColor={'black'}
+                  marginHorizontal={20}
+                  alignCenter
+                  justifyCenter>
+                  <Text color={'white'} bold size={20}>
+                    HUỶ ĐƠN HÀNG
+                  </Text>
+                </Button>
+              ) : null}
             </Block>
           );
         })}

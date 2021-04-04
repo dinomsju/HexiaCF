@@ -74,23 +74,17 @@ export default function Setting() {
     {
       Icon: 'gift-outline',
       title: 'Mã khuyến mãi',
-      onPress: () => {
-        navigation.navigate('OrderManage');
-      },
     },
-    {
-      Icon: 'wallet-outline',
-      title: 'Thanh toán',
-      onPress: () => {
-        navigation.navigate('OrderManage');
-      },
-    },
+    // {
+    //   Icon: 'wallet-outline',
+    //   title: 'Thanh toán',
+    //   onPress: () => {
+    //     navigation.navigate('OrderManage');
+    //   },
+    // },
     {
       Icon: 'ios-map-outline',
       title: 'Địa chỉ',
-      onPress: () => {
-        navigation.navigate('OrderManage');
-      },
     },
     {
       Icon: 'log-out-outline',

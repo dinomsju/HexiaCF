@@ -217,6 +217,7 @@ export default function Home() {
         <FlatList
           // numColumns={2}
           horizontal
+          showsHorizontalScrollIndicator={false}
           data={bestProduct}
           renderItem={({item}) => (
             <Button
