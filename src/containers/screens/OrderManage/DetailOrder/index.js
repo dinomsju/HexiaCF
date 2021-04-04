@@ -154,7 +154,7 @@ const DetailOrder = () => {
                   </Text>
                 </Block>
               </Block>
-              {item?.delivery === 0 ? (
+              {item?.status === 0 ? (
                 <Button
                   marginTop={10}
                   radius={8}
