@@ -96,6 +96,16 @@ const getOrderById = async (id) => {
   }
 };
 
+const cancelOrderById = async (id) => {
+  try {
+    let getData = await axios.post(`${BASE_URL}/api/cancelOrder/id/${id}`);
+    return getData;
+  } catch (error) {
+    console.log('cancelOrder', error);
+    return null;
+  }
+};
+
 export {
   getCartByUser,
   getUserByPhone,
@@ -104,4 +114,5 @@ export {
   updateAllCart,
   addOrderById,
   getOrderById,
+  cancelOrderById,
 };

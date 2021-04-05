@@ -140,7 +140,7 @@ const Payment = () => {
             <Text>Tổng tạm tính:</Text>
             <Text color={'#EA8025'}>{totalA}đ</Text>
           </Block>
-          <Block
+          <Button
             padding={5}
             row
             space={'between'}
@@ -149,7 +149,8 @@ const Payment = () => {
               borderBottomWidth: 1,
               paddingBottom: 10,
               borderColor: '#CDD0D9',
-            }}>
+            }}
+            onPress={() => navigation.navigate('Discount')}>
             <Block>
               <Text bold color={'#EA8025'}>
                 Khuyến mãi
@@ -157,7 +158,7 @@ const Payment = () => {
               <Text>Bấm vào để chọn khuyến mãi</Text>
             </Block>
             <Icon name="right" size={18} />
-          </Block>
+          </Button>
           <Block padding={5} row space={'between'}>
             <Text bold>Thành tiền</Text>
             <Text color={'#EA8025'} bold>

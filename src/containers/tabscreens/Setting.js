@@ -74,6 +74,9 @@ export default function Setting() {
     {
       Icon: 'gift-outline',
       title: 'Mã khuyến mãi',
+      onPress: () => {
+        navigation.navigate('Discount');
+      },
     },
     // {
     //   Icon: 'wallet-outline',

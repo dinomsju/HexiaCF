@@ -4,11 +4,12 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Header from '../../../Header/HeaderPayment';
-import {FlatList, Image, SafeAreaView, ScrollView} from 'react-native';
-import {getOrderById} from '../../../../api/cartApi';
+import {Alert, FlatList, Image, SafeAreaView, ScrollView} from 'react-native';
+import {getOrderById, cancelOrderById} from '../../../../api/cartApi';
 import Item from '../../../views/ItemPayment';
 
 const DetailOrder = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const {item} = route?.params;
   const [user, setUser] = useState();
@@ -54,6 +55,18 @@ const DetailOrder = () => {
       (accumulator, currentValue) => accumulator + currentValue,
     );
   });
+
+  const cancelOrder = async () => {
+    const cancel = await cancelOrderById(item?._id);
+    if (cancel) {
+      setTimeout(() => {
+        Alert.alert('Thành công', 'Huỷ đơn hàng thành công');
+        navigation.goBack();
+      }, 300);
+    } else {
+      Alert.alert('Oops!', 'Huỷ đơn hàng thất bại');
+    }
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -162,7 +175,8 @@ const DetailOrder = () => {
                   backgroundColor={'black'}
                   marginHorizontal={20}
                   alignCenter
-                  justifyCenter>
+                  justifyCenter
+                  onPress={() => cancelOrder()}>
                   <Text color={'white'} bold size={20}>
                     HUỶ ĐƠN HÀNG
                   </Text>
