@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   TextInput,
+  Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
@@ -21,13 +22,15 @@ import {
 } from '../../constants/constants';
 import {getUserByPhone, updateUserByPhone} from '../../api/productApi';
 import {Block, Text, Button} from '../../components';
+import {Slider} from 'react-native-elements';
+import ProgressCircle from 'react-native-progress-circle';
 export default function Setting() {
   const navigation = useNavigation();
   const [user, setUser] = useState();
-
+  const [percent, setPercent] = useState();
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
-
+  const [slide, setSlide] = useState(2999);
   const [visible, setVisible] = React.useState(false);
   const hideModal = () => setVisible(false);
   const containerStyle = {
@@ -126,11 +129,12 @@ export default function Setting() {
           marginTop: 28,
           flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'space-between',
           paddingHorizontal: 10,
           paddingVertical: 20,
         }}>
         <Icon name="person-circle-sharp" color={COLORS.black} size={70} />
-        <Block style={{paddingHorizontal: 10}}>
+        <Block style={{paddingRight: 60}}>
           <Text style={{paddingBottom: 10, fontSize: 14, fontWeight: 'bold'}}>
             {user?.name === null ? 'Ẩn danh' : user?.name}
           </Text>
@@ -152,8 +156,54 @@ export default function Setting() {
             />
           </Block>
         </Block>
+        <ProgressCircle
+          percent={user?.point / 100}
+          borderWidth={3}
+          radius={40}
+          borderWidth={8}
+          color={COLORS.orange}
+          shadowColor="#999"
+          bgColor="#fff">
+          <Text style={{fontSize: 16, color: COLORS.textOrange}}>
+            {user?.point}
+          </Text>
+          <Text style={{fontSize: 12, color: COLORS.textGray}}>point</Text>
+        </ProgressCircle>
       </Block>
+      <View
+        style={{
+          alignItems: 'stretch',
+          justifyContent: 'center',
+          paddingHorizontal: 20,
+        }}>
+        <Slider
+          trackStyle={{height: 7, borderRadius: 10}}
+          style={{height: 5}}
+          allowTouchTrack={false}
+          value={user?.point}
+          disabled={true}
+          maximumValue={10000}
+          minimumValue={0}
+          minimumTrackTintColor={COLORS.textOrange}
+          onValueChange={(value) => setSlide(value)}
+          thumbStyle={{height: 30, width: 30, backgroundColor: 'transparent'}}
+          thumbProps={{
+            Component: Animated.Image,
+            source: {
+              uri:
+                'https://firebasestorage.googleapis.com/v0/b/hexia-1f113.appspot.com/o/logo.png?alt=media&token=2e0d2b4b-8fa5-48b3-8494-f66b0eee57bc',
+            },
+          }}
+        />
+        <View>
+          <View style={styles.timerContainer}>
+            <Text style={{fontSize: 16}}>{'0'}</Text>
+            <Text style={{fontSize: 16}}>{'10000'}</Text>
+          </View>
+        </View>
+      </View>
       <Block marginHorizontal={10}>{renderButton()}</Block>
+
       <Modal
         visible={visible}
         onDismiss={hideModal}
@@ -223,5 +273,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     marginTop: 10,
+  },
+  timerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    paddingTop: 10,
+  },
+  timer: {
+    borderLeftWidth: 2,
+    borderLeftColor: COLORS.dark,
+    height: WIDTH / 19,
+  },
+  subtitle: {
+    fontFamily: 'Roboto-Light',
+    fontSize: 14,
   },
 });
