@@ -6,16 +6,24 @@ import {getUserByPhone} from '../../../../api/productApi';
 import {getOrderByIdOrder, getOrderByUserId} from '../../../../api/orderApi';
 import {ActivityIndicator, FlatList, SafeAreaView} from 'react-native';
 import moment from 'moment';
-
+import {getDiscount} from '../../../../api/discountApi';
 const Voucher = () => {
   const navigation = useNavigation();
-  // const [user, setUser] = useState();
+  const [data, setData] = useState();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const getApi = await getDiscount();
+    console.log(getApi.data.Discount);
+    setData(getApi.data.Discount);
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      {/* <FlatList
+      <FlatList
         data={data}
         keyExtractor={(item) => item._id}
         renderItem={({item}) => {
@@ -50,8 +58,7 @@ const Voucher = () => {
             </Button>
           );
         }}
-      /> */}
-      <Text>aaaaaaaaaaaaaaaaaaaaa</Text>
+      />
     </SafeAreaView>
   );
 };
