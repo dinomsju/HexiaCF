@@ -18,7 +18,7 @@ export default function Menu() {
 
   const getAllCategory = async () => {
     let getApi = await getCategory();
-    setCategory(getApi.data);
+    setCategory(getApi.data.categories);
   };
   if (category === undefined) {
     return (

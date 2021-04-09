@@ -4,7 +4,7 @@ import axios from 'axios';
 const getCategory = async () => {
   try {
     let getData = await axios.get(
-      `${BASE_URL_1}/api/category/getall`,
+      `${BASE_URL}/api/categories`,
       // `http://10.82.166.162:3000/api/category/getall`,
     );
     return getData;

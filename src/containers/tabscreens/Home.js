@@ -74,7 +74,8 @@ export default function Home() {
   const getAllCategory = async () => {
     let getApi = await getCategory();
     // setIsLoading(false);
-    setCategory(getApi.data);
+    console.log('category ---------->>>', getApi.data);
+    setCategory(getApi.data.categories);
   };
 
   const getAllProduct = async () => {

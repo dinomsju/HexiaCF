@@ -10,4 +10,15 @@ const getDiscount = async () => {
     return null;
   }
 };
-export {getDiscount};
+const getDiscountByUser = async (phone) => {
+  try {
+    let getData = await axios.get(
+      `${BASE_URL}/api/findDiscountbyUser/${phone}`,
+    );
+    return getData;
+  } catch (error) {
+    console.log('hello Error', error);
+    return null;
+  }
+};
+export {getDiscount, getDiscountByUser};
