@@ -16,7 +16,7 @@ import OrderManage from './containers/screens/OrderManage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AllProduct from './containers/screens/AllProduct';
 import DetailOrder from './containers/screens/OrderManage/DetailOrder';
-import Discount from './containers/screens/Discount';
+import Discounts from './containers/screens/Discounts';
 const Stack = createStackNavigator();
 const Auth = createStackNavigator();
 
@@ -42,7 +42,7 @@ function StackNavigator() {
       <Stack.Screen name="OrderManage" component={OrderManage} />
       <Stack.Screen name="DetailOrder" component={DetailOrder} />
       <Stack.Screen name="AllProduct" component={AllProduct} />
-      <Stack.Screen name="Discount" component={Discount} />
+      <Stack.Screen name="Discount" component={Discounts} />
     </Stack.Navigator>
   );
 }

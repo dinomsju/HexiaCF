@@ -1,26 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import {FlatList, SafeAreaView} from 'react-native';
-import {Block, Text, Button} from '../../components';
-import Header from '../Header/HeaderPayment';
-import {getDiscount} from '../../api/discountApi';
+import React, {useEffect, useState} from 'react';
+import {Button, Block, Text} from '../../../../components';
+import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import {getUserByPhone} from '../../../../api/productApi';
+import {getOrderByIdOrder, getOrderByUserId} from '../../../../api/orderApi';
+import {ActivityIndicator, FlatList, SafeAreaView} from 'react-native';
 import moment from 'moment';
 
-const Discount = () => {
-  const [data, setData] = useState();
+const Voucher = () => {
+  const navigation = useNavigation();
+  // const [user, setUser] = useState();
 
-  useEffect(() => {
-    getData();
-  });
+  useEffect(() => {}, []);
 
-  const getData = async () => {
-    const getApi = await getDiscount();
-    console.log(getApi.data.Discount);
-    setData(getApi.data.Discount);
-  };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Header title="Phiếu ưu đãi của bạn" />
-      <FlatList
+      {/* <FlatList
         data={data}
         keyExtractor={(item) => item._id}
         renderItem={({item}) => {
@@ -55,9 +50,10 @@ const Discount = () => {
             </Button>
           );
         }}
-      />
+      /> */}
+      <Text>aaaaaaaaaaaaaaaaaaaaa</Text>
     </SafeAreaView>
   );
 };
 
-export default Discount;
+export default Voucher;
