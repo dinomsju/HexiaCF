@@ -17,7 +17,7 @@ const Voucher = () => {
 
   const getData = async () => {
     const getApi = await getDiscount();
-    console.log(getApi.data.Discount);
+    // console.log(getApi.data.Discount);
     setData(getApi.data.Discount);
   };
 
