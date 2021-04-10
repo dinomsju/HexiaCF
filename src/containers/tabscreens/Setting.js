@@ -43,7 +43,7 @@ export default function Setting() {
 
   useEffect(() => {
     getUser();
-  });
+  }, []);
 
   const getUser = async () => {
     const user = auth().currentUser;

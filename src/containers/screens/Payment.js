@@ -23,7 +23,7 @@ const Payment = () => {
 
   useEffect(() => {
     getUser();
-  });
+  }, []);
 
   const getUser = async () => {
     const user = auth().currentUser;

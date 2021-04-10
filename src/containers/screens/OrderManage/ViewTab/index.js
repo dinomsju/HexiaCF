@@ -18,7 +18,7 @@ const ViewTab = ({status}) => {
   useEffect(() => {
     getUser();
     getOrderByUserID();
-  });
+  }, []);
 
   const getUser = async () => {
     const user = auth().currentUser;
