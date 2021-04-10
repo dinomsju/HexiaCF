@@ -21,4 +21,12 @@ const getDiscountByUser = async (phone) => {
     return null;
   }
 };
-export {getDiscount, getDiscountByUser};
+
+const addVoucher = async (_uid, _id) => {
+  let getApi = await axios.post(`${BASE_URL}/api/exchangeVoucher`, {
+    _uid,
+    _id,
+  });
+};
+
+export {getDiscount, getDiscountByUser, addVoucher};
