@@ -54,12 +54,6 @@ export default function Login() {
     console.log('------> ' + confirmation);
   }
 
-  // useEffect(()=>{
-  //   if (AsyncStorage.getItem('SDT')) {
-  //       navigation.replace('Home')
-  //   }
-  // },[])
-
   getUser = async () => {
     let getApi = await getUserByPhone(phone);
     getApi?.data === '' ? setVisible(true) : navigation.navigate('Home');
