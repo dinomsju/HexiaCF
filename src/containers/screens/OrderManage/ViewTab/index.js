@@ -16,19 +16,14 @@ const ViewTab = ({status}) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getUser();
     getOrderByUserID();
   }, []);
 
-  const getUser = async () => {
+  const getOrderByUserID = async () => {
     const user = auth().currentUser;
     const phone = user?.phoneNumber.slice(3);
-    let getApi = await getUserByPhone(phone);
-    setUserId(getApi?.data?._id);
-  };
-
-  const getOrderByUserID = async () => {
-    const getApi = await getOrderByUserId(userId);
+    let getUser = await getUserByPhone(phone);
+    const getApi = await getOrderByUserId(getUser?.data?._id);
     if (getApi) {
       const listTmp = getApi?.data?.Order?.sort((a, b) => {
         return new Date(b.createAt) - new Date(a.createAt);
@@ -39,7 +34,6 @@ const ViewTab = ({status}) => {
         }),
       );
     }
-    setLoading(false);
   };
 
   const renderDelivery = (delivery) => {
