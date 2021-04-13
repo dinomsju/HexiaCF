@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Block, Text} from '../../../../components';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
-  Alert,
+  ActivityIndicator,
   FlatList,
-  Image,
   SafeAreaView,
-  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  ToastAndroid,
+  Alert,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import {getOrderById, cancelOrderById} from '../../../../api/cartApi';
 import Item from '../../../views/ItemPayment';
@@ -41,6 +44,7 @@ const MyVoucher = () => {
     const phone = user.phoneNumber.slice(3);
     const getApi = await getDiscountByUser(phone);
     setDataDiscount(getApi.data.Voucher);
+    console.log('data voucher --------->>> ', getApi.data.Voucher);
   };
 
   // useEffect(() => {}, []);
@@ -51,38 +55,89 @@ const MyVoucher = () => {
           data={dataDiscount}
           keyExtractor={(item) => item._idDiscount._id}
           renderItem={({item}) => {
-            console.log('itemmmmmmmmmmmmmmm ', item);
             return (
-              <Button
-                margin={10}
-                radius={10}
-                row
-                space={'between'}
-                justifyCenter
-                alignCenter
-                backgroundColor={'#eee'}
-                padding={20}
+              <TouchableOpacity
                 style={{
                   shadowColor: '#000',
                   shadowOffset: {
                     width: 0,
                     height: 2,
                   },
+                  margin: 5,
+                  borderRadius: 10,
+                  flexDirection: 'row',
+                  padding: 20,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  backgroundColor: '#eee',
                   shadowOpacity: 0.25,
                   shadowRadius: 3.84,
                   elevation: 5,
+                  backgroundColor: '#ffffff',
                 }}>
-                <Block>
-                  <Text size={15} marginVertical={5} bold>
-                    Giảm {item._idDiscount.percent}% với{' '}
-                    {item._idDiscount.title}
+                <View style={{width: WIDTH / 2 + 25}}>
+                  <Text
+                    style={{
+                      color: COLORS.black,
+                      fontSize: 16,
+                      fontWeight: 'bold',
+                    }}
+                    numberOfLines={2}>
+                    Giảm {item?._idDiscount?.percent}% với{' '}
+                    {item?._idDiscount?.title}
                   </Text>
-                  <Text color={'#29b6f6'} size={15} marginVertical={5}>
+                  <Text
+                    style={{
+                      color: COLORS.blue,
+                      fontSize: 14,
+                      marginTop: 1,
+                      marginLeft: 3,
+                    }}>
                     Ngày hết hạn:{' '}
-                    {moment(item._idDiscount.dateEnd).format('DD/MM/YYYY')}
+                    {moment(item?._idDiscount?.dateEnd).format('DD/MM/YYYY')}
                   </Text>
-                </Block>
-              </Button>
+                </View>
+                <View>
+                  <View
+                    style={{
+                      backgroundColor: '#FFE0B2',
+                      width: WIDTH / 6,
+                      height: WIDTH / 14,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 20,
+                      marginVertical: 5,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#EF6C00',
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                      }}>
+                      {item?._idDiscount?.cost}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      // backgroundColor: '#fad390',
+                      // width: WIDTH / 6,
+                      // height: WIDTH / 14,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 20,
+                    }}>
+                    <Text
+                      style={{
+                        color: COLORS.orange,
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                      }}>
+                      POINT
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
             );
           }}
         />
