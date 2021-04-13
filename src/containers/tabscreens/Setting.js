@@ -50,6 +50,7 @@ export default function Setting() {
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
     setUser(getApi.data);
+    console.log('data user --------->> ', getApi.data.User.name);
   };
   const updateUser = async () => {
     const user = auth().currentUser;
@@ -136,7 +137,7 @@ export default function Setting() {
         <Icon name="person-circle-sharp" color={COLORS.black} size={70} />
         <Block style={{paddingRight: 60}}>
           <Text style={{paddingBottom: 10, fontSize: 14, fontWeight: 'bold'}}>
-            {user?.name === null ? 'Ẩn danh' : user?.name}
+            {user?.User.name === null ? 'Ẩn danh' : user?.User.name}
           </Text>
           <Block
             style={{
@@ -157,7 +158,7 @@ export default function Setting() {
           </Block>
         </Block>
         <ProgressCircle
-          percent={user?.point / 100}
+          percent={user?.User?.point / 100}
           borderWidth={3}
           radius={40}
           borderWidth={8}
@@ -165,7 +166,7 @@ export default function Setting() {
           shadowColor="#999"
           bgColor="#fff">
           <Text style={{fontSize: 16, color: COLORS.textOrange}}>
-            {user?.point}
+            {user?.User?.point}
           </Text>
           <Text style={{fontSize: 12, color: COLORS.textGray}}>point</Text>
         </ProgressCircle>
@@ -180,7 +181,7 @@ export default function Setting() {
           trackStyle={{height: 7, borderRadius: 10}}
           style={{height: 5}}
           allowTouchTrack={false}
-          value={user?.point}
+          value={user?.User.point}
           disabled={true}
           maximumValue={10000}
           minimumValue={0}
