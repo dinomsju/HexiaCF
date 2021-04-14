@@ -9,6 +9,7 @@ import {
   StatusBar,
   SafeAreaView,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
 import Header from '../Header/Header';
 import {useNavigation} from '@react-navigation/native';
@@ -110,7 +111,9 @@ export default function Home() {
     const phone = user.phoneNumber.slice(3);
     let SignUpFetch = await SignUp(phone, name, address);
     // console.log('userrrrrr ------->>>> ' + SignUpFetch);
+    toastAndroid('Luu thông tin thành công!');
     navigation.push('Home');
+    hideModal();
   };
   const containerStyle = {
     backgroundColor: 'white',
@@ -118,6 +121,15 @@ export default function Home() {
     margin: 30,
     alignItems: 'center',
     justifyContent: 'center',
+  };
+  const toastAndroid = (text) => {
+    ToastAndroid.showWithGravityAndOffset(
+      text,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      0,
+      100,
+    );
   };
   if (isLoading) {
     return (
@@ -308,7 +320,7 @@ export default function Home() {
       </ScrollView>
       <Modal
         visible={visible}
-        onDismiss={hideModal}
+        // onDismiss={hideModal}
         contentContainerStyle={containerStyle}>
         <Text
           style={{color: COLORS.textOrange, fontSize: 16, fontWeight: 'bold'}}>
