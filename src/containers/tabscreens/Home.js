@@ -174,7 +174,8 @@ export default function Home() {
               marginTop: 5,
             }}>
             <Icon name="location-sharp" color={COLORS.orange} size={20} />
-            <Text style={{fontWeight: 'bold', fontSize: 14}}>
+            <Text
+              style={{fontWeight: 'bold', fontSize: 14, width: WIDTH / 1.2}}>
               {user?.address}
             </Text>
           </View>
