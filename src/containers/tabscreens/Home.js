@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StatusBar,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
 import Header from '../Header/Header';
 import {useNavigation} from '@react-navigation/native';
@@ -37,6 +38,8 @@ import {Button, Text} from '../../components';
 import {IMAGE_URL} from '../../api/BASE_URL';
 import LottieView from 'lottie-react-native';
 import Swiper from 'react-native-swiper';
+import {Modal} from 'react-native-paper';
+import SignUp from '../../api/userApi';
 export default function Home() {
   const navigation = useNavigation();
   const [idcategory, setIDCategory] = useState('ps09830');
@@ -47,8 +50,12 @@ export default function Home() {
   const [page, setPage] = useState();
   const carouselRef = useRef(null);
   const [bestProduct, setBestProduct] = useState([]);
+  const [visible, setVisible] = React.useState(false);
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    getUserByCheck();
     getAllBanner();
     getAllCategory();
     getAllProduct();
@@ -56,25 +63,22 @@ export default function Home() {
     getUser();
   }, []);
 
+  const hideModal = () => setVisible(false);
+
   const getAllBanner = async () => {
     let getApiBanner = await getBanner();
     setIsLoading(false);
     setDataBanner(getApiBanner?.data);
-    console.log('getApiBanner ------->>> ', getApiBanner.data);
   };
   const getUser = async () => {
     const user = auth().currentUser;
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
-    // setIsLoading(false);
     setUser(getApi.data);
-    // console.log(getApi.data);
   };
 
   const getAllCategory = async () => {
     let getApi = await getCategory();
-    // setIsLoading(false);
-    console.log('category ---------->>>', getApi.data);
     setCategory(getApi.data.categories);
   };
 
@@ -83,31 +87,38 @@ export default function Home() {
     const listTmp = getApi.data.products.sort((a, b) => {
       return new Date(b.createAt) - new Date(a.createAt);
     });
-    // setIsLoading(false);
     setProduct(listTmp);
   };
 
   const getBestSeller = async () => {
     let getApi = await getBestProduct();
 
-    // let dataSeller = getApi.data?.map((data, index) => {
-    //   return data.products;
-    // });
     setBestProduct(getApi.data);
-    // getApi.data.forEach(function (element) {
-    //   console.log('best seller ------> 00001 ', element.products);
-    //   setBestProduct(element.products);
-    // });
-    // var data = getApi.data.filter(function (data) {
-    //   data.products.forEach(function (hoang) {
-    //     console.log('best seller ------> 111111', hoang);
-    //     setBestProduct(hoang);
-    //   });
-    //   // return data.products;
-    // });
-    // console.log('best seller ------> 111111 ', data);
+  };
+  getUserByCheck = async () => {
+    const user = auth().currentUser;
+    const phone = user.phoneNumber.slice(3);
+    let getApi = await getUserByPhone(phone);
+    getApi?.data?.User === null ? setVisible(true) : setVisible(false);
+    console.log('data ---------->>> ', getApi.data);
   };
 
+  check = async () => {
+    console.log('name ------->   ', name);
+    console.log('address ------->   ', address);
+    const user = auth().currentUser;
+    const phone = user.phoneNumber.slice(3);
+    let SignUpFetch = await SignUp(phone, name, address);
+    // console.log('userrrrrr ------->>>> ' + SignUpFetch);
+    navigation.push('Home');
+  };
+  const containerStyle = {
+    backgroundColor: 'white',
+    padding: 20,
+    margin: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
   if (isLoading) {
     return (
       <LottieView
@@ -295,6 +306,40 @@ export default function Home() {
           keyExtractor={(item) => item._id}
         />
       </ScrollView>
+      <Modal
+        visible={visible}
+        onDismiss={hideModal}
+        contentContainerStyle={containerStyle}>
+        <Text
+          style={{color: COLORS.textOrange, fontSize: 16, fontWeight: 'bold'}}>
+          THÔNG TIN CÁ NHÂN
+        </Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Họ và tên"
+          value={name}
+          maxLength={20}
+          onChangeText={(text) => setName(text)}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Địa chỉ"
+          value={address}
+          maxLength={50}
+          onChangeText={(text) => setAddress(text)}
+        />
+        <TouchableOpacity style={styles.login} onPress={() => check()}>
+          <Text
+            style={{
+              color: COLORS.white,
+              fontWeight: 'bold',
+              fontSize: 16,
+              fontStyle: 'normal',
+            }}>
+            LƯU THÔNG TIN
+          </Text>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -313,5 +358,25 @@ const styles = StyleSheet.create({
   wrapper: {
     height: WIDTH / 2 + 10,
     paddingTop: 10,
+  },
+  textInput: {
+    width: WIDTH - 120,
+    height: WIDTH / 7.4,
+    backgroundColor: COLORS.lightGray3,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    flexDirection: 'row',
+  },
+  login: {
+    width: WIDTH - 120,
+    height: WIDTH / 7.4,
+    backgroundColor: COLORS.darkk,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginBottom: 20,
   },
 });

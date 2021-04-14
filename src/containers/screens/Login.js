@@ -33,18 +33,6 @@ export default function Login() {
   const [code, setCode] = useState('');
   const [phone, setPhone] = useState('');
 
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-
-  const [visible, setVisible] = React.useState(false);
-  const hideModal = () => setVisible(false);
-  const containerStyle = {
-    backgroundColor: 'white',
-    padding: 20,
-    margin: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
     const confirmation = await auth().signInWithPhoneNumber(
@@ -53,13 +41,6 @@ export default function Login() {
     setConfirm(confirmation);
     console.log('------> ' + confirmation);
   }
-
-  getUser = async () => {
-    let getApi = await getUserByPhone(phone);
-    getApi?.data === '' ? setVisible(true) : navigation.navigate('Home');
-    console.log('data ---------->>> ', getApi.data);
-    senData(phone);
-  };
 
   // save phone in sotorage
   senData = (sdt) => {
@@ -76,16 +57,6 @@ export default function Login() {
     // getUser()
     // setVisible(true);
   }
-
-  check = async () => {
-    console.log('phone ------->   ', phone);
-    console.log('name ------->   ', name);
-    console.log('address ------->   ', address);
-
-    let SignUpFetch = await SignUp(phone, name, address);
-    console.log('userrrrrr ------->>>> ' + SignUpFetch);
-    navigation.push('Home');
-  };
 
   return (
     <View style={styles.container}>
@@ -164,37 +135,6 @@ export default function Login() {
           CHECK MÃ
         </Text>
       </TouchableOpacity>
-
-      <Modal
-        visible={visible}
-        onDismiss={hideModal}
-        contentContainerStyle={containerStyle}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Họ và tên"
-          value={name}
-          maxLength={20}
-          onChangeText={(text) => setName(text)}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Địa chỉ"
-          value={address}
-          maxLength={50}
-          onChangeText={(text) => setAddress(text)}
-        />
-        <TouchableOpacity style={styles.login} onPress={() => check()}>
-          <Text
-            style={{
-              color: COLORS.white,
-              fontWeight: 'bold',
-              fontSize: 20,
-              fontStyle: 'normal',
-            }}>
-            LƯU THÔNG TIN
-          </Text>
-        </TouchableOpacity>
-      </Modal>
     </View>
   );
 }
