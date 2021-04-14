@@ -50,7 +50,7 @@ const Voucher = () => {
     // console.log('id voucher ne', _id);
     // console.log('id user ne', user._id);
     if (user?.point < cost) {
-      toastAndroid('Thêm thất bại!');
+      toastAndroid('Bạn không đủ Point');
     } else {
       let addCart = await addVoucher(user._id, _id);
       console.log('userrrrrr ------->>>> ', addCart);
