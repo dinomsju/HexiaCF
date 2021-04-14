@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,34 +12,37 @@ import {
   ToastAndroid,
 } from 'react-native';
 import Header from '../Header/Header';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, icons} from '../../constants';
-import {films} from '../../constants/data/fakeData';
+import { COLORS, icons } from '../../constants';
+import { films } from '../../constants/data/fakeData';
 import Item from '../views/Item';
 // import ItemProduct from '../views/ItemProduct';
 import ItemProduct from '../views/ItemProduct_1';
 import ItemSeller from '../views/ItemSeller';
 import auth from '@react-native-firebase/auth';
+
 import {
   WIDTH_SCALE,
   HEIGHT_SCALE,
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import {getCategory} from '../../api/categoryApi';
+import { getCategory } from '../../api/categoryApi';
 import {
   getProduct,
   getUserByPhone,
   getBanner,
-  getBestProduct,
+  getBestProduct, updateFcmToken
 } from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Button, Text} from '../../components';
-import {IMAGE_URL} from '../../api/BASE_URL';
+import messaging from '@react-native-firebase/messaging';
+
+import { Button, Text } from '../../components';
+import { IMAGE_URL } from '../../api/BASE_URL';
 import LottieView from 'lottie-react-native';
 import Swiper from 'react-native-swiper';
-import {Modal} from 'react-native-paper';
+import { Modal } from 'react-native-paper';
 import SignUp from '../../api/userApi';
 export default function Home() {
   const navigation = useNavigation();
@@ -62,7 +65,22 @@ export default function Home() {
     getAllProduct();
     getBestSeller();
     getUser();
+
   }, []);
+
+
+  useEffect(() => {
+    //lấy fcmToken
+    messaging().getToken().then((fcmToken) => {
+      //lấy phonenumber
+      let phone = auth().currentUser.phoneNumber
+      //api có axios
+      updateFcmToken(phone.slice(3), fcmToken)
+    })
+
+
+
+  }, [])
 
   const hideModal = () => setVisible(false);
 
@@ -150,7 +168,7 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <Header title="TRANG CHỦ"></Header>
       <ScrollView>
-        <TouchableOpacity style={{padding: 5}}>
+        <TouchableOpacity style={{ padding: 5 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -175,7 +193,7 @@ export default function Home() {
             }}>
             <Icon name="location-sharp" color={COLORS.orange} size={20} />
             <Text
-              style={{fontWeight: 'bold', fontSize: 14, width: WIDTH / 1.2}}>
+              style={{ fontWeight: 'bold', fontSize: 14, width: WIDTH / 1.2 }}>
               {user?.address}
             </Text>
           </View>
@@ -191,8 +209,8 @@ export default function Home() {
           {dataBanner?.map((value, index) => (
             <Image
               resizeMode={'cover'}
-              style={{width: WIDTH - 20, height: WIDTH / 2}}
-              source={{uri: `${IMAGE_URL}${value.imageUrl}`}}
+              style={{ width: WIDTH - 20, height: WIDTH / 2 }}
+              source={{ uri: `${IMAGE_URL}${value.imageUrl}` }}
             />
           ))}
         </Swiper>
@@ -203,10 +221,10 @@ export default function Home() {
             alignItems: 'center',
             width: WIDTH - 20,
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>THỰC ĐƠN</Text>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>THỰC ĐƠN</Text>
           <TouchableOpacity
-            onPress={() => navigation.push('Menu', {idcategory})}>
-            <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
+            onPress={() => navigation.push('Menu', { idcategory })}>
+            <Text style={{ color: COLORS.blue }}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -214,10 +232,10 @@ export default function Home() {
           data={category}
           horizontal
           showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('DetailsCategory', {data: item})
+                navigation.navigate('DetailsCategory', { data: item })
               }>
               <Item item={item} />
             </TouchableOpacity>
@@ -232,7 +250,7 @@ export default function Home() {
             width: WIDTH - 20,
             marginTop: 10,
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
             SẢN PHẨM BÁN CHẠY NHẤT
           </Text>
           {/* <TouchableOpacity onPress={() => navigation.navigate('AllProduct')}>
@@ -244,7 +262,7 @@ export default function Home() {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={bestProduct}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <Button
               margin={5}
               radius={10}
@@ -282,15 +300,15 @@ export default function Home() {
             width: WIDTH - 20,
             marginTop: 10,
           }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>SẢN PHẨM</Text>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>SẢN PHẨM</Text>
           <TouchableOpacity onPress={() => navigation.navigate('AllProduct')}>
-            <Text style={{color: COLORS.blue}}>Xem tất cả</Text>
+            <Text style={{ color: COLORS.blue }}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
         <FlatList
           // numColumns={2}
           data={product}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <Button
               margin={5}
               radius={10}
@@ -311,7 +329,7 @@ export default function Home() {
                 elevation: 5,
               }}
               onPress={() =>
-                navigation.navigate('DetailsProduct', {product: item})
+                navigation.navigate('DetailsProduct', { product: item })
               }>
               <ItemProduct item={item} />
             </Button>
@@ -324,7 +342,7 @@ export default function Home() {
         // onDismiss={hideModal}
         contentContainerStyle={containerStyle}>
         <Text
-          style={{color: COLORS.textOrange, fontSize: 16, fontWeight: 'bold'}}>
+          style={{ color: COLORS.textOrange, fontSize: 16, fontWeight: 'bold' }}>
           THÔNG TIN CÁ NHÂN
         </Text>
         <TextInput

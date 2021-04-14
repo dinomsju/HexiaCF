@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,13 +16,13 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import {COLORS, icons} from '../../constants';
+import { COLORS, icons } from '../../constants';
 import SignUp from '../../api/userApi';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
-import {Modal} from 'react-native-paper';
-import {getUserByPhone} from '../../api/productApi';
+import { Modal } from 'react-native-paper';
+import { getUserByPhone } from '../../api/productApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Login() {
   const navigation = useNavigation();
@@ -39,7 +39,7 @@ export default function Login() {
       '+84' + phoneNumber,
     );
     setConfirm(confirmation);
-    console.log('------> ' + confirmation);
+    console.log('confirm ------> ' + confirmation);
   }
 
   // save phone in sotorage
@@ -50,18 +50,17 @@ export default function Login() {
   async function confirmCode() {
     try {
       await confirm.confirm(code);
-      getUser();
+
     } catch (error) {
       console.log('Invalid code.', error);
     }
-    // getUser()
-    // setVisible(true);
+
   }
 
   return (
     <View style={styles.container}>
       <View
-        style={{alignItems: 'center', justifyContent: 'center', marginTop: 5}}>
+        style={{ alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
         <Image
           style={styles.logo}
           source={require('../../constants/icons/logo.png')}
@@ -78,9 +77,9 @@ export default function Login() {
         ĐĂNG NHẬP
       </Text>
       <View style={styles.textInput}>
-        <Text style={{marginRight: 10}}>+84</Text>
+        <Text style={{ marginRight: 10 }}>+84</Text>
         <TextInput
-          style={{width: WIDTH - 120, height: WIDTH / 7.4}}
+          style={{ width: WIDTH - 120, height: WIDTH / 7.4 }}
           placeholder="Phone"
           value={phone}
           textContentType="telephoneNumber"
@@ -113,7 +112,7 @@ export default function Login() {
         </Text>
       </TouchableOpacity>
 
-      <View style={{marginVertical: 10}}>
+      <View style={{ marginVertical: 10 }}>
         <TextInput
           style={styles.textInput}
           placeholder="code"
