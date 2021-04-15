@@ -78,9 +78,22 @@ export default function Home() {
       updateFcmToken(phone.slice(3), fcmToken)
     })
 
+    //subscribeToTopic
+    messaging()
+      .subscribeToTopic('all')
+      .then(() => console.log('Subscribed to topic!'));
+
 
 
   }, [])
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
+  }, []);
 
   const hideModal = () => setVisible(false);
 
