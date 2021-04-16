@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   ActivityIndicator,
   FlatList,
@@ -12,20 +12,22 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import {getOrderById, cancelOrderById} from '../../../../api/cartApi';
+import { getOrderById, cancelOrderById } from '../../../../api/cartApi';
 import Item from '../../../views/ItemPayment';
 import auth from '@react-native-firebase/auth';
-import {getDiscountByUser} from '../../../../api/discountApi';
-import {FAB} from 'react-native-paper';
+import { getDiscountByUser } from '../../../../api/discountApi';
+import { FAB } from 'react-native-paper';
 import moment from 'moment';
-import {COLORS} from '../../../../constants';
-import {getUserByPhone, updateUserByPhone} from '../../../../api/productApi';
-import {WIDTH} from '../../../../constants/constants';
+import { COLORS } from '../../../../constants';
+import { getUserByPhone, updateUserByPhone } from '../../../../api/productApi';
+import { WIDTH } from '../../../../constants/constants';
+
 const MyVoucher = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [dataDiscount, setDataDiscount] = useState([]);
   const [user, setUser] = useState();
+
 
   useEffect(() => {
     getUser();
@@ -49,12 +51,12 @@ const MyVoucher = () => {
 
   // useEffect(() => {}, []);
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <FlatList
           data={dataDiscount}
           keyExtractor={(item) => item._idDiscount._id}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
               <TouchableOpacity
                 style={{
@@ -75,7 +77,26 @@ const MyVoucher = () => {
                   elevation: 5,
                   backgroundColor: '#ffffff',
                 }}>
-                <View style={{width: WIDTH / 2 + 25}}>
+                <View
+                  style={{
+                    backgroundColor: '#def0d6',
+                    width: WIDTH / 4.7,
+                    height: WIDTH / 4.7,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 20,
+                    marginVertical: 5,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#4a8a29',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                    }}>
+                    {item?._idDiscount?.cost}
+                  </Text>
+                </View>
+                <View style={{ width: WIDTH / 2 + 50 }}>
                   <Text
                     style={{
                       color: COLORS.black,
@@ -97,46 +118,9 @@ const MyVoucher = () => {
                     {moment(item?._idDiscount?.dateEnd).format('DD/MM/YYYY')}
                   </Text>
                 </View>
-                <View>
-                  <View
-                    style={{
-                      backgroundColor: '#FFE0B2',
-                      width: WIDTH / 6,
-                      height: WIDTH / 14,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 20,
-                      marginVertical: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#EF6C00',
-                        fontSize: 14,
-                        fontWeight: 'bold',
-                      }}>
-                      {item?._idDiscount?.cost}
-                    </Text>
-                  </View>
 
-                  <View
-                    style={{
-                      // backgroundColor: '#fad390',
-                      // width: WIDTH / 6,
-                      // height: WIDTH / 14,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 20,
-                    }}>
-                    <Text
-                      style={{
-                        color: COLORS.orange,
-                        fontSize: 14,
-                        fontWeight: 'bold',
-                      }}>
-                      POINT
-                    </Text>
-                  </View>
-                </View>
+
+
               </TouchableOpacity>
             );
           }}
@@ -147,6 +131,7 @@ const MyVoucher = () => {
         label={'POINT: ' + user?.point}
         color={COLORS.white}
       />
+
     </SafeAreaView>
   );
 };

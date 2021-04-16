@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -7,22 +7,23 @@ import {
   Alert,
   TextInput,
   Animated,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import {COLORS, icons} from '../../constants';
+import { COLORS, icons } from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
-import {Modal} from 'react-native-paper';
+import { Modal } from 'react-native-paper';
 import {
   WIDTH_SCALE,
   HEIGHT_SCALE,
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import {getUserByPhone, updateUserByPhone} from '../../api/productApi';
-import {Block, Text, Button} from '../../components';
-import {Slider} from 'react-native-elements';
+import { getUserByPhone, updateUserByPhone } from '../../api/productApi';
+import { Block, Text, Button } from '../../components';
+import { Slider } from 'react-native-elements';
 import ProgressCircle from 'react-native-progress-circle';
 export default function Setting() {
   const navigation = useNavigation();
@@ -134,8 +135,8 @@ export default function Setting() {
           paddingVertical: 20,
         }}>
         <Icon name="person-circle-sharp" color={COLORS.black} size={70} />
-        <Block style={{paddingRight: 60}}>
-          <Text style={{paddingBottom: 10, fontSize: 14, fontWeight: 'bold'}}>
+        <Block style={{ paddingRight: 60 }}>
+          <Text style={{ paddingBottom: 10, fontSize: 14, fontWeight: 'bold' }}>
             {user?.name === null ? 'Ẩn danh' : user?.name}
           </Text>
           <Block
@@ -164,10 +165,10 @@ export default function Setting() {
           color={COLORS.orange}
           shadowColor="#999"
           bgColor="#fff">
-          <Text style={{fontSize: 16, color: COLORS.textOrange}}>
+          <Text style={{ fontSize: 16, color: COLORS.textOrange }}>
             {user?.point}
           </Text>
-          <Text style={{fontSize: 12, color: COLORS.textGray}}>point</Text>
+          <Text style={{ fontSize: 12, color: COLORS.textGray }}>point</Text>
         </ProgressCircle>
       </Block>
       <View
@@ -177,8 +178,8 @@ export default function Setting() {
           paddingHorizontal: 20,
         }}>
         <Slider
-          trackStyle={{height: 7, borderRadius: 10}}
-          style={{height: 5}}
+          trackStyle={{ height: 7, borderRadius: 10 }}
+          style={{ height: 5 }}
           allowTouchTrack={false}
           value={user?.point}
           disabled={true}
@@ -186,7 +187,7 @@ export default function Setting() {
           minimumValue={0}
           minimumTrackTintColor={COLORS.textOrange}
           onValueChange={(value) => setSlide(value)}
-          thumbStyle={{height: 30, width: 30, backgroundColor: 'transparent'}}
+          thumbStyle={{ height: 30, width: 30, backgroundColor: 'transparent' }}
           thumbProps={{
             Component: Animated.Image,
             source: {
@@ -197,8 +198,8 @@ export default function Setting() {
         />
         <View>
           <View style={styles.timerContainer}>
-            <Text style={{fontSize: 16}}>{'0'}</Text>
-            <Text style={{fontSize: 16}}>{'10000'}</Text>
+            <Text style={{ fontSize: 16 }}>{'0'}</Text>
+            <Text style={{ fontSize: 16 }}>{'10000'}</Text>
           </View>
         </View>
       </View>
@@ -208,6 +209,14 @@ export default function Setting() {
         visible={visible}
         onDismiss={hideModal}
         contentContainerStyle={containerStyle}>
+        <Image
+          style={{
+            width: WIDTH / 2,
+            height: WIDTH / 1.7,
+          }}
+          source={require('../../constants/icons/logo.png')}
+          resizeMode="center"
+        />
         <TextInput
           style={styles.textInput}
           placeholder="Họ và tên"

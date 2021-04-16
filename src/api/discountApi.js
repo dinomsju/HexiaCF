@@ -1,4 +1,4 @@
-import {BASE_URL, BASE_URL_1} from './BASE_URL';
+import { BASE_URL, BASE_URL_1 } from './BASE_URL';
 import axios from 'axios';
 
 const getDiscount = async () => {
@@ -27,6 +27,7 @@ const addVoucher = async (_uid, _id) => {
     _uid,
     _id,
   });
+  return getApi;
 };
 
-export {getDiscount, getDiscountByUser, addVoucher};
+export { getDiscount, getDiscountByUser, addVoucher };

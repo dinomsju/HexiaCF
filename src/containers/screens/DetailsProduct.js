@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -20,16 +20,16 @@ import {
 } from '../../constants/constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, icons} from '../../constants';
-import {IMAGE_URL} from '../../api/BASE_URL';
+import { COLORS, icons } from '../../constants';
+import { IMAGE_URL } from '../../api/BASE_URL';
 import Footer from '../Footer/FooterDetailPro';
 import auth from '@react-native-firebase/auth';
-import {getUserByPhone} from '../../api/productApi';
-import {addCartByID} from '../../api/cartApi';
+import { getUserByPhone } from '../../api/productApi';
+import { addCartByID } from '../../api/cartApi';
 import LottieView from 'lottie-react-native';
 export default function DetailsProduct(props) {
   const navigation = useNavigation();
-  const {product} = props.route.params;
+  const { product } = props.route.params;
   const [number, setNumber] = useState(1);
   const [limit, setLimit] = useState(false);
   const [hearColor, setHearColor] = useState(COLORS.textGray);
@@ -64,6 +64,7 @@ export default function DetailsProduct(props) {
     let addCart = await addCartByID(user._id, product._id, number);
     console.log('userrrrrr ------->>>> ', addCart);
     toastAndroid('Thêm vào giỏ hàng thành công!');
+    setNumber(1)
     navigation.push('Home');
 
     // console.log('id user -------> ' + user._id);
@@ -110,7 +111,7 @@ export default function DetailsProduct(props) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <ImageBackground
           style={styles.header}
-          source={{uri: `${IMAGE_URL}${product.imageUrl}`}}>
+          source={{ uri: `${IMAGE_URL}${product.imageUrl}` }}>
           {/* <ImageBackground style={styles.header} source={{uri: product.imageUrl}}> */}
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Icon name="arrow-back" color={COLORS.textOrange} size={40} />
@@ -131,7 +132,7 @@ export default function DetailsProduct(props) {
             </TouchableOpacity>
           )}
 
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: COLORS.black}}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.black }}>
             {product.title}
           </Text>
           <Text
@@ -144,7 +145,7 @@ export default function DetailsProduct(props) {
             Mô tả
           </Text>
           <Text
-            style={{fontSize: 18, color: COLORS.textGray, paddingTop: 10}}
+            style={{ fontSize: 18, color: COLORS.textGray, paddingTop: 10 }}
             ellipsizeMode="tail">
             {product.description}
           </Text>
@@ -172,7 +173,7 @@ export default function DetailsProduct(props) {
           </View>
         </TouchableOpacity>
 
-        <Text style={{paddingHorizontal: 10}}>{number}</Text>
+        <Text style={{ paddingHorizontal: 10 }}>{number}</Text>
 
         <TouchableOpacity onPress={() => numberPlus(number)}>
           <View

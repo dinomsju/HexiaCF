@@ -354,6 +354,14 @@ export default function Home() {
         visible={visible}
         // onDismiss={hideModal}
         contentContainerStyle={containerStyle}>
+        <Image
+          style={{
+            width: WIDTH / 2,
+            height: WIDTH / 1.7,
+          }}
+          source={require('../../constants/icons/logo.png')}
+          resizeMode="center"
+        />
         <Text
           style={{ color: COLORS.textOrange, fontSize: 16, fontWeight: 'bold' }}>
           THÔNG TIN CÁ NHÂN

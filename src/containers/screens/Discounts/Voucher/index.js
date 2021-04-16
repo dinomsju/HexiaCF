@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Block} from '../../../../components';
+import React, { useEffect, useState } from 'react';
+import { Button, Block } from '../../../../components';
 import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
-import {getUserByPhone} from '../../../../api/productApi';
-import {addVoucher} from '../../../../api/discountApi';
-import {getOrderByIdOrder, getOrderByUserId} from '../../../../api/orderApi';
-import {FAB} from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { getUserByPhone } from '../../../../api/productApi';
+import { addVoucher } from '../../../../api/discountApi';
+import { getOrderByIdOrder, getOrderByUserId } from '../../../../api/orderApi';
+import { FAB } from 'react-native-paper';
 import {
   ActivityIndicator,
   FlatList,
@@ -16,20 +16,39 @@ import {
   ToastAndroid,
   Alert,
   StyleSheet,
+  Image,
 } from 'react-native';
 import moment from 'moment';
-import {getDiscount} from '../../../../api/discountApi';
+import { getDiscount } from '../../../../api/discountApi';
 import {
   WIDTH_SCALE,
   HEIGHT_SCALE,
   WIDTH,
   HEIGHT,
 } from '../../../../constants/constants';
-import {COLORS} from '../../../../constants';
+import { COLORS } from '../../../../constants';
+import { Modal } from 'react-native-paper';
 const Voucher = () => {
   const navigation = useNavigation();
   const [data, setData] = useState();
   const [user, setUser] = useState();
+  const [_id, set_id] = useState();
+  const [cost, setCost] = useState();
+  const [visible, setVisible] = React.useState(false);
+  const showModal = (_id, cost) => {
+    set_id(_id)
+    setCost(cost)
+    setVisible(true)
+  };
+  const hideModal = () => setVisible(false);
+  const containerStyle = {
+    backgroundColor: 'white',
+    padding: 20,
+    margin: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
   useEffect(() => {
     getUser();
     getData();
@@ -46,17 +65,22 @@ const Voucher = () => {
     let getApi = await getUserByPhone(phone);
     setUser(getApi.data);
   };
-  const addVoucherByID = async (_id, cost) => {
+  const addVoucherByID = async () => {
     // console.log('id voucher ne', _id);
     // console.log('id user ne', user._id);
-    if (user?.point < cost) {
+
+    if (user.point < cost) {
       toastAndroid('Bạn không đủ Point');
     } else {
       let addCart = await addVoucher(user._id, _id);
-      console.log('userrrrrr ------->>>> ', addCart);
-      toastAndroid('Đổi khuyến mãi thành công!');
+      console.log('addCart ------->>>> ', addCart.data.msg);
+      addCart.data.msg === 'Bạn đã đổi voucher này rồi' ? toastAndroid(addCart.data.msg) : toastAndroid('Đổi khuyến mãi thành công!');
+      hideModal()
       onRefresh();
     }
+    console.log('id voucher ne', _id);
+    console.log('id user ne', user._id);
+    console.log('cost ne', cost);
     // let addCart = await addVoucher(user._id, _id);
   };
 
@@ -74,11 +98,11 @@ const Voucher = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <FlatList
         data={data}
         keyExtractor={(item) => item._id}
-        renderItem={({item}) => {
+        renderItem={({ item }) => {
           return (
             <TouchableOpacity
               style={{
@@ -99,8 +123,8 @@ const Voucher = () => {
                 elevation: 5,
                 backgroundColor: '#ffffff',
               }}
-              onPress={() => addVoucherByID(item._id, item.cost)}>
-              <View style={{width: WIDTH / 2 + 25}}>
+              onPress={() => showModal(item._id, item.cost)}>
+              <View style={{ width: WIDTH / 2 + 25 }}>
                 <Text
                   style={{
                     color: COLORS.black,
@@ -169,6 +193,51 @@ const Voucher = () => {
         label={'POINT: ' + user?.point}
         color={COLORS.white}
       />
+      <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
+        <Image
+          style={{
+            width: WIDTH / 2,
+            height: WIDTH / 1.7,
+          }}
+          source={require('../../../../constants/icons/logo.png')}
+          resizeMode="center"
+        />
+        <View>
+          <Text
+            style={{
+              color: COLORS.black,
+              fontWeight: 'bold',
+              fontSize: 16,
+              fontStyle: 'normal',
+            }}>
+            BẠN CÓ MUỐN ĐỔI KHÔNG ?
+          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20, paddingHorizontal: 20 }}>
+            <TouchableOpacity onPress={hideModal}>
+              <Text
+                style={{
+                  color: COLORS.textOrange,
+                  fontWeight: 'bold',
+                  fontSize: 14,
+                  fontStyle: 'normal',
+                }}>
+                Huỷ
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => addVoucherByID()}>
+              <Text
+                style={{
+                  color: COLORS.textOrange,
+                  fontWeight: 'bold',
+                  fontSize: 14,
+                  fontStyle: 'normal',
+                }}>
+                Đồng ý
+            </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
