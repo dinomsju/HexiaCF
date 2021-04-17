@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Block, Text} from '../../../../components';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Button, Block, Text } from '../../../../components';
+import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import {getUserByPhone} from '../../../../api/productApi';
-import {getOrderByIdOrder, getOrderByUserId} from '../../../../api/orderApi';
-import {ActivityIndicator, FlatList} from 'react-native';
+import { getUserByPhone } from '../../../../api/productApi';
+import { getOrderByIdOrder, getOrderByUserId } from '../../../../api/orderApi';
+import { ActivityIndicator, FlatList } from 'react-native';
 import moment from 'moment';
 
-const ViewTab = ({status}) => {
+const ViewTab = ({ status }) => {
   const navigation = useNavigation();
   // const [user, setUser] = useState();
   const [userId, setUserId] = useState();
@@ -61,16 +61,16 @@ const ViewTab = ({status}) => {
       data={order}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item._id}
-      renderItem={({item}) => {
+      renderItem={({ item }) => {
         return (
           <Button
-            margin={10}
+            margin={5}
             radius={10}
             row
             space={'between'}
             justifyCenter
             alignCenter
-            backgroundColor={'#eee'}
+            backgroundColor={'#ffffff'}
             padding={20}
             style={{
               shadowColor: '#000',
@@ -82,7 +82,7 @@ const ViewTab = ({status}) => {
               shadowRadius: 3.84,
               elevation: 5,
             }}
-            onPress={() => navigation.navigate('DetailOrder', {item})}>
+            onPress={() => navigation.navigate('DetailOrder', { item })}>
             <Block>
               <Text size={15} marginVertical={5} bold>
                 Mã đơn: {item._id}

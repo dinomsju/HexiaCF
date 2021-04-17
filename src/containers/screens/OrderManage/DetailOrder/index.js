@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Block, Text} from '../../../../components';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {RadioButton} from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import { Button, Block, Text } from '../../../../components';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Header from '../../../Header/HeaderPayment';
-import {Alert, FlatList, Image, SafeAreaView, ScrollView} from 'react-native';
-import {getOrderById, cancelOrderById} from '../../../../api/cartApi';
+import { Alert, FlatList, Image, SafeAreaView, ScrollView } from 'react-native';
+import { getOrderById, cancelOrderById } from '../../../../api/cartApi';
 import Item from '../../../views/ItemPayment';
 
 const DetailOrder = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const {item} = route?.params;
+  const { item } = route?.params;
   const [user, setUser] = useState();
   const [data, setData] = useState();
   const [value, setValue] = useState('0');
+  const [voucher, setVoucher] = useState();
 
   useEffect(() => {
     getOrder();
@@ -69,7 +70,7 @@ const DetailOrder = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header title="CHI TIẾT ĐƠN HÀNG" />
       <ScrollView showsVerticalScrollIndicator={false}>
         {data?.map((item) => {
@@ -114,7 +115,7 @@ const DetailOrder = () => {
                 <FlatList
                   numColumns={1}
                   data={item?.products}
-                  renderItem={({item}) => <Item item={item} />}
+                  renderItem={({ item }) => <Item item={item} />}
                   keyExtractor={(item) => item.title}
                 />
               </Block>
@@ -131,7 +132,7 @@ const DetailOrder = () => {
                 alignCenter>
                 <Image
                   source={require('../../../../constants/icons/icMoney.png')}
-                  style={{width: 35, height: 35}}
+                  style={{ width: 35, height: 35 }}
                 />
                 <Text marginLeft={10} size={16}>
                   Thanh toán tiền mặt khi nhận hàng

@@ -235,7 +235,7 @@ const Payment = () => {
         </Block>
       </ScrollView>
       <Footer
-        title={` 1 món trong giỏ hàng`}
+        title={` ${dataCart.length} món trong giỏ hàng`}
         price={`${percent === 0 ? totalA : totalA - ((totalA * percent) / 100)}đ`}
         onPress={() => addOrder()}
       />

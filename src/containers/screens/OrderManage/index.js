@@ -1,20 +1,22 @@
-import React, {useState, useEffect} from 'react';
-import {SafeAreaView, Dimensions, StatusBar} from 'react-native';
-import {Block, Text, Button} from './../../../components';
-import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, Dimensions, StatusBar } from 'react-native';
+import { Block, Text, Button } from './../../../components';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import MTIcon from 'react-native-vector-icons/MaterialIcons';
-import {SceneMap, TabView} from 'react-native-tab-view';
+import { SceneMap, TabView } from 'react-native-tab-view';
 import ViewTab from './ViewTab';
-const initialLayout = {width: Dimensions.get('window').width};
+import { TabBar } from 'react-native-tab-view';
+import { COLORS } from '../../../constants';
+const initialLayout = { width: Dimensions.get('window').width };
 
 export default function OrderManage() {
   const route = useRoute();
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    {key: 'pending', title: 'Chờ duyệt'},
-    {key: 'delivery', title: 'Đang giao'},
-    {key: 'success', title: 'Hoàn thành'},
+    { key: 'pending', title: 'Chờ duyệt' },
+    { key: 'delivery', title: 'Đang giao' },
+    { key: 'success', title: 'Hoàn thành' },
   ]);
   const isFocused = useIsFocused();
   const [reload, setReload] = useState(false);
@@ -28,14 +30,22 @@ export default function OrderManage() {
     delivery: () => <ViewTab status={1} />,
     success: () => <ViewTab status={2} />,
   });
+
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: 'white' }}
+      style={{ backgroundColor: COLORS.textOrange }}
+    />
+  );
   return (
-    <SafeAreaView style={{flex: 1, marginTop: 28}}>
+    <SafeAreaView style={{ flex: 1, marginTop: 28 }}>
       <Block
         row
         height={50}
         alignCenter
         paddingLeft={20}
-        backgroundColor={'#2296f3'}>
+        backgroundColor={COLORS.textOrange}>
         <Button
           width={25}
           onPress={() => {
@@ -50,7 +60,8 @@ export default function OrderManage() {
 
       <TabView
         reload={reload}
-        navigationState={{index, routes}}
+        renderTabBar={renderTabBar}
+        navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={initialLayout}
