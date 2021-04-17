@@ -1,4 +1,4 @@
-import {BASE_URL, BASE_URL_1} from './BASE_URL';
+import { BASE_URL, BASE_URL_1 } from './BASE_URL';
 import axios from 'axios';
 
 const getCartByUser = async (id) => {
@@ -77,12 +77,19 @@ const updateAllCart = async (_uid) => {
   }
 };
 
-const addOrderById = async (_uid, delivery, products) => {
-  let getApi = await axios.post(`${BASE_URL}/api/order`, {
-    _uid,
-    delivery,
-    products,
-  });
+const addOrderById = async (_uid, delivery, voucher, products) => {
+  try {
+    let getApi = await axios.post(`${BASE_URL}/api/order`, {
+      _uid,
+      delivery,
+      voucher,
+      products,
+    });
+  } catch (error) {
+    console.log('addOrderById', error);
+    return null;
+  }
+
 };
 
 const getOrderById = async (id) => {

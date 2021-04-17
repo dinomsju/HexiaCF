@@ -171,6 +171,7 @@ export default function Setting() {
           <Text style={{ fontSize: 12, color: COLORS.textGray }}>point</Text>
         </ProgressCircle>
       </Block>
+
       <View
         style={{
           alignItems: 'stretch',
@@ -203,6 +204,10 @@ export default function Setting() {
           </View>
         </View>
       </View>
+      <View style={{ alignItems: 'center', justifyContent: 'center', opacity: 0.7 }}>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: COLORS.textGray }}>Cứ mỗi 14.000 VNĐ sẽ là 9 point </Text>
+      </View>
+
       <Block marginHorizontal={10}>{renderButton()}</Block>
 
       <Modal
