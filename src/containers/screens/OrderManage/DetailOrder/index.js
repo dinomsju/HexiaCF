@@ -7,6 +7,7 @@ import Header from '../../../Header/HeaderPayment';
 import { Alert, FlatList, Image, SafeAreaView, ScrollView } from 'react-native';
 import { getOrderById, cancelOrderById } from '../../../../api/cartApi';
 import Item from '../../../views/ItemPayment';
+import { getDiscount } from '../../../../api/discountApi';
 
 const DetailOrder = () => {
   const navigation = useNavigation();
@@ -15,16 +16,22 @@ const DetailOrder = () => {
   const [user, setUser] = useState();
   const [data, setData] = useState();
   const [value, setValue] = useState('0');
-  const [voucher, setVoucher] = useState();
+  const [discount, setDiscount] = useState();
 
   useEffect(() => {
     getOrder();
+    getDiscounts();
   }, []);
 
   const getOrder = async () => {
     const getApi = await getOrderById(item?._id);
     setData(getApi.data.Order);
   };
+
+  const getDiscounts = async () => {
+    const getApi = await getDiscount()
+    setDiscount(getApi.data.Discount)
+  }
 
   const renderDelivery = (delivery) => {
     if (delivery === 1) {
@@ -73,7 +80,7 @@ const DetailOrder = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <Header title="CHI TIẾT ĐƠN HÀNG" />
       <ScrollView showsVerticalScrollIndicator={false}>
-        {data?.map((item) => {
+        {data?.map((itemData) => {
           // console.log('item -------->', item);
           return (
             <Block>
@@ -91,17 +98,17 @@ const DetailOrder = () => {
                   <RadioButton.Group
                     onValueChange={(newValue) => setValue(newValue)}
                     value={value}>
-                    {renderDelivery(item?.delivery)}
+                    {renderDelivery(itemData?.delivery)}
                   </RadioButton.Group>
-                  <Block paddingLeft={5}>
+                  <Block paddingLeft={5} paddingBottom={5}>
                     <Text bold size={15}>
-                      {item?._uid?.name}
+                      {itemData?._uid?.name}
                     </Text>
                     <Text color={'#848484'}>
-                      Sđt: 0{item?._uid?.phone?.slice(3)}
+                      Sđt: 0{itemData?._uid?.phone?.slice(3)}
                     </Text>
                     <Text color={'#848484'}>
-                      Địa chỉ: {item?._uid?.address}
+                      Địa chỉ: {itemData?._uid?.address}
                     </Text>
                   </Block>
                 </Block>
@@ -114,9 +121,9 @@ const DetailOrder = () => {
               <Block backgroundColor={'white'} paddingHorizontal={10}>
                 <FlatList
                   numColumns={1}
-                  data={item?.products}
+                  data={itemData?.products}
                   renderItem={({ item }) => <Item item={item} />}
-                  keyExtractor={(item) => item.title}
+                  keyExtractor={(item) => itemData.title}
                 />
               </Block>
               <Block marginHorizontal={10} marginVertical={5}>
@@ -139,33 +146,47 @@ const DetailOrder = () => {
                 </Text>
               </Block>
               <Block backgroundColor={'white'} marginTop={10} padding={10}>
-                <Block
-                  style={{
-                    borderBottomWidth: 1,
-                    paddingBottom: 10,
-                    borderColor: '#CDD0D9',
-                  }}>
-                  <Text bold size={16}>
-                    Tổng cộng
+                <Block>
+                  <Block
+                    style={{
+                      borderBottomWidth: 1,
+                      paddingBottom: 10,
+                      borderColor: '#CDD0D9',
+                    }}>
+                    <Text bold size={16}>
+                      Tổng cộng
                   </Text>
-                </Block>
-                <Block
-                  padding={5}
-                  row
-                  space={'between'}
-                  style={{
-                    borderBottomWidth: 1,
-                    paddingBottom: 10,
-                    borderColor: '#CDD0D9',
-                  }}>
-                  <Text>Tổng tạm tính:</Text>
-                  <Text color={'#EA8025'}>{totalA}đ</Text>
-                </Block>
-                <Block padding={5} row space={'between'}>
-                  <Text bold>Thành tiền</Text>
-                  <Text color={'#EA8025'} bold>
-                    {totalA}đ
+                  </Block>
+                  <Block
+                    padding={5}
+                    row
+                    space={'between'}
+                    style={{
+                      borderBottomWidth: 1,
+                      paddingBottom: 10,
+                      borderColor: '#CDD0D9',
+                    }}>
+                    <Text>Tổng tạm tính:</Text>
+                    <Text color={'#EA8025'}>{totalA}đ</Text>
+                  </Block>
+                  <Block
+                    padding={5}
+                    row
+                    space={'between'}
+                    style={{
+                      borderBottomWidth: 1,
+                      paddingBottom: 10,
+                      borderColor: '#CDD0D9',
+                    }}>
+                    <Text>Giảm:</Text>
+                    <Text color={'red'}>25%</Text>
+                  </Block>
+                  <Block padding={5} row space={'between'}>
+                    <Text bold>Thành tiền</Text>
+                    <Text color={'#EA8025'} bold>
+                      {totalA - (totalA * 25 / 100)}đ
                   </Text>
+                  </Block>
                 </Block>
               </Block>
               {item?.status === 0 ? (
