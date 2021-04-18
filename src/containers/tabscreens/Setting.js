@@ -89,10 +89,10 @@ export default function Setting() {
     //     navigation.navigate('OrderManage');
     //   },
     // },
-    {
-      Icon: 'ios-map-outline',
-      title: 'Địa chỉ',
-    },
+    // {
+    //   Icon: 'ios-map-outline',
+    //   title: 'Địa chỉ',
+    // },
     {
       Icon: 'log-out-outline',
       title: 'Đăng xuất',
