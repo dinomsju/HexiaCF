@@ -132,7 +132,7 @@ const Payment = () => {
               <Text>Nhận hàng tại quán</Text>
             </Block>
           </RadioButton.Group>
-          <Block marginHorizontal={10}>
+          <Block marginHorizontal={10} paddingBottom={5}>
             <Text bold size={15}>
               {user?.name}
             </Text>

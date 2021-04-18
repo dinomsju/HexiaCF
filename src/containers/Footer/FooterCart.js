@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   Image,
@@ -8,12 +8,12 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import {greaterOrEq} from 'react-native-reanimated';
+import { greaterOrEq } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {COLORS, icons} from '../../constants';
-import {HEIGHT, WIDTH} from '../../constants/constants';
+import { COLORS, icons } from '../../constants';
+import { HEIGHT, WIDTH } from '../../constants/constants';
 
-const FooterCart = ({title, price, onPress}) => {
+const FooterCart = ({ title, price, onPress }) => {
   const navigation = useNavigation();
 
   return (
@@ -36,9 +36,9 @@ const FooterCart = ({title, price, onPress}) => {
           justifyContent: 'center',
           flexDirection: 'column',
         }}>
-        <Text style={{fontSize: 12, color: COLORS.white}}>{title}</Text>
+        <Text style={{ fontSize: 12, color: COLORS.white }}>{title}</Text>
 
-        <Text style={{fontSize: 12, fontWeight: 'bold', color: COLORS.white}}>
+        <Text style={{ fontSize: 12, fontWeight: 'bold', color: COLORS.white }}>
           {price}
         </Text>
       </View>
@@ -53,7 +53,7 @@ const FooterCart = ({title, price, onPress}) => {
           borderRadius: 8,
         }}
         onPress={onPress}>
-        <Text style={{fontSize: 18, fontWeight: 'bold', color: COLORS.white}}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold', color: COLORS.white }}>
           ĐẶT HÀNG
         </Text>
       </TouchableOpacity>
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   container: {
     width: WIDTH,
     height: 55,
-    marginTop: 28,
     backgroundColor: COLORS.footer,
     flexDirection: 'row',
     justifyContent: 'space-between',
