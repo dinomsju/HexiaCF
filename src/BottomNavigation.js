@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //Vector Icons
 import Foundation from 'react-native-vector-icons/Foundation';
@@ -15,27 +15,27 @@ import Notification from './containers/tabscreens/Notification';
 import Cart from './containers/screens/Cart';
 
 //Constants
-import {COLORS, icons} from './constants';
-import Svg, {Path} from 'react-native-svg';
-import {TouchableOpacity, View} from 'react-native';
+import { COLORS, icons } from './constants';
+import Svg, { Path } from 'react-native-svg';
+import { TouchableOpacity, View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
-const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
+const TabBarCustomButton = ({ accessibilityState, children, onPress }) => {
   var isSelected = accessibilityState.selected;
 
   if (isSelected) {
     return (
-      <View style={{flex: 1, alignItems: 'center'}}>
-        <View style={{flexDirection: 'row', position: 'absolute', top: 0}}>
-          <View style={{flex: 1, backgroundColor: COLORS.white}}></View>
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', position: 'absolute', top: 0 }}>
+          <View style={{ flex: 1, backgroundColor: COLORS.white }}></View>
           <Svg width={75} height={61} viewBox="0 0 75 61">
             <Path
               d="M75.2 0v61H0V0c4.1 0 7.4 3.1 7.9 7.1C10 21.7 22.5 33 37.7 33c15.2 0 27.7-11.3 29.7-25.9.5-4 3.9-7.1 7.9-7.1h-.1z"
               fill={COLORS.white}
             />
           </Svg>
-          <View style={{flex: 1, backgroundColor: COLORS.white}}></View>
+          <View style={{ flex: 1, backgroundColor: COLORS.white }}></View>
         </View>
 
         <TouchableOpacity
@@ -69,7 +69,7 @@ const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
   }
 };
 
-const Tabs = ({navigation}) => {
+const Tabs = ({ navigation }) => {
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -85,7 +85,7 @@ const Tabs = ({navigation}) => {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Foundation name="home" color={color} size={size} />
           ),
           tabBarButton: (props) => <TabBarCustomButton {...props} />,
@@ -95,13 +95,13 @@ const Tabs = ({navigation}) => {
         name="Cart"
         component={Cart}
         options={{
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <FontAwesome name="shopping-cart" color={color} size={size} />
           ),
           tabBarButton: (props) => <TabBarCustomButton {...props} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Notifications"
         component={Notification}
         options={{
@@ -110,12 +110,12 @@ const Tabs = ({navigation}) => {
           ),
           tabBarButton: (props) => <TabBarCustomButton {...props} />,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Settings"
         component={Setting}
         options={{
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings" color={color} size={size} />
           ),
           tabBarButton: (props) => <TabBarCustomButton {...props} />,
