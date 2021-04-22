@@ -34,6 +34,9 @@ export default function Setting() {
   const [slide, setSlide] = useState(2999);
   const [visible, setVisible] = React.useState(false);
   const hideModal = () => setVisible(false);
+  const [checkN, setCheckN] = useState(false);
+  const [checkA, setCheckA] = useState(false);
+
   const containerStyle = {
     backgroundColor: 'white',
     padding: 20,
@@ -52,10 +55,31 @@ export default function Setting() {
     let getApi = await getUserByPhone(phone);
     setUser(getApi.data);
   };
+  checkInfo = () => {
+    if (name.length === '') {
+      setCheckN(true)
+    } else if (address.length === '') {
+      setCheckA(true)
+      setCheckN(false)
+    } else if (name.length < 10) {
+      setCheckN(true)
+      setCheckA(false)
+    } else if (address.length < 10) {
+      setCheckA(true)
+      setCheckN(false)
+    } else {
+      setCheckN(false)
+      setCheckA(false)
+      updateUser()
+    }
+
+  }
   const updateUser = async () => {
     const user = auth().currentUser;
     const phone = user.phoneNumber.slice(3);
     let editUser = await updateUserByPhone(phone, name, address);
+    setName('')
+    setAddress('')
     hideModal();
   };
   const logOut = async () => {
@@ -229,6 +253,9 @@ export default function Setting() {
           maxLength={20}
           onChangeText={(text) => setName(text)}
         />
+        {
+          checkN ? <Text style={{ marginBottom: 5, color: COLORS.hearRed, fontSize: 16, fontWeight: 'bold' }}>Họ và tên chưa đúng định dạng</Text> : null
+        }
         <TextInput
           style={styles.textInput}
           placeholder="Địa chỉ"
@@ -236,7 +263,10 @@ export default function Setting() {
           maxLength={50}
           onChangeText={(text) => setAddress(text)}
         />
-        <TouchableOpacity style={styles.login} onPress={() => updateUser()}>
+        {
+          checkA ? <Text style={{ marginBottom: 5, color: COLORS.hearRed, fontSize: 16, fontWeight: 'bold' }}>Địa chỉ chưa đúng định dạng</Text> : null
+        }
+        <TouchableOpacity style={styles.login} onPress={() => checkInfo()}>
           <Text
             style={{
               color: COLORS.white,

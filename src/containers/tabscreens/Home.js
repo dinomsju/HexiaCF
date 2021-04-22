@@ -58,6 +58,8 @@ export default function Home() {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [checkN, setCheckN] = useState(false);
+  const [checkA, setCheckA] = useState(false);
   useEffect(() => {
     getUserByCheck();
     getAllBanner();
@@ -136,15 +138,31 @@ export default function Home() {
   };
 
   check = async () => {
-    console.log('name ------->   ', name);
-    console.log('address ------->   ', address);
-    const user = auth().currentUser;
-    const phone = user.phoneNumber.slice(3);
-    let SignUpFetch = await SignUp(phone, name, address);
-    // console.log('userrrrrr ------->>>> ' + SignUpFetch);
-    toastAndroid('Luu thông tin thành công!');
-    navigation.push('Home');
-    hideModal();
+    if (name.length === '') {
+      setCheckN(true)
+    } else if (address.length === '') {
+      setCheckA(true)
+      setCheckN(false)
+    } else if (name.length < 10) {
+      setCheckN(true)
+      setCheckA(false)
+    } else if (address.length < 10) {
+      setCheckA(true)
+      setCheckN(false)
+    } else {
+      setCheckN(false)
+      setCheckA(false)
+      console.log('name ------->   ', name);
+      console.log('address ------->   ', address);
+      const user = auth().currentUser;
+      const phone = user.phoneNumber.slice(3);
+      let SignUpFetch = await SignUp(phone, name, address);
+      // console.log('userrrrrr ------->>>> ' + SignUpFetch);
+      toastAndroid('Luu thông tin thành công!');
+      navigation.push('Home');
+      hideModal();
+    }
+
   };
   const containerStyle = {
     backgroundColor: 'white',
@@ -373,6 +391,9 @@ export default function Home() {
           maxLength={20}
           onChangeText={(text) => setName(text)}
         />
+        {
+          checkN ? <Text style={{ marginBottom: 5, color: COLORS.hearRed, fontSize: 16, fontWeight: 'bold' }}>Họ và tên chưa đúng định dạng</Text> : null
+        }
         <TextInput
           style={styles.textInput}
           placeholder="Địa chỉ"
@@ -380,6 +401,9 @@ export default function Home() {
           maxLength={50}
           onChangeText={(text) => setAddress(text)}
         />
+        {
+          checkA ? <Text style={{ marginBottom: 5, color: COLORS.hearRed, fontSize: 16, fontWeight: 'bold' }}>Địa chỉ chưa đúng định dạng</Text> : null
+        }
         <TouchableOpacity style={styles.login} onPress={() => check()}>
           <Text
             style={{
