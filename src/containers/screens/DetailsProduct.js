@@ -118,7 +118,7 @@ export default function DetailsProduct(props) {
           </TouchableOpacity>
         </ImageBackground>
         <View style={styles.footer}>
-          {condition ? (
+          {/* {condition ? (
             <TouchableOpacity
               style={styles.heart}
               onPress={() => heartCondition()}>
@@ -130,7 +130,7 @@ export default function DetailsProduct(props) {
               onPress={() => heartCondition()}>
               <Icon name="heart" color={COLORS.textGray} size={25} />
             </TouchableOpacity>
-          )}
+          )} */}
 
           <Text style={{ fontSize: 20, fontWeight: 'bold', color: COLORS.black }}>
             {product.title}
