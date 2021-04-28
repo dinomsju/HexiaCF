@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -17,21 +17,21 @@ import {
   WIDTH,
   HEIGHT,
 } from '../../constants/constants';
-import {songs} from '../../constants/data/song';
+import { songs } from '../../constants/data/song';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {COLORS, icons} from '../../constants';
-import {Searchbar} from 'react-native-paper';
+import { COLORS, icons } from '../../constants';
+import { Searchbar } from 'react-native-paper';
 import Item from '../views/ItemDetailsCategory';
-import {getProductByCat} from '../../api/productApi';
-import {IMAGE_URL} from '../../api/BASE_URL';
+import { getProductByCat } from '../../api/productApi';
+import { IMAGE_URL } from '../../api/BASE_URL';
 import LottieView from 'lottie-react-native';
 export default function DetailsCategory(props) {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = React.useState('');
   const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const {data} = props.route.params;
+  const { data } = props.route.params;
   const onChangeSearch = (query) => setSearchQuery(query);
 
   useEffect(() => {
@@ -63,15 +63,15 @@ export default function DetailsCategory(props) {
     <View style={styles.container}>
       <ImageBackground
         style={styles.header}
-        source={{uri: `${IMAGE_URL}${data.imageUrl}`}}>
+        source={{ uri: `${IMAGE_URL}${data.imageUrl}` }}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={{marginTop: 100}}>
+          style={{ marginTop: 100, marginLeft: 10 }}>
           <Icon name="arrow-back" color={COLORS.textOrange} size={40} />
         </TouchableOpacity>
       </ImageBackground>
       <View style={styles.footer}>
-        <View style={{alignItems: 'center', flex: 1, marginBottom: 90}}>
+        <View style={{ alignItems: 'center', flex: 1, marginBottom: 90 }}>
           <Text
             style={{
               fontSize: 24,
@@ -86,7 +86,7 @@ export default function DetailsCategory(props) {
             <Text>Tìm kiếm</Text>
           </TextInput> */}
           <Searchbar
-            style={{borderRadius: 30, marginBottom: 5}}
+            style={{ borderRadius: 30, marginBottom: 5 }}
             placeholder="Tìm kiếm"
             onChangeText={onChangeSearch}
             value={searchQuery}
@@ -95,14 +95,14 @@ export default function DetailsCategory(props) {
             <Text style={styles.alertWarning}>Tìm thấy (0) kết quả!</Text>
           ) : (
             <FlatList
-              style={{marginLeft: 10}}
+              style={{ marginLeft: 10 }}
               numColumns={1}
               data={product}
               showsVerticalScrollIndicator={false}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('DetailsProduct', {product: item})
+                    navigation.navigate('DetailsProduct', { product: item })
                   }>
                   <Item item={item} />
                 </TouchableOpacity>
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     // padding: 20,
+    marginBottom: 110
   },
   textInput: {
     width: WIDTH - 120,
