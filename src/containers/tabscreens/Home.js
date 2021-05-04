@@ -9,7 +9,7 @@ import {
   StatusBar,
   SafeAreaView,
   TextInput,
-  ToastAndroid,
+  ToastAndroid, Alert
 } from 'react-native';
 import Header from '../Header/Header';
 import { useNavigation } from '@react-navigation/native';
@@ -91,7 +91,19 @@ export default function Home() {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      console.log(remoteMessage)
+      Alert.alert(
+        remoteMessage.notification.title,
+        remoteMessage.notification.body,
+        [
+          {
+            text: "Ok",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+
+        ]
+      );
     });
 
     return unsubscribe;
