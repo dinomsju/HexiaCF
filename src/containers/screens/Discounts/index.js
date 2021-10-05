@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {SafeAreaView, Dimensions, StatusBar, Alert} from 'react-native';
-import {Block, Text, Button} from '../../../components';
-import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, Dimensions, StatusBar, Alert } from 'react-native';
+import { Block, Text, Button } from '../../../components';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import MTIcon from 'react-native-vector-icons/MaterialIcons';
-import {SceneMap, TabView} from 'react-native-tab-view';
+import { SceneMap, TabView } from 'react-native-tab-view';
 import Voucher from './Voucher';
 import MyVoucher from './MyVoucher';
-import {COLORS} from '../../../constants';
-import {TabBar} from 'react-native-tab-view';
-import {getUserByPhone, updateUserByPhone} from '../../../api/productApi';
+import { COLORS } from '../../../constants';
+import { TabBar } from 'react-native-tab-view';
+import { getUserByPhone, updateUserByPhone } from '../../../api/productApi';
 import auth from '@react-native-firebase/auth';
-const initialLayout = {width: Dimensions.get('window').width};
+const initialLayout = { width: Dimensions.get('window').width };
 
 export default function Discounts() {
   const route = useRoute();
@@ -18,8 +18,8 @@ export default function Discounts() {
   const [index, setIndex] = useState(0);
 
   const [routes] = useState([
-    {key: 'pending', title: 'Đổi Khuyến Mãi'},
-    {key: 'delivery', title: 'Khuyến Mãi Của Bạn'},
+    { key: 'pending', title: 'Đổi Khuyến Mãi' },
+    { key: 'delivery', title: 'Khuyến Mãi Của Bạn' },
   ]);
   const isFocused = useIsFocused();
   const [reload, setReload] = useState(false);
@@ -35,13 +35,13 @@ export default function Discounts() {
   const renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={{backgroundColor: 'white'}}
-      style={{backgroundColor: COLORS.textOrange}}
+      indicatorStyle={{ backgroundColor: 'white' }}
+      style={{ backgroundColor: COLORS.textOrange }}
     />
   );
 
   return (
-    <SafeAreaView style={{flex: 1, marginTop: 24}}>
+    <SafeAreaView style={{ flex: 1, marginTop: 24 }}>
       <Block
         row
         height={50}
@@ -66,7 +66,7 @@ export default function Discounts() {
       <TabView
         reload={reload}
         renderTabBar={renderTabBar}
-        navigationState={{index, routes}}
+        navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={initialLayout}
