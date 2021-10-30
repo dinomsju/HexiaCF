@@ -39,7 +39,7 @@ export default function DetailsProduct(props) {
   useEffect(() => {
     getUser();
   }, []);
-  console.log('product -------> ' + product.title);
+  // console.log('product -------> ' + product.title);
   const numberPlus = (number) => {
     setNumber(number + 1);
     setLimit(false);
@@ -54,15 +54,15 @@ export default function DetailsProduct(props) {
   const addCart = () => {
     navigation.push('Home');
 
-    console.log('addCart -------> ' + number);
-    console.log('Tổng tiền -------->' + product.price * number);
-    console.log('condition -------> ' + condition);
-    console.log('hearColor -------> ' + hearColor);
+    // console.log('addCart -------> ' + number);
+    // console.log('Tổng tiền -------->' + product.price * number);
+    // console.log('condition -------> ' + condition);
+    // console.log('hearColor -------> ' + hearColor);
   };
 
   addCartByIDUser = async () => {
     let addCart = await addCartByID(user._id, product._id, number);
-    console.log('userrrrrr ------->>>> ', addCart);
+    // console.log('userrrrrr ------->>>> ', addCart);
     toastAndroid('Thêm vào giỏ hàng thành công!');
     setNumber(1)
     navigation.push('Home');
@@ -79,7 +79,7 @@ export default function DetailsProduct(props) {
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
     setUser(getApi.data);
-    console.log('data-----------> ', getApi.data);
+    // console.log('data-----------> ', getApi.data);
   };
   const toastAndroid = (text) => {
     ToastAndroid.showWithGravityAndOffset(

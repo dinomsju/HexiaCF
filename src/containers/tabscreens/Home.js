@@ -91,7 +91,7 @@ export default function Home() {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log(remoteMessage)
+      // console.log(remoteMessage)
       Alert.alert(
         remoteMessage.notification.title,
         remoteMessage.notification.body,
@@ -146,7 +146,7 @@ export default function Home() {
     const phone = user.phoneNumber.slice(3);
     let getApi = await getUserByPhone(phone);
     getApi?.data?.User === null ? setVisible(true) : setVisible(false);
-    console.log('data ---------->>> ', getApi.data);
+    // console.log('data ---------->>> ', getApi.data);
   };
 
   check = async () => {
@@ -164,8 +164,8 @@ export default function Home() {
     } else {
       setCheckN(false)
       setCheckA(false)
-      console.log('name ------->   ', name);
-      console.log('address ------->   ', address);
+      // console.log('name ------->   ', name);
+      // console.log('address ------->   ', address);
       const user = auth().currentUser;
       const phone = user.phoneNumber.slice(3);
       let SignUpFetch = await SignUp(phone, name, address);

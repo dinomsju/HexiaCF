@@ -46,7 +46,7 @@ const MyVoucher = () => {
     const phone = user.phoneNumber.slice(3);
     const getApi = await getDiscountByUser(phone);
     setDataDiscount(getApi.data.Voucher);
-    console.log('data voucher --------->>> ', getApi.data.Voucher);
+    // console.log('data voucher --------->>> ', getApi.data.Voucher);
   };
 
   // useEffect(() => {}, []);

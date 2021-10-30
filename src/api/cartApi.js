@@ -95,7 +95,7 @@ const addOrderById = async (_uid, delivery, voucher, products) => {
 const getOrderById = async (id) => {
   try {
     let getData = await axios.get(`${BASE_URL}/api/findOder/id/${id}`);
-    console.log(`${BASE_URL}/api/findOder/id/${id}`);
+    // console.log(`${BASE_URL}/api/findOder/id/${id}`);
     return getData;
   } catch (error) {
     console.log('getOrderById', error);

@@ -105,7 +105,7 @@ const Payment = () => {
     const getApi = await getDiscountByUser(phone);
     setDataDiscount(getApi.data.Voucher);
     setIsLoading(false)
-    console.log(' dataDiscount --------->>> ', dataDiscount.length);
+    // console.log(' dataDiscount --------->>> ', dataDiscount.length);
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -257,7 +257,7 @@ const Payment = () => {
             fontStyle: 'normal',
           }}>
           KHUYẾN MÃI HIỆN CÓ
-          </Text>
+        </Text>
         {isLoading ?
           <LottieView
             style={{

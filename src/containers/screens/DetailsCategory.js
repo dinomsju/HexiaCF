@@ -66,7 +66,7 @@ export default function DetailsCategory(props) {
         source={{ uri: `${IMAGE_URL}${data.imageUrl}` }}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={{ marginTop: 100, marginLeft: 10 }}>
+          style={{ marginTop: 60, marginLeft: 10 }}>
           <Icon name="arrow-back" color={COLORS.textOrange} size={40} />
         </TouchableOpacity>
       </ImageBackground>
@@ -94,25 +94,25 @@ export default function DetailsCategory(props) {
           {product.length === 0 ? (
             <Text style={styles.alertWarning}>Tìm thấy (0) kết quả!</Text>
           ) : (
-              <ScrollView showsVerticalScrollIndicator={false} >
-                <FlatList
-                  style={{ marginLeft: 10, marginBottom: 20 }}
-                  numColumns={1}
-                  data={product}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('DetailsProduct', { product: item })
-                      }>
-                      <Item item={item} />
-                    </TouchableOpacity>
-                  )}
-                  keyExtractor={(item) => item._id}
-                />
-              </ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false} >
+              <FlatList
+                style={{ marginLeft: 10, marginBottom: 20 }}
+                numColumns={1}
+                data={product}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('DetailsProduct', { product: item })
+                    }>
+                    <Item item={item} />
+                  </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item._id}
+              />
+            </ScrollView>
 
-            )}
+          )}
         </View>
       </View>
     </View>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   header: {
     width: WIDTH,
     height: WIDTH - 60,
-    marginTop: WIDTH / 2,
+    marginTop: WIDTH / 1.2,
   },
   footer: {
     width: WIDTH,

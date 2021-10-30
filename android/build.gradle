@@ -3,9 +3,9 @@
 buildscript {
     ext {
         buildToolsVersion = "29.0.2"
-        minSdkVersion = 17
-        compileSdkVersion = 29
-        targetSdkVersion = 29
+        minSdkVersion = 21
+        compileSdkVersion = 31
+        targetSdkVersion = 31
     }
     repositories {
         google()
@@ -35,4 +35,8 @@ allprojects {
         jcenter()
         maven { url 'https://www.jitpack.io' }
     }
+}
+
+project.ext {
+    excludeAppGlideModule = true
 }

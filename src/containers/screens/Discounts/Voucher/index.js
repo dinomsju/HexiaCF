@@ -73,14 +73,14 @@ const Voucher = () => {
       toastAndroid('Bạn không đủ Point');
     } else {
       let addCart = await addVoucher(user._id, _id);
-      console.log('addCart ------->>>> ', addCart.data.msg);
+      // console.log('addCart ------->>>> ', addCart.data.msg);
       addCart.data.msg === 'Bạn đã đổi voucher này rồi' ? toastAndroid(addCart.data.msg) : toastAndroid('Đổi khuyến mãi thành công!');
       hideModal()
       onRefresh();
     }
-    console.log('id voucher ne', _id);
-    console.log('id user ne', user._id);
-    console.log('cost ne', cost);
+    // console.log('id voucher ne', _id);
+    // console.log('id user ne', user._id);
+    // console.log('cost ne', cost);
     // let addCart = await addVoucher(user._id, _id);
   };
 
@@ -222,7 +222,7 @@ const Voucher = () => {
                   fontStyle: 'normal',
                 }}>
                 Huỷ
-            </Text>
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => addVoucherByID()}>
               <Text
@@ -233,7 +233,7 @@ const Voucher = () => {
                   fontStyle: 'normal',
                 }}>
                 Đồng ý
-            </Text>
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

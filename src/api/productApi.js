@@ -76,7 +76,7 @@ const updateFcmToken = async (phone, token) => {
   try {
     //test thì nó trả ra link nhấn vô update đc
     let str = `${BASE_URL}/api/updateToken/${phone}/${token}`
-    console.log('str', str);
+    // console.log('str', str);
     //copy past thôi chứ méo biết
     let updateToken = await axios.get(`${BASE_URL}/api/updateToken/${phone}/${token}`);
     return updateToken;

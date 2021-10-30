@@ -42,7 +42,7 @@ export default function Login() {
       '+84' + phoneNumber,
     );
     setConfirm(confirmation);
-    console.log('confirm ------> ' + confirmation);
+    // console.log('confirm ------> ' + confirmation);
   }
   checkPhone = () => {
     phone.length < 9
